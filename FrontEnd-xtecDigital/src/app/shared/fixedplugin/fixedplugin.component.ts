@@ -28,5 +28,7 @@ export class FixedPluginComponent implements OnInit{
         sidebar.setAttribute('data-active-color',color);
     }
   }
-  ngOnInit(){}
+  ngOnInit(){
+    this.changeSidebarActiveColor('danger');
+  }
 }
