@@ -20,7 +20,7 @@ export class UserComponent implements OnInit{
     }
 
     //SE INICIALIZA LA VENTANA EMERGENTE (pop-up)
-    openModal(content){ this.modal.open(content,{size:'sm', centered:true});}
+    openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
 
 
 }
