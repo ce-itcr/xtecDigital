@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from "ngx-toastr";
 
-import { SidebarModule } from './shared/sidebar/sidebar.module';
+import { SidebarModule } from './shared/sidebar/admin-sidebar/sidebar.module';
+import { ProfessorSidebarModule } from './shared/sidebar/professor-sidebar/sidebar.module';
 import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule} from './shared/navbar/navbar.module';
 import { FixedPluginModule} from './shared/fixedplugin/fixedplugin.module';
@@ -13,12 +14,14 @@ import { AppRoutes } from './app.routing';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProfessorLayoutComponent } from './layouts/professor-layout/professor-layout.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    ProfessorLayoutComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -27,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
       useHash: true
     }),
     SidebarModule,
+    ProfessorSidebarModule,
     NavbarModule,
     ToastrModule.forRoot(),
     FooterModule,
