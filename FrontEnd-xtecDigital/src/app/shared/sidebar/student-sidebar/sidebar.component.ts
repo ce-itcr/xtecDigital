@@ -9,8 +9,10 @@ export interface RouteInfo {
 }
 
 export const ROUTES_STUDENT: RouteInfo[] = [
-    { path: '/student_dashboard',     title: 'Inicio',         icon:'nc-bank',       class: '' },
-    { path: '/student_profile',          title: 'Perfil',      icon:'nc-single-02',  class: '' },
+    { path: '/student_dashboard',     title: 'Inicio',         icon:'nc-bank',            class: '' },
+    { path: '/student_courses',       title: 'Cursos',         icon:'nc-single-copy-04',  class: '' },
+    { path: '/student_records',       title: 'Expediente',     icon:'nc-single-02',  class: '' },
+    { path: '/student_profile',       title: 'Cuenta',         icon:'nc-settings-gear-65',       class: '' },
 ];
 
 @Component({

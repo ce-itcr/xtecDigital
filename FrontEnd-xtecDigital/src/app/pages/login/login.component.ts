@@ -20,13 +20,13 @@ export class LoginComponent{
     this.router.navigate(['admin_dashboard']));
   }
 
-  //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE ADMINISTRADOR
+  //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE PROFESOR
   toProfessorLayout(){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['professor_dashboard']));
   }
 
-    //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE ADMINISTRADOR
+    //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE ESTUDIANTE
   toStudentLayout(){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['student_dashboard']));
