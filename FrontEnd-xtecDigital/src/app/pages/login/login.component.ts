@@ -26,6 +26,12 @@ export class LoginComponent{
     this.router.navigate(['professor_dashboard']));
   }
 
+    //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE ADMINISTRADOR
+  toStudentLayout(){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+    this.router.navigate(['student_dashboard']));
+  }
+
   //VERIFICA QUE LOS DATOS INGRESADOS PERTENEZCAN A UN USUARIO REGISTRADO
   //POSTERIORMENTE SE ENVÍA AL COMPONENTE RESPECTIVO
   //RECIBE: NOMBRE DE USUARIO Y CONTRASEÑA, RESPECTIVAMENTE

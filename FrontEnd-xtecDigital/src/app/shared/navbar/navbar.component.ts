@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/admin-sidebar/sidebar.component';
 import { ROUTES_PROFESSOR } from '../sidebar/professor-sidebar/sidebar.component';
+import { ROUTES_STUDENT } from '../sidebar/student-sidebar/sidebar.component';
 import { Router } from '@angular/router';
 import { Location} from '@angular/common';
 
@@ -16,7 +17,7 @@ export class NavbarComponent implements OnInit{
     private nativeElement: Node;
     private toggleButton;
     private sidebarVisible: boolean;
-    allRoutes = ROUTES.concat(ROUTES_PROFESSOR);
+    allRoutes = ROUTES.concat(ROUTES_PROFESSOR).concat(ROUTES_STUDENT);
 
     public isCollapsed = true;
     @ViewChild("navbar-cmp", {static: false}) button;

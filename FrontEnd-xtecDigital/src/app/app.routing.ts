@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ProfessorLayoutComponent } from './layouts/professor-layout/professor-layout.component';
+import { StudentLayoutComponent } from './layouts/student-layout/student-layout.component';
 import { LoginComponent } from './pages/login/login.component';
 
 export const AppRoutes: Routes = [
@@ -37,6 +38,20 @@ export const AppRoutes: Routes = [
         {
       path: '',
       loadChildren: './layouts/professor-layout/professor-layout.module#ProfessorLayoutModule'
+  }]},
+
+  {
+    path: 'student_dashboard',
+    redirectTo: 'student_dashboard',
+    pathMatch: 'full',
+    runGuardsAndResolvers: 'always'
+  }, {
+    path: '',
+    component: StudentLayoutComponent,
+    children: [
+        {
+      path: '',
+      loadChildren: './layouts/student-layout/student-layout.module#StudentLayoutModule'
   }]},
 
 
