@@ -13,4 +13,11 @@ export class CommunicationService {
     return this.http.post<JSON>("https://jsonplaceholder.typicode.com/posts", {"username": username, "password": password});
    }
 
+   sendProfileDataToUpdate(userName, fullName, password, phone, address, nationality, birthDate, imgUrl){
+    return this.http.post<JSON>("https://jsonplaceholder.typicode.com/posts", {"userName": userName, "fullName": fullName,
+                                                                               "password": password, "phone": phone,
+                                                                               "address": address, "nationality": nationality,
+                                                                               "birthDate": birthDate, "imgUrl": imgUrl});
+   }
+
 }
