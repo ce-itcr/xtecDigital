@@ -1,0 +1,114 @@
+<div class="row">
+  <div class="col-lg-4 col-md-4 col-sm-6">
+    <a (click)="toCurrentSection()">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-bank text-primary"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">{{courseName}}<p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </a>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-6">
+    <a (click)="toDocumentsSection()">
+      <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-single-copy-04 text-danger"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">DOCUMENTOS</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </a>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-6">
+    <a (click)="toAssignmentsSection()">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-bullet-list-67 text-primary"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">EVALUACIONES</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </a>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+      <p class="card-text">Sección de Noticias</p>
+      <div class="body">
+        <ul>
+          <ng-template #recursiveList let-list>
+            <li *ngFor="let item of list">
+
+               <a (click)="toNewsSection()">{{item.date}} {{item.title}} </a>
+
+            </li>
+          </ng-template>
+          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: newsData }"></ng-container>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <p class="card-text">Equipo Docente</p>
+        <ul>
+          <ng-template #recursiveList let-list>
+            <li *ngFor="let item of list">
+
+              {{item.title}} <i class="nc-icon nc-email-85 text-primary"></i>  {{item.email}}
+
+            </li>
+          </ng-template>
+          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: courseProfessor }"></ng-container>
+        </ul>
+        <p class="card-text">Lista de Miembros</p>
+        <ul>
+          <ng-template #recursiveList let-list>
+            <li *ngFor="let item of list">
+
+              {{item.title}} <i class="nc-icon nc-email-85 text-primary"></i>  {{item.email}}
+
+            </li>
+          </ng-template>
+          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: courseStudents }"></ng-container>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+

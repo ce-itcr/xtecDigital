@@ -1,4 +1,19 @@
 <div class="row">
 
+  <ul>
+    <ng-template #recursiveList let-list>
+      <li *ngFor="let item of list">
+
+        {{item.title}}
+        <ul *ngIf="item.children.length > 0">
+          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children };" ></ng-container>
+        </ul>
+        <a (click)="test(item.id, item.title)">{{item.id}}</a>
+
+      </li>
+    </ng-template>
+    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: courses }"></ng-container>
+  </ul>
+
 </div>
 

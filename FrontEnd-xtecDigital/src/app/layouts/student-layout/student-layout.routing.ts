@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { CourseComponent } from 'app/pages/student-pages/course/course.component';
 import { CoursesComponent } from 'app/pages/student-pages/courses/courses.component';
 import { RecordsComponent } from 'app/pages/student-pages/records/records.component';
 import { DashboardComponent } from '../../pages/student-pages/dashboard/dashboard.component';
@@ -10,4 +11,5 @@ export const StudentLayoutRoutes: Routes = [
     { path: 'student_courses',        component: CoursesComponent },
     { path: 'student_records',        component: RecordsComponent },
     { path: 'student_profile',        component: UserComponent },
+    { path: 'course',                 component: CourseComponent }
 ];
