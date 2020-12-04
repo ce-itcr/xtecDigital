@@ -15,7 +15,7 @@ export class CoursesComponent implements OnInit{
     ngOnInit(){}
 
     test(id,name){
-      alert(id);
+      //alert(id);
       localStorage.setItem("currentCourseId", id);
       localStorage.setItem("currentCourseName", name);
       this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>

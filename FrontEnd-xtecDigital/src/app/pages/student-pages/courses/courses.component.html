@@ -2,7 +2,7 @@
 
   <ul>
     <ng-template #recursiveList let-list>
-      <li *ngFor="let item of list">
+      <li *ngFor="let item of list" style="color: #14447c;">
 
         {{item.title}}
         <ul *ngIf="item.children.length > 0">

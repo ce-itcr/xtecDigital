@@ -63,7 +63,6 @@ export class CourseComponent implements OnInit{
   ];
 
 
-
   toCurrentSection(){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['course']));
@@ -79,9 +78,12 @@ export class CourseComponent implements OnInit{
     this.router.navigate(['assignments']));
   }
 
-  toNewsSection(){
+  toNewsSection(title, date, body){
+    localStorage.setItem("currentNewsBody",body);
+    localStorage.setItem("currentNewsTitle",title);
+    localStorage.setItem("currentNewsDate",date);
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['assignments']));
+    this.router.navigate(['news']));
   }
 
 

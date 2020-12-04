@@ -72,7 +72,7 @@
           <ng-template #recursiveList let-list>
             <li *ngFor="let item of list">
 
-               <a (click)="toNewsSection()">{{item.date}} {{item.title}} </a>
+               <a (click)="toNewsSection(item.title, item.date, item.body)">{{item.date}}</a> {{item.title}}
 
             </li>
           </ng-template>
@@ -88,9 +88,9 @@
         <p class="card-text">Equipo Docente</p>
         <ul>
           <ng-template #recursiveList let-list>
-            <li *ngFor="let item of list">
+            <li *ngFor="let itemb of list">
 
-              {{item.title}} <i class="nc-icon nc-email-85 text-primary"></i>  {{item.email}}
+              {{itemb.title}} <i class="nc-icon nc-email-85 text-primary"></i>  {{itemb.email}}
 
             </li>
           </ng-template>
@@ -99,9 +99,9 @@
         <p class="card-text">Lista de Miembros</p>
         <ul>
           <ng-template #recursiveList let-list>
-            <li *ngFor="let item of list">
+            <li *ngFor="let itemb of list">
 
-              {{item.title}} <i class="nc-icon nc-email-85 text-primary"></i>  {{item.email}}
+              {{itemb.title}} <i class="nc-icon nc-email-85 text-primary"></i>  {{itemb.email}}
 
             </li>
           </ng-template>

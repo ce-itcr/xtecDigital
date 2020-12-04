@@ -10,8 +10,8 @@ import { UserComponent }            from '../../pages/student-pages/user/user.co
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CoursesComponent } from 'app/pages/student-pages/courses/courses.component';
-import { RecordsComponent } from 'app/pages/student-pages/records/records.component';
 import { CourseComponent } from 'app/pages/student-pages/course/course.component';
+import { NewsComponent } from 'app/pages/student-pages/news/news.component';
 
 @NgModule({
   imports: [
@@ -23,9 +23,9 @@ import { CourseComponent } from 'app/pages/student-pages/course/course.component
   declarations: [
     DashboardComponent,
     CoursesComponent,
-    RecordsComponent,
     UserComponent,
-    CourseComponent
+    CourseComponent,
+    NewsComponent
   ]
 })
 
