@@ -16,6 +16,7 @@ export class UserComponent implements OnInit{
     this.fullName = "Student Student";
     this.img_url = "../../../../assets/img/default-avatar.png";
     this.userName = "student";
+    this.userCarnet = "2020000000"
     this.userPassword = "student";
     this.cellPhone = "88888888";
     this.userAddress = "Carago, Cartago, Dulce Nombre, Urbanización La Ilusión, Dulce Nombre, Central, Cartago.";
@@ -35,6 +36,7 @@ export class UserComponent implements OnInit{
   nationality;
   userPassword;
   userName;
+  userCarnet;
   activitiesLength = 0;
 
   public sidebarColor: string = "white";

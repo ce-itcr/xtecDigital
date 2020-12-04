@@ -88,9 +88,9 @@
         <p class="card-text">Equipo Docente</p>
         <ul>
           <ng-template #recursiveList let-list>
-            <li *ngFor="let itemb of list">
+            <li *ngFor="let item of list">
 
-              {{itemb.title}} <i class="nc-icon nc-email-85 text-primary"></i>  {{itemb.email}}
+              {{item.title}} <i class="nc-icon nc-email-85 text-primary"></i>  {{item.email}}
 
             </li>
           </ng-template>
@@ -99,9 +99,9 @@
         <p class="card-text">Lista de Miembros</p>
         <ul>
           <ng-template #recursiveList let-list>
-            <li *ngFor="let itemb of list">
+            <li *ngFor="let item of list">
 
-              {{itemb.title}} <i class="nc-icon nc-email-85 text-primary"></i>  {{itemb.email}}
+              {{item.title}} <i class="nc-icon nc-email-85 text-primary"></i>  {{item.email}}
 
             </li>
           </ng-template>

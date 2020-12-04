@@ -1,7 +1,8 @@
+<!--<div class="container vcenter-item">
 
-<div class="container">
   <div class="row justify-content-center align-items-center">
-    <form class="col-6">
+
+    <form class="col-lg-6 col-md-6">
       <div class="imgcontainer">
         <img src="./../../../assets/img/xtecdigital-logo.png" alt="xtecdigital-logo" class="logo">
       </div>
@@ -17,11 +18,38 @@
       </div>
 
     </form>
+
+  </div>
+</div>
+<div class="container">
+  <div class="row justify-content-center align-items-center">
     <div class="col-4">
       <a (click)="toAdminLayout()"><h4>Vista Administrador</h4></a>
       <a (click)="toProfessorLayout()"><h4>Vista Profesor</h4></a>
       <a (click)="toStudentLayout()"><h4>Vista Estudiante</h4></a>
     </div>
-
   </div>
+</div>-->
+<div class="wrapper vcenter-item">
+  <div class="row justify-content-center align-items-center">
+    <form class="col-lg-3 col-md-6">
+      <div class="imgcontainer">
+        <img src="./../../../assets/img/xtecdigital-logo.png" alt="xtecdigital-logo" class="logo">
+      </div>
+
+      <div class="container">
+        <label for="username"><b>Nombre de Usuario</b></label>
+        <input type="text" #username placeholder="Enter Username" name="uname" required>
+
+        <label for="password"><b>Contraseña</b></label>
+        <input type="password" #password placeholder="Enter Password" name="psw" required>
+
+        <button class="btn btn-primary btn-block text-uppercase" style="background-color: #14447c; margin-bottom: 25px;" (click)="verifyLogin(username.value,password.value)">Iniciar Sesión</button>
+        <a (click)="toAdminLayout()"><h4>Vista Administrador</h4></a>
+        <a (click)="toProfessorLayout()"><h4>Vista Profesor</h4></a>
+        <a (click)="toStudentLayout()"><h4>Vista Estudiante</h4></a>
+      </div>
+
+    </form>
+    </div>
 </div>

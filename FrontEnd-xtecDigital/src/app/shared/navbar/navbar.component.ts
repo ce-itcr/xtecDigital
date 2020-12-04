@@ -18,6 +18,29 @@ export class NavbarComponent implements OnInit{
     private toggleButton;
     private sidebarVisible: boolean;
     allRoutes = ROUTES.concat(ROUTES_PROFESSOR).concat(ROUTES_STUDENT);
+    newsData = [
+      {
+        title: 'Horario de Consulta 04/12/2020',
+        date: '04-12-2020',
+        body: 'Estimados estudiantes el horario de consulta para el día de hoy es a las 11:00am por el siguiente link: http://localhost:4200/#/course'
+      },
+      {
+        title: 'Link para el Examen Parcial II',
+        date: '04-10-2020',
+        body: ''
+      },
+      {
+        title: 'Link para el Examen Parcial I',
+        date: '12-09-2020',
+        body: ''
+      },
+      {
+        title: 'Horario de Consulta día de hoy',
+        date: '25-07-2020',
+        body: ''
+      },
+    ];
+
 
     public isCollapsed = true;
     @ViewChild("navbar-cmp", {static: false}) button;
@@ -93,6 +116,27 @@ export class NavbarComponent implements OnInit{
           navbar.classList.remove('bg-white');
         }
 
+      }
+      toProfile(){
+        var accountType = localStorage.getItem("accountType");
+        if(accountType == "STUDENT"){
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['student_profile']));
+        } else if(accountType == "ADMIN"){
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['admin_profile']));
+        } else if(accountType == "PROFESSOR"){
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['professor_profile']));
+        }
+      }
+
+      toNewsSection(title, date, body){
+        localStorage.setItem("currentNewsBody",body);
+        localStorage.setItem("currentNewsTitle",title);
+        localStorage.setItem("currentNewsDate",date);
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['news']));
       }
 
 }

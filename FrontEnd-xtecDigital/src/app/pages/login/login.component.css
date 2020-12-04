@@ -49,7 +49,10 @@ img.logo {
 
 /* Add padding to containers */
 .container {
-  padding: 16px;
+  padding-top: 16px;
+  width: 100%;
+  margin: 0 auto;
+  /*background-image: url("car.png");*/
 }
 
 /* The "Forgot password" text */
@@ -69,13 +72,9 @@ span.psw {
   }
 }
 
-
-.align-items-center {
-  -ms-flex-align: center!important;
-  align-items: center!important;
+.vcenter-item{
+  display: flex;
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 
-.d-flex {
-  display: -ms-flexbox!important;
-  display: flex!important;
-}

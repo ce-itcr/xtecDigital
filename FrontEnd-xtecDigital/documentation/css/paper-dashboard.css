@@ -6861,7 +6861,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
     text-align: center; }
   .dropdown-menu .dropdown-item {
     color: #66615b;
-    font-size: 14px;
+    font-size: 20px;
     padding: 10px 45px 10px 15px;
     clear: both;
     white-space: nowrap;

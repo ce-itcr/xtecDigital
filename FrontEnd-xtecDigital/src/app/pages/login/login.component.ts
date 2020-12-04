@@ -16,18 +16,21 @@ export class LoginComponent{
 
   //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE ADMINISTRADOR
   toAdminLayout(){
+    localStorage.setItem("accountType", "ADMIN");
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['admin_dashboard']));
   }
 
   //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE PROFESOR
   toProfessorLayout(){
+    localStorage.setItem("accountType", "PROFESSOR");
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['professor_dashboard']));
   }
 
     //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE ESTUDIANTE
   toStudentLayout(){
+    localStorage.setItem("accountType", "STUDENT");
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['student_dashboard']));
   }
