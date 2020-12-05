@@ -4,11 +4,45 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Data.SqlClient;
+using System.Web.Http.Cors;
+using System.Diagnostics;
+using Newtonsoft.Json.Linq;
 
 namespace BackEnd_xtecDigital.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200/", headers: "*", methods: "*")]
     public class ValuesController : ApiController
     {
+        static string stringconnection = @"Data Source=(localdb)\xTecDigital; Initial Catalog=xTecDigital; Integrated Security=True";
+        SqlConnection conn = new SqlConnection(stringconnection);
+
+        [HttpGet]
+        [Route("api/admin/courses")]
+        public JArray obtainCourses()
+        {
+            conn.Open();
+            string query = "SELECT CID, CName, Credits, Career FROM COURSE;";
+            SqlCommand command = new SqlCommand(query, conn);
+            SqlDataReader data = command.ExecuteReader();
+            JArray obj = new JArray();
+            while (data.Read())
+            {
+                JObject courseInfo = new JObject(
+                new JProperty("CID", data.GetValue(0).ToString()),
+                new JProperty("CName", data.GetValue(1).ToString()),
+                new JProperty("Credits", data.GetValue(2).ToString()),
+                new JProperty("Career", data.GetValue(3).ToString())
+                );
+                obj.Add(courseInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+
+        }
+
+
         // GET api/values
         public IEnumerable<string> Get()
         {
@@ -18,6 +52,17 @@ namespace BackEnd_xtecDigital.Controllers
         // GET api/values/5
         public string Get(int id)
         {
+            conn.Open();
+            System.Diagnostics.Debug.Print("La conexion a la BD: " + conn.Database + " ha sido existosa");
+            string query = "SELECT * FROM COURSE;";
+            SqlCommand command = new SqlCommand(query, conn);
+            SqlDataReader data = command.ExecuteReader();
+            while (data.Read())
+            {
+                Debug.Print(data.GetValue(1).ToString());
+            }
+            data.Close();
+            conn.Close();
             return "value";
         }
 
