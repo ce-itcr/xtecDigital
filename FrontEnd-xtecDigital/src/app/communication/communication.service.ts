@@ -20,4 +20,16 @@ export class CommunicationService {
                                                                                "birthDate": birthDate, "imgUrl": imgUrl});
    }
 
+   getAdminCourses(){
+    return this.http.get<any[]>("api/admin/courses").subscribe(res => {
+      globalThis.adminCourses = [];
+      var cont = 0;
+      while(cont < res.length){
+        globalThis.adminCourses.push(res[cont]);
+        cont++;
+      }
+    }, error => {
+      alert("ERROR");
+    });
+  }
 }

@@ -8,8 +8,8 @@ import { Observable, of as observableOf, merge, Subject } from 'rxjs';
 export interface AdminCoursesItem {
   id: string;
   name: string;
-  credits: number;
-  hours: number;
+  credits: string;
+  career: string;
   
 }
 
@@ -20,12 +20,6 @@ declare global {
 
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: AdminCoursesItem[] = [
-  {id: "MA0101", name: 'Matemática General', credits: 2, hours: 5},
-  {id: "MA1403", name: 'Matemática Discreta', credits: 4, hours: 4},
-  {id: "MA1102", name: 'Cálculo Diferencial', credits: 4, hours: 4},
-  {id: "MA1103", name: 'Cálculo y Álgebra Lineal', credits: 4, hours: 4},
-  {id: "MA2104", name: 'Cálculo Superior', credits: 4, hours: 4},
-  {id: "MA2105", name: 'Ecuaciones Diferenciales', credits: 4, hours: 4}
 ];
 
 /**

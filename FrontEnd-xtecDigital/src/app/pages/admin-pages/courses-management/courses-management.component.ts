@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/communication/communication.service';
 import {AdminCoursesDataSource} from '../../../data-tables/admin-courses/admin-courses-datasource'
 
 @Component({
@@ -11,29 +12,19 @@ import {AdminCoursesDataSource} from '../../../data-tables/admin-courses/admin-c
 
 export class CoursesManagementComponent implements OnInit {
 
-  constructor(private modal:NgbModal, private router: Router) { 
+  constructor(private modal:NgbModal, private router: Router, private CS: CommunicationService) { 
+    
   }
 
   teachDS: any;
 
   ngOnInit(): void {
-    if(globalThis.flag == 0){
-      globalThis.adminCourses = [
-        {id: "MA0101", name: 'Matemática General', credits: 2, hours: 5}
-      ];
-    }
+    
   }
 
   public deleteCourse(){
     globalThis.flag = 1;
-    globalThis.adminCourses = [
-                                {id: "MA0101", name: 'Matemática General', credits: 2, hours: 5},
-                                {id: "MA1403", name: 'Matemática Discreta', credits: 4, hours: 4},
-                                {id: "MA1102", name: 'Cálculo Diferencial', credits: 4, hours: 4},
-                                {id: "MA1103", name: 'Cálculo y Álgebra Lineal', credits: 4, hours: 4},
-                                {id: "MA2104", name: 'Cálculo Superior', credits: 4, hours: 4},
-                                {id: "MA2105", name: 'Ecuaciones Diferenciales', credits: 4, hours: 4}
-                              ];
+    this.CS.getAdminCourses();
     this.router.navigateByUrl("/admin_profile");
   }
 

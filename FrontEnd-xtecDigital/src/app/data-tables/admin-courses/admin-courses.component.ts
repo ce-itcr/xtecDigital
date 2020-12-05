@@ -16,7 +16,7 @@ export class AdminCoursesComponent implements AfterViewInit, OnInit {
   dataSource: AdminCoursesDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'credits', 'hours'];
+  displayedColumns = ['id', 'name', 'credits', 'career'];
 
   ngOnInit() {
     this.dataSource = new AdminCoursesDataSource();

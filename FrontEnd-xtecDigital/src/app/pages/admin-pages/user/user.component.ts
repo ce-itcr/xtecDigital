@@ -17,6 +17,7 @@ export class UserComponent implements OnInit{
     ngOnInit(){
       if(globalThis.flag == 1){
         this.router.navigateByUrl("/admin_coursesManagement");
+        globalThis.flag = 0;
       }
       this.userFullName = "Administrador";
       this.userImage = "../../../../assets/img/default-avatar.png"

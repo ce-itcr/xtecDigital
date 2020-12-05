@@ -15,6 +15,8 @@ import {Md5} from 'ts-md5/dist/md5';
 export class LoginComponent{
   constructor(private router: Router, private CS:CommunicationService) {
     globalThis.flag = 0;
+    globalThis.adminCourses = [];
+    this.CS.getAdminCourses();
   }
 
   //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE ADMINISTRADOR
