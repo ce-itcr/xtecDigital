@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -12,8 +13,11 @@ export class UserComponent implements OnInit{
   userFullName = "Usuario por Defecto";
   username = localStorage.getItem("current_username");
 
-  constructor(private modal:NgbModal){}
+  constructor(private modal:NgbModal, private router: Router){}
     ngOnInit(){
+      if(globalThis.flag == 1){
+        this.router.navigateByUrl("/admin_coursesManagement");
+      }
       this.userFullName = "Administrador";
       this.userImage = "../../../../assets/img/default-avatar.png"
       this.username = "admin"

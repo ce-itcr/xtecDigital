@@ -17,6 +17,11 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { HttpClientModule } from '@angular/common/http';
 import { ProfessorLayoutComponent } from './layouts/professor-layout/professor-layout.component';
 import { StudentLayoutComponent } from './layouts/student-layout/student-layout.component';
+import { CoursesManagementComponent } from './pages/admin-pages/courses-management/courses-management.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { AdminCoursesComponent } from './data-tables/admin-courses/admin-courses.component';
 
 
 @NgModule({
@@ -24,7 +29,9 @@ import { StudentLayoutComponent } from './layouts/student-layout/student-layout.
     AppComponent,
     AdminLayoutComponent,
     ProfessorLayoutComponent,
-    StudentLayoutComponent
+    StudentLayoutComponent,
+    CoursesManagementComponent,
+    AdminCoursesComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -38,7 +45,10 @@ import { StudentLayoutComponent } from './layouts/student-layout/student-layout.
     NavbarModule,
     ToastrModule.forRoot(),
     FooterModule,
-    FixedPluginModule
+    FixedPluginModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

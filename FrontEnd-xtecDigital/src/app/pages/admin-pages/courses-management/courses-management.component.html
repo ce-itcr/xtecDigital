@@ -1,0 +1,19 @@
+<div>
+    <button type="button" class="btn btn-outline-danger" (click)="deleteCourse()">Cancelar</button>
+    <admin-courses></admin-courses>
+</div>
+
+<ng-template #delete_course_modal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Eliminar Curso</h4>
+    </div>
+    <div class="modal-body" style="justify-content: center;align-items: center;display: inline-block;vertical-align: middle;padding-left: 25%;">
+      <form>
+        <input #course_id type="number" placeholder="Código del Curso">
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="deleteCourse(course_id.value)" (click)="modal.close()">Eliminar</button>
+        <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cancelar</button>
+    </div>
+  </ng-template>
