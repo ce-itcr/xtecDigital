@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommunicationService } from 'app/communication/communication.service';
+import {Md5} from 'ts-md5/dist/md5';
 
 
 @Component({
@@ -60,6 +61,11 @@ export class LoginComponent{
         alert("Nombre de usuario o contraseña incorrectos");
       }
     )
+  }
+
+  testMD5(password){
+    let e = Md5.hashStr("HI");
+    alert(password + Md5.hashStr(password));
   }
 
 }

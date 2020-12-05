@@ -19,7 +19,7 @@ export class UserComponent implements OnInit{
     this.userCarnet = "2020000000"
     this.userPassword = "student";
     this.cellPhone = "88888888";
-    this.userAddress = "Carago, Cartago, Dulce Nombre, Urbanización La Ilusión, Dulce Nombre, Central, Cartago.";
+    this.userMail = "user@gmail.com";
     this.nationality = "Costarricense";
     this.birthDate = "28-02-2020";
   }
@@ -30,7 +30,7 @@ export class UserComponent implements OnInit{
 
   img_url;
   fullName;
-  userAddress;
+  userMail;
   cellPhone;
   birthDate;
   nationality;

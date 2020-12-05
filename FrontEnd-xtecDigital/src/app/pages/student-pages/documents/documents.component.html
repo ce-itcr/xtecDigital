@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        <h6 class="card-title">{{courseName}} -> DOCUMENTOS</h6>
+      </div>
+      <div class="card-body">
+        <ul>
+          <ng-template #recursiveList let-list>
+            <li *ngFor="let item of list">
+
+              <div class="card-columns">
+                <a (click)="toSingleDocumentSection(item.title)" >
+                  <p class="card-title">{{item.title}}</p>
+                  <p class="card-title">{{item.courseId}}</p>
+                  <p class="card-title">{{item.owner}}</p>
+                </a>
+              </div>
+
+
+            </li>
+          </ng-template>
+          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: foldersStructure }"></ng-container>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
