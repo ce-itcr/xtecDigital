@@ -11,13 +11,14 @@
   </div>
   <div class="modal-body" style="justify-content: center;align-items: center;display: inline-block;vertical-align: middle;padding-left: 25%;">
     <form>
+      <input #course_id type="text" placeholder="Código">
       <input #course_name type="text" placeholder="Nombre">
       <input #course_credits type="text" placeholder="Créditos">
       <input #course_career type="text" placeholder="Carrera">
     </form>
   </div>
   <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="createCourse(course_name.value, course_credits.value, course_career.value)" (click)="modal.close()">Actualizar</button>
+      <button type="button" class="btn btn-success" (click)="createCourse(course_id.value, course_name.value, course_credits.value, course_career.value)" (click)="modal.close()">Crear</button>
       <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>

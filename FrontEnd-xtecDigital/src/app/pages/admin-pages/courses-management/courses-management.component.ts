@@ -18,22 +18,68 @@ export class CoursesManagementComponent implements OnInit {
     
   }
 
-  public createCourse(name, credits, career){
-    localStorage.setItem("flag","1");
-    this.CS.getAdminCourses();
-    this.router.navigateByUrl("/admin_profile");
+  public createCourse(courseId ,name, credits, career){
+    this.CS.createCourse(courseId, name, credits, career).subscribe(res => {
+      this.CS.getAdminCourses().subscribe(res => {
+        globalThis.flag = 1;
+        var data = []
+        var cont = 0;
+        while(cont < res.length){
+          data.push(res[cont]);
+          cont++;
+        }
+        localStorage.setItem("adminCourses",JSON.stringify(data));
+        this.router.navigateByUrl("/admin_profile");
+      }, error => {
+        alert("ERROR");
+      });
+    }, error => {
+      alert("ERROR");
+    });
+    //this.router.navigateByUrl("/admin_profile");
   }
 
   public updateCourse(courseId, name, credits, career){
-    localStorage.setItem("flag","1");
+    this.CS.updateCourse(courseId, name, credits, career).subscribe(res => {
+      this.CS.getAdminCourses().subscribe(res => {
+        globalThis.flag = 1;
+        var data = []
+        var cont = 0;
+        while(cont < res.length){
+          data.push(res[cont]);
+          cont++;
+        }
+        localStorage.setItem("adminCourses",JSON.stringify(data));
+        this.router.navigateByUrl("/admin_profile");
+      }, error => {
+        alert("ERROR");
+      })
+    }, error => {
+      alert("ERROR");
+    });
     this.CS.getAdminCourses();
-    this.router.navigateByUrl("/admin_profile");
   }
 
   public deleteCourse(courseId){
-    localStorage.setItem("flag","1");
-    this.CS.getAdminCourses();
-    this.router.navigateByUrl("/admin_profile");
+    globalThis.flag = 1;
+    this.CS.deleteCourse(courseId).subscribe(res => {
+      this.CS.getAdminCourses().subscribe(res => {
+        globalThis.flag = 1;
+        var data = []
+        var cont = 0;
+        while(cont < res.length){
+          data.push(res[cont]);
+          cont++;
+        }
+        localStorage.setItem("adminCourses",JSON.stringify(data));
+        this.router.navigateByUrl("/admin_profile");
+      }, error => {
+        alert("ERROR");
+      });
+    }, error => {
+      alert("ERROR");
+    });
+    //this.router.navigateByUrl("/admin_profile");
   }
 
   openModal(content){ this.modal.open(content,{size:'sm', centered:true});}

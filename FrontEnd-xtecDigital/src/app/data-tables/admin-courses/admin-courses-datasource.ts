@@ -17,6 +17,10 @@ export interface AdminCoursesItem {
 const EXAMPLE_DATA: AdminCoursesItem[] = [
 ];
 
+
+declare global{
+  var flag: any;
+}
 /**
  * Data source for the AdminCourses view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data

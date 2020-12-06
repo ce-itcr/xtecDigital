@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CommunicationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
    // LOGIN - INICIO DE SESIÓN | VERIFICACIÓN DE USUARIO
    public verifyUser(username: string, password: string){
@@ -20,17 +22,20 @@ export class CommunicationService {
                                                                                "birthDate": birthDate, "imgUrl": imgUrl});
    }
 
+   createCourse(id, name, credits, career){
+    return this.http.post<JSON>("api/admin/courses/add", {"id":id, "name":name, "credits":credits, "career":career});
+   }
+
+   updateCourse(id, name, credits, career){
+    return this.http.post<JSON>("api/admin/courses/update", {"id":id, "name":name, "credits":credits, "career":career});
+   }
+
+   deleteCourse(id){
+    return this.http.post<JSON>("api/admin/courses/delete", {"id":id});
+   }
+
+
    getAdminCourses(){
-    return this.http.get<any[]>("api/admin/courses").subscribe(res => {
-      var data = []
-      var cont = 0;
-      while(cont < res.length){
-        data.push(res[cont]);
-        cont++;
-      }
-      localStorage.setItem("adminCourses",JSON.stringify(data));
-    }, error => {
-      alert("ERROR");
-    });
+    return this.http.get<any[]>("api/admin/courses");
   }
 }
