@@ -32,4 +32,9 @@ export class CommunicationService {
       alert("ERROR");
     });
   }
+
+  reset(){
+    globalThis.flag = 0;
+    this.getAdminCourses();
+  }
 }

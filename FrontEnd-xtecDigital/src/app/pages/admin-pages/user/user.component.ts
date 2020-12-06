@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/communication/communication.service';
 
 @Component({
     selector: 'user-cmp',
@@ -13,11 +14,12 @@ export class UserComponent implements OnInit{
   userFullName = "Usuario por Defecto";
   username = localStorage.getItem("current_username");
 
-  constructor(private modal:NgbModal, private router: Router){}
+  constructor(private modal:NgbModal, private router: Router, private CS: CommunicationService){
+  }
     ngOnInit(){
       if(globalThis.flag == 1){
         this.router.navigateByUrl("/admin_coursesManagement");
-        globalThis.flag = 0;
+        this.CS.reset();
       }
       this.userFullName = "Administrador";
       this.userImage = "../../../../assets/img/default-avatar.png"

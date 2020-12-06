@@ -13,7 +13,7 @@ import {AdminCoursesDataSource} from '../../../data-tables/admin-courses/admin-c
 export class CoursesManagementComponent implements OnInit {
 
   constructor(private modal:NgbModal, private router: Router, private CS: CommunicationService) { 
-    
+    this.CS.reset();
   }
 
   teachDS: any;
@@ -22,7 +22,19 @@ export class CoursesManagementComponent implements OnInit {
     
   }
 
-  public deleteCourse(){
+  public createCourse(name, credits, career){
+    globalThis.flag = 1;
+    this.CS.getAdminCourses();
+    this.router.navigateByUrl("/admin_profile");
+  }
+
+  public updateCourse(courseId, name, credits, career){
+    globalThis.flag = 1;
+    this.CS.getAdminCourses();
+    this.router.navigateByUrl("/admin_profile");
+  }
+
+  public deleteCourse(courseId){
     globalThis.flag = 1;
     this.CS.getAdminCourses();
     this.router.navigateByUrl("/admin_profile");
