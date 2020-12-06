@@ -29,10 +29,10 @@ namespace BackEnd_xtecDigital.Controllers
             while (data.Read())
             {
                 JObject courseInfo = new JObject(
-                new JProperty("CID", data.GetValue(0).ToString()),
-                new JProperty("CName", data.GetValue(1).ToString()),
-                new JProperty("Credits", data.GetValue(2).ToString()),
-                new JProperty("Career", data.GetValue(3).ToString())
+                new JProperty("id", data.GetValue(0).ToString()),
+                new JProperty("name", data.GetValue(1).ToString()),
+                new JProperty("credits", data.GetValue(2).ToString()),
+                new JProperty("career", data.GetValue(3).ToString())
                 );
                 obj.Add(courseInfo);
             }
