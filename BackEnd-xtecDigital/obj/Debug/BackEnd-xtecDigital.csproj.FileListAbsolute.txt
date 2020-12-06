@@ -284,3 +284,7 @@ C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\Sys
 C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\System.Text.Encodings.Web.xml
 C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\System.Web.Http.Cors.xml
+C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\mongocrypt.dll
+C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\snappy32.dll
+C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\snappy64.dll
+C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\libzstd.dll

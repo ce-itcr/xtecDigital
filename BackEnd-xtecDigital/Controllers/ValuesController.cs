@@ -42,6 +42,71 @@ namespace BackEnd_xtecDigital.Controllers
 
         }
 
+        [HttpPost]
+        [Route("api/admin/courses/add")]
+        public IHttpActionResult addCourse([FromBody] JObject courseInfo)
+        {
+            conn.Open();
+            try
+            {
+                string query = "INSERT INTO COURSE VALUES ('" + courseInfo["CID"] + "', '" + courseInfo["CName"] + 
+                    "', " + courseInfo["Credits"] + ", '" + courseInfo["Career"] + "');";
+
+                SqlCommand insertRequest = new SqlCommand(query, conn);
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Curso agregado");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/admin/courses/delete")]
+        public IHttpActionResult deleteCourse([FromBody] JObject courseInfo)
+        {
+            try
+            {
+                conn.Open();
+                string query = "DELETE FROM CGROUPS WHERE CID='" + courseInfo["CID"] + "');";
+                SqlCommand deleteRequest = new SqlCommand(query, conn);
+                deleteRequest.ExecuteNonQuery();
+
+                query = "DELETE FROM COURSE WHERE CID='" + courseInfo["CID"] + "');";
+                deleteRequest = new SqlCommand(query, conn);
+                deleteRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Curso eliminado");
+            }
+            catch
+            {
+                return BadRequest("Error al eliminar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/admin/courses/update")]
+        public IHttpActionResult updateCourse([FromBody] JObject courseInfo)
+        { 
+            conn.Open();
+            int flag = 0;
+            string query = "UPDATE COURSE SET CName='" + courseInfo["CName"] + "', Credits=" + courseInfo["Credits"] + 
+                ", Career='" + courseInfo["Career"] + "' WHERE CID='" + courseInfo["CID"] + "');";
+            SqlCommand updateRequest = new SqlCommand(query, conn);
+            flag = updateRequest.ExecuteNonQuery();
+
+            if(flag == 1)
+            {
+                return Ok("Curso actualizado");
+            }
+            else
+            {
+                return BadRequest("Course ID not found");
+            }
+        }
+
 
         // GET api/values
         public IEnumerable<string> Get()
