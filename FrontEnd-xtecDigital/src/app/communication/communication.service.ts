@@ -22,19 +22,15 @@ export class CommunicationService {
 
    getAdminCourses(){
     return this.http.get<any[]>("api/admin/courses").subscribe(res => {
-      globalThis.adminCourses = [];
+      var data = []
       var cont = 0;
       while(cont < res.length){
-        globalThis.adminCourses.push(res[cont]);
+        data.push(res[cont]);
         cont++;
       }
+      localStorage.setItem("adminCourses",JSON.stringify(data));
     }, error => {
       alert("ERROR");
     });
-  }
-
-  reset(){
-    globalThis.flag = 0;
-    this.getAdminCourses();
   }
 }

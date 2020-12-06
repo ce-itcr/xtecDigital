@@ -17,9 +17,9 @@ export class UserComponent implements OnInit{
   constructor(private modal:NgbModal, private router: Router, private CS: CommunicationService){
   }
     ngOnInit(){
-      if(globalThis.flag == 1){
+      if(localStorage.getItem("flag") == "1"){
         this.router.navigateByUrl("/admin_coursesManagement");
-        this.CS.reset();
+        localStorage.setItem("flag","0");
       }
       this.userFullName = "Administrador";
       this.userImage = "../../../../assets/img/default-avatar.png"

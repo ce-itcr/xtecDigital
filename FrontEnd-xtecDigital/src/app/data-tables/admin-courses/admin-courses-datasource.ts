@@ -13,11 +13,6 @@ export interface AdminCoursesItem {
   
 }
 
-declare global {
-  var adminCourses: any[];
-  var flag: number;
-}
-
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: AdminCoursesItem[] = [
 ];
@@ -28,7 +23,8 @@ const EXAMPLE_DATA: AdminCoursesItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class AdminCoursesDataSource extends DataSource<AdminCoursesItem> {
-  data: AdminCoursesItem[] = globalThis.adminCourses;
+  localData = localStorage.getItem("adminCourses");
+  data: AdminCoursesItem[] = this.localData ? JSON.parse(this.localData) : [];
   paginator: MatPaginator;
   sort: MatSort;
 
