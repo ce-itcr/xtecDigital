@@ -49,8 +49,8 @@ namespace BackEnd_xtecDigital.Controllers
             conn.Open();
             try
             {
-                string query = "INSERT INTO COURSE VALUES ('" + courseInfo["CID"] + "', '" + courseInfo["CName"] + 
-                    "', " + courseInfo["Credits"] + ", '" + courseInfo["Career"] + "');";
+                string query = "INSERT INTO COURSE VALUES ('" + courseInfo["id"] + "', '" + courseInfo["name"] + 
+                    "', " + courseInfo["credits"] + ", '" + courseInfo["career"] + "');";
 
                 SqlCommand insertRequest = new SqlCommand(query, conn);
                 insertRequest.ExecuteNonQuery();
@@ -70,11 +70,11 @@ namespace BackEnd_xtecDigital.Controllers
             try
             {
                 conn.Open();
-                string query = "DELETE FROM CGROUPS WHERE CID='" + courseInfo["CID"] + "');";
+                string query = "DELETE FROM CGROUP WHERE CID='" + courseInfo["CID"] + "';";
                 SqlCommand deleteRequest = new SqlCommand(query, conn);
                 deleteRequest.ExecuteNonQuery();
 
-                query = "DELETE FROM COURSE WHERE CID='" + courseInfo["CID"] + "');";
+                query = "DELETE FROM COURSE WHERE CID='" + courseInfo["id"] + "';";
                 deleteRequest = new SqlCommand(query, conn);
                 deleteRequest.ExecuteNonQuery();
                 conn.Close();
@@ -92,8 +92,8 @@ namespace BackEnd_xtecDigital.Controllers
         { 
             conn.Open();
             int flag = 0;
-            string query = "UPDATE COURSE SET CName='" + courseInfo["CName"] + "', Credits=" + courseInfo["Credits"] + 
-                ", Career='" + courseInfo["Career"] + "' WHERE CID='" + courseInfo["CID"] + "');";
+            string query = "UPDATE COURSE SET CName='" + courseInfo["name"] + "', Credits=" + courseInfo["credits"] + 
+                ", Career='" + courseInfo["career"] + "' WHERE CID='" + courseInfo["id"] + "';";
             SqlCommand updateRequest = new SqlCommand(query, conn);
             flag = updateRequest.ExecuteNonQuery();
 
