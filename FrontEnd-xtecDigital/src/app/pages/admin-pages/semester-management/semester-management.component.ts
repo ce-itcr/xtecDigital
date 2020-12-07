@@ -19,6 +19,7 @@ export class SemesterManagementComponent implements OnInit {
   number = "";
 
   cont = 0;
+  closeModal = false;
 
   semesterCourses = [];
   semesterData = [];
@@ -29,7 +30,13 @@ export class SemesterManagementComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openModal(content){ this.modal.open(content,{size:'sm', centered:true});}
+  openModal(content){ 
+    if(this.closeModal){
+      this.closeModal = false;
+    }else{
+      this.modal.open(content,{size:'sm', centered:true});
+    }
+  }
 
   semesterInfo(year, period){
     this.semesterYear = year;
@@ -40,6 +47,7 @@ export class SemesterManagementComponent implements OnInit {
     this.cont = 0;
     if(this.includes(course)){
       this.deleteCourses(course);
+      this.closeModal = true;
     }else{
       this.selectedCourse = course;
       this.modal.activeInstances
@@ -86,8 +94,6 @@ export class SemesterManagementComponent implements OnInit {
 
   includes(courseCode){
     while(this.cont < this.semesterCourses.length){
-      alert(courseCode);
-      alert(this.semesterCourses[this.cont][0]);
       if(courseCode == this.semesterCourses[this.cont][0]){
         return true;
       }
