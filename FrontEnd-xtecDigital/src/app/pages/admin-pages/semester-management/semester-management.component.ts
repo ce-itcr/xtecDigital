@@ -18,6 +18,8 @@ export class SemesterManagementComponent implements OnInit {
   teacher = [];
   number = "";
 
+  cont = 0;
+
   semesterCourses = [];
   semesterData = [];
 
@@ -34,11 +36,18 @@ export class SemesterManagementComponent implements OnInit {
     this.semesterPeriod = period;
   }
 
-  courseOnCheck(item){
-    this.selectedCourse = item;
+  courseOnCheck(course){
+    this.cont = 0;
+    if(this.includes(course)){
+      this.deleteCourses(course);
+    }else{
+      this.selectedCourse = course;
+      this.openModal("addCourseInfo_semester_modal");
+    }
   }
 
   groupInfo(teacher1, teacher2, number){
+    this.teacher = [];
     if((teacher1 != "" || teacher2 != "") && number != ""){
       if(teacher2 == ""){
         this.teacher.push(teacher1);
@@ -73,10 +82,27 @@ export class SemesterManagementComponent implements OnInit {
   }
 
   erase(){
-    this.selectedCourse = "";
     this.selectedStudents = [];
-    this.teacher = [];
-    this.number = "";
   }
+
+  includes(courseCode){
+    while(this.cont < this.semesterCourses.length){
+      alert(courseCode);
+      alert(this.semesterCourses[this.cont][0]);
+      if(courseCode == this.semesterCourses[this.cont][0]){
+        return true;
+      }
+      this.cont++;
+    }
+    return false;
+  }
+
+  deleteCourses(course){
+    while(this.includes(course)){
+      this.semesterCourses = this.semesterCourses.slice(0,this.cont).concat(this.semesterCourses.slice(this.cont+1,this.semesterCourses.length));
+      this.cont = 0;
+    }
+  }
+
 }
 //this.selectedCourses = this.selectedCourses.slice(0,slice).concat(this.selectedCourses.slice(slice+1,this.selectedCourses.length));
