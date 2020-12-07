@@ -425,3 +425,7 @@ C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\obj\Debug
 C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\obj\Debug\BackEnd-xtecDigital.csproj.CopyComplete
 C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\obj\Debug\BackEnd-xtecDigital.dll
 C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\obj\Debug\BackEnd-xtecDigital.pdb
+C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\mongocrypt.dll
+C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\snappy32.dll
+C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\snappy64.dll
+C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\libzstd.dll

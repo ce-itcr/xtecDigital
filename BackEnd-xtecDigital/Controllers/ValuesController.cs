@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Web.Http.Cors;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
+using System.Data;
 
 namespace BackEnd_xtecDigital.Controllers
 {
@@ -46,13 +47,16 @@ namespace BackEnd_xtecDigital.Controllers
         [Route("api/admin/courses/add")]
         public IHttpActionResult addCourse([FromBody] JObject courseInfo)
         {
-            conn.Open();
+
             try
             {
-                string query = "INSERT INTO COURSE VALUES ('" + courseInfo["id"] + "', '" + courseInfo["name"] + 
-                    "', " + courseInfo["credits"] + ", '" + courseInfo["career"] + "');";
-
-                SqlCommand insertRequest = new SqlCommand(query, conn);
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddCourse @CID, @CName, @Credits, @Career";
+                insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = courseInfo["id"];
+                insertRequest.Parameters.Add("@CName", SqlDbType.VarChar, 50).Value = courseInfo["name"];
+                insertRequest.Parameters.Add("@Credits", SqlDbType.Int).Value = (int)courseInfo["credits"];
+                insertRequest.Parameters.Add("@Career", SqlDbType.VarChar, 50).Value = courseInfo["career"];
                 insertRequest.ExecuteNonQuery();
                 conn.Close();
                 return Ok("Curso agregado");
@@ -70,12 +74,9 @@ namespace BackEnd_xtecDigital.Controllers
             try
             {
                 conn.Open();
-                string query = "DELETE FROM CGROUP WHERE CID='" + courseInfo["CID"] + "';";
-                SqlCommand deleteRequest = new SqlCommand(query, conn);
-                deleteRequest.ExecuteNonQuery();
-
-                query = "DELETE FROM COURSE WHERE CID='" + courseInfo["id"] + "';";
-                deleteRequest = new SqlCommand(query, conn);
+                SqlCommand deleteRequest = conn.CreateCommand();
+                deleteRequest.CommandText = "EXEC sp_DeleteCourse @CID";
+                deleteRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = courseInfo["id"];
                 deleteRequest.ExecuteNonQuery();
                 conn.Close();
                 return Ok("Curso eliminado");
@@ -89,21 +90,22 @@ namespace BackEnd_xtecDigital.Controllers
         [HttpPost]
         [Route("api/admin/courses/update")]
         public IHttpActionResult updateCourse([FromBody] JObject courseInfo)
-        { 
+        {
+            try {
             conn.Open();
-            int flag = 0;
-            string query = "UPDATE COURSE SET CName='" + courseInfo["name"] + "', Credits=" + courseInfo["credits"] + 
-                ", Career='" + courseInfo["career"] + "' WHERE CID='" + courseInfo["id"] + "';";
-            SqlCommand updateRequest = new SqlCommand(query, conn);
-            flag = updateRequest.ExecuteNonQuery();
-
-            if(flag == 1)
-            {
+                SqlCommand updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_UpdateCourse @CID, @CName, @Credits, @Career";
+                updateRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = courseInfo["id"];
+                updateRequest.Parameters.Add("@CName", SqlDbType.VarChar, 50).Value = courseInfo["name"];
+                updateRequest.Parameters.Add("@Credits", SqlDbType.Int).Value = courseInfo["credits"];
+                updateRequest.Parameters.Add("@Career", SqlDbType.VarChar, 50).Value = courseInfo["career"];
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
                 return Ok("Curso actualizado");
             }
-            else
+            catch
             {
-                return BadRequest("Course ID not found");
+                return BadRequest("Error al eliminar");
             }
         }
 
