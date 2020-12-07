@@ -22,6 +22,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { AdminCoursesComponent } from './data-tables/admin-courses/admin-courses.component';
+import { SemesterManagementComponent } from './pages/admin-pages/semester-management/semester-management.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { AdminCoursesComponent } from './data-tables/admin-courses/admin-courses
     ProfessorLayoutComponent,
     StudentLayoutComponent,
     CoursesManagementComponent,
-    AdminCoursesComponent
+    AdminCoursesComponent,
+    SemesterManagementComponent
   ],
   imports: [
     BrowserAnimationsModule,

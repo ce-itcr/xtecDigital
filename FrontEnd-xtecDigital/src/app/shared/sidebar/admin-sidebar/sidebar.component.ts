@@ -12,6 +12,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/admin_dashboard',     title: 'Inicio',         icon:'nc-bank',       class: '' },
     { path: '/admin_profile',          title: 'Perfil',      icon:'nc-single-02',  class: '' },
     { path: '/admin_coursesManagement',          title: 'Cursos',      icon:'nc-single-02',  class: '' },
+    { path: '/admin_semesterManagement',          title: 'Semestres',      icon:'nc-single-02',  class: '' }
 ];
 
 @Component({
