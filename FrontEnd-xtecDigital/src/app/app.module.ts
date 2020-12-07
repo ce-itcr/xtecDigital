@@ -18,11 +18,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfessorLayoutComponent } from './layouts/professor-layout/professor-layout.component';
 import { StudentLayoutComponent } from './layouts/student-layout/student-layout.component';
 import { CoursesManagementComponent } from './pages/admin-pages/courses-management/courses-management.component';
+import { SemesterManagementComponent } from './pages/admin-pages/semester-management/semester-management.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { AdminCoursesComponent } from './data-tables/admin-courses/admin-courses.component';
-import { SemesterManagementComponent } from './pages/admin-pages/semester-management/semester-management.component';
+import { AdminSemestersComponent } from './data-tables/admin-semesters/admin-semesters.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { SemesterManagementComponent } from './pages/admin-pages/semester-manage
     StudentLayoutComponent,
     CoursesManagementComponent,
     AdminCoursesComponent,
+    AdminSemestersComponent,
     SemesterManagementComponent
   ],
   imports: [

@@ -42,10 +42,9 @@ export class SemesterManagementComponent implements OnInit {
       this.deleteCourses(course);
     }else{
       this.selectedCourse = course;
-      this.openModal("addCourseInfo_semester_modal");
+      this.modal.activeInstances
     }
   }
-
   groupInfo(teacher1, teacher2, number){
     this.teacher = [];
     if((teacher1 != "" || teacher2 != "") && number != ""){

@@ -1,0 +1,31 @@
+<div class="mat-elevation-z8">
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
+    <!-- year Column -->
+    <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Año</th>
+      <td mat-cell *matCellDef="let row">{{row.year}}</td>
+    </ng-container>
+
+    <!-- period Column -->
+    <ng-container matColumnDef="period">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Periodo</th>
+      <td mat-cell *matCellDef="let row">{{row.period}}</td>
+    </ng-container>
+
+    <!-- courses Column -->
+    <ng-container matColumnDef="courses">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Cursos impartidos</th>
+      <td mat-cell *matCellDef="let row">{{row.courses}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator #paginator
+      [length]="dataSource?.data.length"
+      [pageIndex]="0"
+      [pageSize]="50"
+      [pageSizeOptions]="[25, 50, 100, 250]">
+  </mat-paginator>
+</div>
