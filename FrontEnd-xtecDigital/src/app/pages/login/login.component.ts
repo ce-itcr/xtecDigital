@@ -36,7 +36,7 @@ export class LoginComponent{
   toAdminLayout(){
     localStorage.setItem("accountType", "ADMIN");
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['admin_dashboard']));
+    this.router.navigate(['admin_semesterManagement']));
   }
 
   //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE PROFESOR

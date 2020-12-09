@@ -1,13 +1,17 @@
+<h3 class="card-title"><b>Vista Administrador > Inicializar Semestre</b> </h3>
+<h4><b>Descripción: </b>El sistema permite crear semestres, estableciendo cursos, grupos, profesores y estudiantes asociados.</h4>
 <div>
   <admin-semesters></admin-semesters>
-  <button type="button" class="btn btn-outline-danger" (click)="openModal(create_semester_modal)">Crear</button>
+  <div style="margin-left: auto;margin-right: auto; display: block;">
+    <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" (click)="openModal(create_semester_modal)">Inicializar Semestre</button>
+  </div>
 </div>
-  
+
 <ng-template #create_semester_modal let-modal>
   <div class="modal-header">
       <h4 class="modal-title">Crear Semestre</h4>
   </div>
-  <div class="modal-body" style="justify-content: center;align-items: center;display: inline-block;vertical-align: middle;padding-left: 25%;">
+  <div class="modal-body" >
     <form>
       <div class="form-group mb-3">
           Año: <select #year name="period" class="form-control rounded-pill border-0 shadow-sm px-4">
@@ -34,7 +38,7 @@
   </div>
   <div class="modal-footer">
       <button type="button" class="btn btn-success" (click)="semesterInfo(year.value, period.value)" (click)="openModal(addCourses_semester_modal)" (click)="modal.close()">Avanzar</button>
-      <button type="button" class="btn btn-outline-danger" (click)="erase()" (click)="modal.close()">Cancelar</button>
+      <button type="button" class="btn btn-warning" (click)="erase()" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>
 
@@ -42,7 +46,7 @@
   <div class="modal-header">
       <h4 class="modal-title">Ingrese los cursos a impartir</h4>
   </div>
-  <div class="modal-body" style="justify-content: center;align-items: center;display: inline-block;vertical-align: middle;padding-left: 25%;">
+  <div class="modal-body" >
     <form>
       <div fxFlex="30%" *ngFor="let item of courses">
           <input #ref type="checkbox" id="{{item[0]}}" name="{{item[1]}}" value="{{item[0]}}" (click)="courseOnCheck(ref.value)" (click)="openModal(addCourseInfo_semester_modal)">
@@ -52,7 +56,7 @@
   </div>
   <div class="modal-footer">
       <button type="submit" class="btn btn-success" (click)="createSemester()" (click)="modal.close()">Finalizar</button>
-      <button type="button" class="btn btn-outline-danger" (click)="erase()" (click)="modal.close()">Cancelar</button>
+      <button type="button" class="btn btn-warning" (click)="erase()" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>
 
@@ -60,7 +64,7 @@
   <div class="modal-header">
       <h4 class="modal-title">Ingrese datos para el curso</h4>
   </div>
-  <div class="modal-body" style="justify-content: center;align-items: center;display: inline-block;vertical-align: middle;padding-left: 25%;">
+  <div class="modal-body" >
     <form>
       <input #number type="text" placeholder="Número de grupo">
       <input #teacher1 type="text" placeholder="Profesor 1">
@@ -69,7 +73,7 @@
   </div>
   <div class="modal-footer">
       <button type="submit" class="btn btn-success" (click)="groupInfo(teacher1.value, teacher2.value, number.value)" (click)="openModal(addStudents_semester_modal)" (click)="modal.close()">Avanzar</button>
-      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cancelar</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>
 
@@ -77,7 +81,7 @@
   <div class="modal-header">
       <h4 class="modal-title">Ingrese los estudiantes para el grupo</h4>
   </div>
-  <div class="modal-body" style="justify-content: center;align-items: center;display: inline-block;vertical-align: middle;padding-left: 25%;">
+  <div class="modal-body" >
     <form>
       <div fxFlex="30%" *ngFor="let item of students">
           <input #ref type="checkbox" id="{{item}}" name="{{item}}" value="{{item}}" (click)="studentsOnCheck(ref.value)">
@@ -88,6 +92,6 @@
   <div class="modal-footer">
       <button type="submit" class="btn btn-success" (click)="addNewCourse()" (click)="modal.close()">Crear curso</button>
       <button type="submit" class="btn btn-success" (click)="addNewCourse()" (click)="openModal(addCourseInfo_semester_modal)" (click)="modal.close()">Añadir otro grupo</button>
-      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cancelar</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>

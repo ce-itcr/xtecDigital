@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { AdminLayoutRoutes } from './admin-layout.routing';
-
-import { DashboardComponent }       from '../../pages/admin-pages/dashboard/dashboard.component';
 import { UserComponent }            from '../../pages/admin-pages/user/user.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -18,8 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule
   ],
   declarations: [
-    DashboardComponent,
-    UserComponent,
+    UserComponent
   ]
 })
 

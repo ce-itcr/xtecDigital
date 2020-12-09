@@ -1,15 +1,26 @@
-<div>
-  <button type="button" class="btn btn-outline-danger" (click)="openModal(create_course_modal)">Crear</button>
-  <button type="button" class="btn btn-outline-danger" (click)="openModal(update_course_modal)">Actualizar</button>
-  <button type="button" class="btn btn-outline-danger" (click)="openModal(delete_course_modal)">Eliminar</button>
-  <admin-courses></admin-courses>
+<h3 class="card-title"><b>Vista Administrador > Gestión de Cursos</b> </h3>
+<h4><b>Descripción: </b>El sistema permite gestionar la lista de cursos genérica que utiliza el sistema.</h4>
+
+<div class="row">
+  <div class="col-lg-4 col-md-4 col-sm-6">
+    <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(create_course_modal)">Crear </button>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-6">
+    <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(update_course_modal)">Actualizar </button>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-6">
+      <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(delete_course_modal)">Eliminar </button>
+  </div>
 </div>
+
+<admin-courses></admin-courses>
+
 
 <ng-template #create_course_modal let-modal>
   <div class="modal-header">
       <h4 class="modal-title">Crear Curso</h4>
   </div>
-  <div class="modal-body" style="justify-content: center;align-items: center;display: inline-block;vertical-align: middle;padding-left: 25%;">
+  <div class="modal-body">
     <form>
       <input #course_id type="text" placeholder="Código">
       <input #course_name type="text" placeholder="Nombre">
@@ -19,7 +30,7 @@
   </div>
   <div class="modal-footer">
       <button type="button" class="btn btn-success" (click)="createCourse(course_id.value, course_name.value, course_credits.value, course_career.value)" (click)="modal.close()">Crear</button>
-      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cancelar</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>
 
@@ -27,7 +38,7 @@
   <div class="modal-header">
       <h4 class="modal-title">Actualizar Curso</h4>
   </div>
-  <div class="modal-body" style="justify-content: center;align-items: center;display: inline-block;vertical-align: middle;padding-left: 25%;">
+  <div class="modal-body" >
     <form>
       <input #course_id type="text" placeholder="Código">
       <input #course_name type="text" placeholder="Nombre">
@@ -37,7 +48,7 @@
   </div>
   <div class="modal-footer">
       <button type="button" class="btn btn-success" (click)="updateCourse(course_id.value, course_name.value, course_credits.value, course_career.value)" (click)="modal.close()">Actualizar</button>
-      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cancelar</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>
 
@@ -45,13 +56,13 @@
     <div class="modal-header">
         <h4 class="modal-title">Eliminar Curso</h4>
     </div>
-    <div class="modal-body" style="justify-content: center;align-items: center;display: inline-block;vertical-align: middle;padding-left: 25%;">
+    <div class="modal-body" >
       <form>
         <input #course_id type="text" placeholder="Código del Curso">
       </form>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-success" (click)="deleteCourse(course_id.value)" (click)="modal.close()">Eliminar</button>
-        <button type="button" class="btn btn-outline-danger" (click)="modal.close()">Cancelar</button>
+        <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
     </div>
   </ng-template>

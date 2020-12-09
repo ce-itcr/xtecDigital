@@ -13,8 +13,8 @@ export const AppRoutes: Routes = [
 
 
   {
-    path: 'dashboard',
-    redirectTo: 'dashboard',
+    path: 'admin_semesterManagement',
+    redirectTo: 'admin_semesterManagement',
     pathMatch: 'full',
     runGuardsAndResolvers: 'always'
   }, {
