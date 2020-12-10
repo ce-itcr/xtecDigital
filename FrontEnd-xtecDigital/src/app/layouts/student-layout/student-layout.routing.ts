@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AssignmentsComponent } from 'app/pages/student-pages/assignments/assignments.component';
 
 import { CourseComponent } from 'app/pages/student-pages/course/course.component';
 import { CoursesComponent } from 'app/pages/student-pages/courses/courses.component';
@@ -15,5 +16,6 @@ export const StudentLayoutRoutes: Routes = [
     { path: 'course',                 component: CourseComponent },
     { path: 'news',                   component: NewsComponent },
     { path: 'student_documents',      component: DocumentsComponent },
+    { path: 'student_assignments',     component: AssignmentsComponent},
     { path: 'student_single_document',       component: DocumentComponent }
 ];

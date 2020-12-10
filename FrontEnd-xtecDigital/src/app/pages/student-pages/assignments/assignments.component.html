@@ -1,0 +1,22 @@
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title"  style="color: #14447c;">{{courseName}} -> EVALUACIONES</h1>
+      </div>
+
+      <div class="card-body">
+        <div fxflex="30%" *ngFor="let item of assignments">
+
+          <div class="text-muted card-columns">
+            <a (click)="populateDocs(item[0])"><p><i class="fa fa-folder"></i>  {{item[0]}} </p></a>
+            <p>{{singleAssignment}}</p>
+            <!--<p>{{item[1]}}</p>-->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
