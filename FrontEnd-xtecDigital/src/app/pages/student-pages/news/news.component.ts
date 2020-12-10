@@ -16,10 +16,12 @@ export class NewsComponent implements OnInit{
     this.newBody = localStorage.getItem("currentNewsBody");
     this.newTitle = localStorage.getItem("currentNewsTitle");
     this.newDate = localStorage.getItem("currentNewsDate");
+    this.newAuthor = localStorage.getItem("currentNewsAuthor");
   }
 
   newBody;
   newTitle;
   newDate;
+  newAuthor;
 
 }

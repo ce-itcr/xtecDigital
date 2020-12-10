@@ -15,7 +15,7 @@
       <div class="card-footer">
         <hr>
         <div>
-          <button class="btn btn-primary btn-block text-uppercase"  (click)="openModal(close_this)">Cerrar Sesión</button>
+          <button class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"  (click)="openModal(close_this)">Cerrar Sesión</button>
         </div>
       </div>
     </div>
@@ -80,15 +80,8 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12">
-              <span style="color:red;" *ngIf="message">{{message}}</span>
-              <input #file type="file" accept='image/*'  (change)="preview(file.files)" />
-              <img [src]="imgURL" style="width: 100px;" class="avatar border-gray" *ngIf="imgURL">
-            </div>
-          </div>
-          <div class="row">
             <div class="update ml-auto mr-auto">
-              <button type="button" (click)="updateData(password.value, phone.value, address.value, file.value)" class="btn btn-primary btn-round">Actualizar Perfil</button>
+              <button type="button" (click)="updateData(password.value, phone.value, address.value)" class="btn btn-primary btn-round">Actualizar Perfil</button>
             </div>
           </div>
         </form>
@@ -96,24 +89,6 @@
     </div>
   </div>
 
-
-  <div class="fixed-plugin">
-    <div class="show-dropdown" ngbDropdown>
-        <a href="javascript:void(0)" ngbDropdownToggle id="dropdownConfig">
-          <i class="fa fa-cog fa-2x"> </i>
-        </a>
-        <ul class="" ngbDropdownMenu aria-labelledby="dropdownConfig">
-            <li class="header-title">Sidebar Background</li>
-            <li class="adjustments-line text-center">
-                <a href="javascript:void(0)" class="switch-trigger background-color">
-                    <span class="badge filter badge-light active" [ngClass]="{'active':sidebarColor==='white'}" (click)="changeSidebarColor('white')"></span>
-                    <span class="badge filter badge-dark" [ngClass]="{'active':sidebarColor==='black'}" (click)="changeSidebarColor('black')"></span>
-                </a>
-            </li>
-
-        </ul>
-    </div>
-</div>
 
   <ng-template #close_this let-modal>
     <div class="modal-header">
@@ -126,7 +101,7 @@
   </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Si</button>
-        <button type="button" class="btn btn-outline-danger" (click)="modal.close()">No</button>
+        <button type="button" class="btn btn-warning" (click)="modal.close()">No</button>
     </div>
   </ng-template>
 

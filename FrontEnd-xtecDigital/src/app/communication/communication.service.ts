@@ -34,7 +34,6 @@ export class CommunicationService {
     return this.http.post<JSON>("api/admin/courses/delete", {"id":id});
    }
 
-
    getAdminCourses(){
     return this.http.get<any[]>("api/admin/courses");
   }
