@@ -9,6 +9,7 @@ using System.Web.Http.Cors;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using System.Data;
+using System.Collections.Generic;
 
 namespace BackEnd_xtecDigital.Controllers
 {
@@ -23,9 +24,10 @@ namespace BackEnd_xtecDigital.Controllers
         public JArray obtainCourses()
         {
             conn.Open();
-            string query = "SELECT CID, CName, Credits, Career FROM COURSE;";
-            SqlCommand command = new SqlCommand(query, conn);
-            SqlDataReader data = command.ExecuteReader();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_GetCourse";
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
             JArray obj = new JArray();
             while (data.Read())
             {
@@ -107,6 +109,55 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 return BadRequest("Error al eliminar");
             }
+        }
+
+        [HttpGet]
+        [Route("api/admin/semester")]
+        public JArray obtainSemester()
+        {
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_GetSemester";
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            JArray obj = new JArray();
+            List<string[]> arr = new List<string[]>();
+            List<string> exists = new List<string>();
+            int i = 0;
+            while (data.Read())
+            {
+                string current = data.GetValue(0).ToString() + data.GetValue(1).ToString();
+                if (exists.Contains(current))
+                {
+                    foreach(var item in arr)
+                    {
+                        if (data.GetValue(0).ToString() == item[0] && data.GetValue(1).ToString() == item[1])
+                        {
+                            item[2] += " ," + data.GetValue(2).ToString();
+                        }
+                    }
+                }
+                else
+                {
+                    string[] temp = {data.GetValue(0).ToString(), data.GetValue(1).ToString(), data.GetValue(2).ToString()};
+                    arr.Add(temp);
+                    exists.Add(current);
+                    i++;
+                }
+            }
+            foreach (var item in arr)
+            {
+                JObject courseInfo = new JObject(
+                new JProperty("year", item[0].Substring(6, 4)),
+                new JProperty("period", item[1]),
+                new JProperty("course", item[2])
+                );
+                obj.Add(courseInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+
         }
 
 
