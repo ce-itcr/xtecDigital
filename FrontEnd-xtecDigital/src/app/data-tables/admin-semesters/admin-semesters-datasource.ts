@@ -8,17 +8,17 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 export interface AdminSemestersItem {
   year: string;
   period: string;
-  courses: string;
+  course: string;
 }
 
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: AdminSemestersItem[] = [
-  {year: "2020", period: '1', courses: 'CE3105, EL2104'},
-  {year: "2020", period: '2', courses: 'CE3105, EL2104'},
-  {year: "2020", period: 'V', courses: 'CE3105, EL2104'},
-  {year: "2021", period: '1', courses: 'CE3105, EL2104'},
-  {year: "2021", period: '2', courses: 'CE3105, EL2104'},
-  {year: "2021", period: 'V', courses: 'CE3105, EL2104'},
+  {year: "2020", period: '1', course: 'CE3105, EL2104'},
+  {year: "2020", period: '2', course: 'CE3105, EL2104'},
+  {year: "2020", period: 'V', course: 'CE3105, EL2104'},
+  {year: "2021", period: '1', course: 'CE3105, EL2104'},
+  {year: "2021", period: '2', course: 'CE3105, EL2104'},
+  {year: "2021", period: 'V', course: 'CE3105, EL2104'},
 ];
 
 /**
@@ -27,7 +27,8 @@ const EXAMPLE_DATA: AdminSemestersItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class AdminSemestersDataSource extends DataSource<AdminSemestersItem> {
-  data: AdminSemestersItem[] = EXAMPLE_DATA;
+  localData = localStorage.getItem("adminSemesters");
+  data: AdminSemestersItem[] = this.localData ? JSON.parse(this.localData) : [];
   paginator: MatPaginator;
   sort: MatSort;
 

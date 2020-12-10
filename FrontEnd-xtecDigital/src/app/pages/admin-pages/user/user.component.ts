@@ -31,6 +31,9 @@ export class UserComponent implements OnInit{
       if(globalThis.flag == 1){
         this.router.navigateByUrl("/admin_coursesManagement");
         globalThis.flag = 0;
+      }else if(globalThis.flag == 2){
+        this.router.navigateByUrl("/admin_semestersManagement");
+        globalThis.flag = 0;
       }
     }
 
