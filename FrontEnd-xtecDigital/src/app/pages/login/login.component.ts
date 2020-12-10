@@ -15,7 +15,7 @@ import {Md5} from 'ts-md5/dist/md5';
 export class LoginComponent{
   constructor(private router: Router, private CS:CommunicationService) {
     localStorage.setItem("flag","0");
-    this.CS.getAdminCourses().subscribe(res => {
+    /*this.CS.getAdminCourses().subscribe(res => {
       this.CS.getAdminCourses().subscribe(res => {
         var data = []
         var cont = 0;
@@ -29,7 +29,7 @@ export class LoginComponent{
       });
     }, error => {
       alert("ERROR");
-    });
+    });*/
   }
 
   //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE ADMINISTRADOR

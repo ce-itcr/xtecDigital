@@ -15,81 +15,32 @@ export class DocumentComponent implements OnInit{
   ngOnInit(){
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentDocumentSection = localStorage.getItem("currentDocumentSection");
-    this.test();
+    //this.test("PRESENTACIONES");
+    this.populateDocs(this.currentDocumentSection);
   }
 
   courseName;
   currentDocumentSection;
-  foldersStructure = [
-    {
-      title: 'PRESENTACIONES',
-      courseId: 'S2-2020-CE3101.2',
-      date: '06-06-2020',
-      owner: 'xtecdigital',
-      children: [
-        {
-          title: 'Lesson_01_Introduction_to_Databases.pdf',
-          type: 'pdf',
-          owner: 'PROFESOR',
-          date: '07-07-2020',
-          children: []
-        },
-        {
-          title: 'Lesson_02_Conceptual_Model.pdf',
-          type: 'pdf',
-          owner: 'PROFESOR',
-          date: '07-10-2020',
-          children: []
-        },
-      ]
-    },
-    {
-      title: 'QUICES',
-      courseId: 'S2-2020-CE3101.2',
-      date: '06-06-2020',
-      owner: 'xtecdigital',
-      children: [ ]
-    },
-    {
-      title: 'EXAMENES',
-      courseId: 'S2-2020-CE3101.2',
-      date: '06-06-2020',
-      owner: 'xtecdigital',
-      children: [
-        {
-          title: 'Examen_I_Bases_de_Datos.pdf',
-          type: 'pdf',
-          owner: 'PROFESOR',
-          date: '07-10-2020',
-          children: []
-        }
-      ]
-    },
-    {
-      title: 'PROYECTOS',
-      courseId: 'S2-2020-CE3101.2',
-      date: '06-06-2020',
-      owner: 'xtecdigital',
-      children: [
-        {
-          title: 'Requerimientos_de_Software_Proyecto_I_BD.pdf',
-          type: 'pdf',
-          owner: 'PROFESOR',
-          date: '07-10-2020',
-          children: []
-        }
-      ]
-    },
+  documents;
+  folders = [["PRESENTACIONES","NOMBRE PROFESOR","2020-07-10",["Lesson_01_Introduction_to_Databases.pdf","Lesson_02_Conceptual_Model.pdf"]],
+             ["QUICES","NOMBRE PROFESOR","2020-07-10",["Quiz_1.pdf","Quiz2_test.pdf"]],
+             ["EXAMENES","NOMBRE PROFESOR","2020-07-10",["Examen_1.pdf"]],
+             ["PROYECTOS","NOMBRE PROFESOR","2020-07-10",["Proyecto_1.pdf"]]
+            ]
 
-  ];
-
-  test(){
-    //if(this.foldersStructure.includes(this.currentDocumentSection)){
-    //  alert("si lo incluye");
-    //} else{
-    //  alert("no incluye")
-    //}
-
-    alert(this.foldersStructure.includes(this.currentDocumentSection));
+  populateDocs(name){
+    for(var i=0; i<this.folders.length; i++){
+      if(name == this.folders[i][0]){
+        //console.log(this.folders[i][3]);
+        this.documents = this.folders[i][3];
+        break;
+      }
+    }
   }
+
+  downloadFile(document){
+    alert(document);
+  }
+
 }
+
