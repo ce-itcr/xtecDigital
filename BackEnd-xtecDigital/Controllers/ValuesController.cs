@@ -147,8 +147,10 @@ namespace BackEnd_xtecDigital.Controllers
             }
             foreach (var item in arr)
             {
+                int first = item[0].IndexOf("/");
+                int second = item[0].Substring(first + 1, 10).IndexOf("/") + first + 1;
                 JObject courseInfo = new JObject(
-                new JProperty("year", item[0].Substring(6, 4)),
+                new JProperty("year", item[0].Substring(second + 1, 4)),
                 new JProperty("period", item[1]),
                 new JProperty("course", item[2])
                 );
@@ -157,6 +159,26 @@ namespace BackEnd_xtecDigital.Controllers
             data.Close();
             conn.Close();
             return obj;
+
+        }
+
+        [HttpGet]
+        [Route("api/admin/student")]
+        public string[] obtainStudents()
+        {
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_GetStudent";
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            List<string> list = new List<string> { };
+            while (data.Read())
+            {
+                list.Add(data.GetValue(0).ToString());
+            }
+            data.Close();
+            conn.Close();
+            return list.ToArray();
 
         }
 
