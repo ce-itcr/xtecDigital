@@ -17,6 +17,7 @@ namespace BackEnd_xtecDigital.Controllers
     {
         static string stringconnection = @"Data Source=(localdb)\xTecDigital; Initial Catalog=xTecDigital; Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
+        string currentSemester = "";
 
         [HttpGet]
         [Route("api/admin/courses")]
@@ -179,7 +180,78 @@ namespace BackEnd_xtecDigital.Controllers
             data.Close();
             conn.Close();
             return list.ToArray();
-
         }
+
+        [HttpPost]
+        [Route("api/admin/semester/add")]
+        public IHttpActionResult addSemester([FromBody] JObject semesterInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddSemester @Year, @Period";
+                insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = semesterInfo["year"];
+                insertRequest.Parameters.Add("@CName", SqlDbType.VarChar, 50).Value = semesterInfo["period"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+                currentSemester = semesterInfo["year"] + "" + semesterInfo["period"];
+                return Ok("Semestre agregado");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/admin/group/add")]
+        public IHttpActionResult addGroup([FromBody] JObject GroupInfo)
+        {
+
+            try
+            {
+                SqlCommand insertRequest;
+                string GID = currentSemester + "-" + GroupInfo["code"] + "-" + GroupInfo["number"];
+                foreach (var item in GroupInfo["students"])
+                {
+                    conn.Open();
+                    insertRequest = conn.CreateCommand();
+                    insertRequest.CommandText = "EXEC sp_AddStudentToGroup @GID, @Student";
+                    insertRequest.Parameters.Add("@Student", SqlDbType.Int).Value = item;
+                    insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = GID;
+                    insertRequest.ExecuteNonQuery();
+                    conn.Close();
+                }
+
+                foreach (var item in GroupInfo["teacher"])
+                {
+                    conn.Open();
+                    insertRequest = conn.CreateCommand();
+                    insertRequest.CommandText = "EXEC sp_AddTeacherToGroup @GID, @Teacher";
+                    insertRequest.Parameters.Add("@Teacher", SqlDbType.Int).Value = item;
+                    insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = GID;
+                    insertRequest.ExecuteNonQuery();
+                    conn.Close();
+                }
+
+                conn.Open();
+                insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddGroup @GID, @Number, @CID, @SemID";
+                insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = GID;
+                insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GroupInfo["number"];
+                insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GroupInfo["code"];
+                insertRequest.Parameters.Add("@SemID", SqlDbType.VarChar, 50).Value = currentSemester;
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Grupos agregados");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
     }
 }
