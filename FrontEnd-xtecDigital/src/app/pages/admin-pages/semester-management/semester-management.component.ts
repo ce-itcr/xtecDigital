@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/communication/communication.service';
 import { Alert } from 'bootstrap';
 
 @Component({
@@ -9,7 +10,7 @@ import { Alert } from 'bootstrap';
 })
 export class SemesterManagementComponent implements OnInit {
 
-  constructor(private modal:NgbModal) { }
+  constructor(private modal:NgbModal, private CS: CommunicationService) { }
 
   semesterYear;
   semesterPeriod;
@@ -24,10 +25,27 @@ export class SemesterManagementComponent implements OnInit {
   semesterCourses = [];
   semesterData = [];
 
-  courses = [["CE3105", "Lenguajes"],["CE2121","Datos 1"],["EL2323", "CC"],["MA2103","Cálculo Diferencial"],["CS4567", "Seminario EC"]];
-  students = ["2020202020","2020202021","2020202022","2020202023","2020202024","2020202025","2020202026","2020202027","2020202028"];
+  courses = [];
+  students = [];
 
   ngOnInit(): void {
+    this.CS.getSemesterCourses().subscribe(res => {
+      var cont = 0;
+      while(cont < res.length){
+        var data = [];
+        data.push(res[cont]["id"]);
+        data.push(res[cont]["name"]);
+        this.courses.push(data);
+        cont++;
+      }
+    }, error => {
+      alert("ERROR")
+    });
+    this.CS.getSemesterStudents().subscribe(res => {
+      this.students = res;
+    }, error => {
+      alert("ERROR")
+    });
   }
 
   openModal(content){ 

@@ -20,19 +20,7 @@ export class CoursesManagementComponent implements OnInit {
 
   public createCourse(courseId ,name, credits, career){
     this.CS.createCourse(courseId, name, credits, career).subscribe(res => {
-      this.CS.getAdminCourses().subscribe(res => {
-        globalThis.flag = 1;
-        var data = []
-        var cont = 0;
-        while(cont < res.length){
-          data.push(res[cont]);
-          cont++;
-        }
-        localStorage.setItem("adminCourses",JSON.stringify(data));
-        this.router.navigateByUrl("/admin_profile");
-      }, error => {
-        alert("ERROR");
-      });
+      this.CS.getAdminCourses(true);
     }, error => {
       alert("ERROR");
     });
@@ -41,41 +29,16 @@ export class CoursesManagementComponent implements OnInit {
 
   public updateCourse(courseId, name, credits, career){
     this.CS.updateCourse(courseId, name, credits, career).subscribe(res => {
-      this.CS.getAdminCourses().subscribe(res => {
-        globalThis.flag = 1;
-        var data = []
-        var cont = 0;
-        while(cont < res.length){
-          data.push(res[cont]);
-          cont++;
-        }
-        localStorage.setItem("adminCourses",JSON.stringify(data));
-        this.router.navigateByUrl("/admin_profile");
-      }, error => {
-        alert("ERROR");
-      })
+      this.CS.getAdminCourses(true);
     }, error => {
       alert("ERROR");
     });
-    this.CS.getAdminCourses();
   }
 
   public deleteCourse(courseId){
     globalThis.flag = 1;
     this.CS.deleteCourse(courseId).subscribe(res => {
-      this.CS.getAdminCourses().subscribe(res => {
-        globalThis.flag = 1;
-        var data = []
-        var cont = 0;
-        while(cont < res.length){
-          data.push(res[cont]);
-          cont++;
-        }
-        localStorage.setItem("adminCourses",JSON.stringify(data));
-        this.router.navigateByUrl("/admin_profile");
-      }, error => {
-        alert("ERROR");
-      });
+      this.CS.getAdminCourses(true);
     }, error => {
       alert("ERROR");
     });

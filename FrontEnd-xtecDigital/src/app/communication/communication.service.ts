@@ -34,7 +34,58 @@ export class CommunicationService {
     return this.http.post<JSON>("api/admin/courses/delete", {"id":id});
    }
 
-   getAdminCourses(){
+
+   getAdminCourses(key){
+    return this.http.get<any[]>("api/admin/courses").subscribe(res => {
+      var data = []
+      var cont = 0;
+      while(cont < res.length){
+        data.push(res[cont]);
+        cont++;
+      }
+      localStorage.setItem("adminCourses",JSON.stringify(data));
+      if(key){
+        globalThis.flag = 1;
+        this.router.navigateByUrl("/admin_profile");
+      }
+    }, error => {
+      alert("ERROR");
+    });;
+  }
+
+  getSemesterCourses(){
     return this.http.get<any[]>("api/admin/courses");
+  }
+
+
+  getAdminSemesters(key){
+    return this.http.get<any[]>("api/admin/semester").subscribe(res => {
+      var data = []
+      var cont = 0;
+      while(cont < res.length){
+        data.push(res[cont]);
+        cont++;
+      }
+      localStorage.setItem("adminSemesters",JSON.stringify(data));
+      if(key){
+        globalThis.flag = 2;
+        this.router.navigateByUrl("/admin_profile");
+      }
+    }, error => {
+      alert("ERROR");
+    });;
+  }
+
+  getSemesterStudents(){
+    return this.http.get<any[]>("api/admin/student");
+  }
+
+  sendNewSemester(year, period){
+    return this.http.post<JSON>("api/admin/student",
+    {
+      "year":year,
+      "period":period,
+    }
+    );
   }
 }
