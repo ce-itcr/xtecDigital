@@ -32,6 +32,11 @@ export class CourseComponent implements OnInit{
                 ["Nombre Profesor 2","prof02@gmail.com","../../../../assets/img/default-avatar.png"]]
 
   news = [["Horario de Consulta 04/12/2020","2020-04-12","PROFESOR 01","Estimados estudiantes el horario de consulta para el día de hoy es a las 11:00am por el siguiente link: http://localhost:4200/#/course",],
+          ["Link para el II Examen Parcial","2020-04-12","PROFESOR 01","Estimados estudiantes el horario de consulta para el día de hoy es a las 11:00am por el siguiente link: http://localhost:4200/#/course"],
+          ["Link para el II Examen Parcial","2020-04-12","PROFESOR 01","Estimados estudiantes el horario de consulta para el día de hoy es a las 11:00am por el siguiente link: http://localhost:4200/#/course"],
+          ["Link para el II Examen Parcial","2020-04-12","PROFESOR 01","Estimados estudiantes el horario de consulta para el día de hoy es a las 11:00am por el siguiente link: http://localhost:4200/#/course"],
+          ["Link para el II Examen Parcial","2020-04-12","PROFESOR 01","Estimados estudiantes el horario de consulta para el día de hoy es a las 11:00am por el siguiente link: http://localhost:4200/#/course"],
+          ["Link para el II Examen Parcial","2020-04-12","PROFESOR 01","Estimados estudiantes el horario de consulta para el día de hoy es a las 11:00am por el siguiente link: http://localhost:4200/#/course"],
           ["Link para el II Examen Parcial","2020-04-12","PROFESOR 01","Estimados estudiantes el horario de consulta para el día de hoy es a las 11:00am por el siguiente link: http://localhost:4200/#/course"]]
 
 
