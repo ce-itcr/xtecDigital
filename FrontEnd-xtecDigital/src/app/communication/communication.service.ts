@@ -30,8 +30,8 @@ export class CommunicationService {
     return this.http.post<JSON>("api/admin/courses/update", {"id":id, "name":name, "credits":credits, "career":career});
    }
 
-   deleteCourse(id){
-    return this.http.post<JSON>("api/admin/courses/delete", {"id":id});
+   deleteCourse(id, available){
+    return this.http.post<JSON>("api/admin/courses/update/availability", {"id":id, "available":available});
    }
 
 

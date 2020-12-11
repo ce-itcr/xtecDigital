@@ -35,9 +35,11 @@ export class SemesterManagementComponent implements OnInit {
       var cont = 0;
       while(cont < res.length){
         var data = [];
-        data.push(res[cont]["id"]);
-        data.push(res[cont]["name"]);
-        this.courses.push(data);
+        if(res[cont]["available"] == "Habilitado"){
+          data.push(res[cont]["id"]);
+          data.push(res[cont]["name"]);
+          this.courses.push(data);
+        }
         cont++;
       }
     }, error => {
@@ -82,7 +84,7 @@ export class SemesterManagementComponent implements OnInit {
   }
   groupInfo(teacher1, teacher2, number){
     this.teacher = [];
-    this.putOffStudents();
+    this.putOutStudents();
     if((teacher1 != "" || teacher2 != "") && number != ""){
       if(teacher2 == ""){
         this.teacher.push(teacher1);
@@ -137,9 +139,7 @@ export class SemesterManagementComponent implements OnInit {
     }
   }
 
-
-
-  putOffStudents(){
+  putOutStudents(){
     var cont = 0;
     while(cont < this.selectedStudents.length){
       if(this.students.includes(this.selectedStudents[cont])){

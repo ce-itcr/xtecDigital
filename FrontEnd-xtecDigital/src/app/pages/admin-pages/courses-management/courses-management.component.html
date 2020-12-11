@@ -9,7 +9,7 @@
     <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(update_course_modal)">Actualizar </button>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-6">
-      <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(delete_course_modal)">Eliminar </button>
+      <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(delete_course_modal)">Habilitar / Deshabilitar </button>
   </div>
 </div>
 
@@ -59,10 +59,14 @@
     <div class="modal-body" >
       <form>
         <input #course_id type="text" placeholder="Código del Curso">
+        <select #avilable name="avilable" class="form-control rounded-pill border-0 shadow-sm px-4">
+          <option value="Habilitado">Habilitar</option>
+          <option value="Deshabilitado">Deshabilitar</option>
+        </select>
       </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="deleteCourse(course_id.value)" (click)="modal.close()">Eliminar</button>
+        <button type="button" class="btn btn-success" (click)="deleteCourse(course_id.value, avilable.value)" (click)="modal.close()">Listo</button>
         <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
     </div>
   </ng-template>

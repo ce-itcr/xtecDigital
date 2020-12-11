@@ -35,9 +35,8 @@ export class CoursesManagementComponent implements OnInit {
     });
   }
 
-  public deleteCourse(courseId){
-    globalThis.flag = 1;
-    this.CS.deleteCourse(courseId).subscribe(res => {
+  public deleteCourse(courseId, available){
+    this.CS.deleteCourse(courseId, available).subscribe(res => {
       this.CS.getAdminCourses(true);
     }, error => {
       alert("ERROR");

@@ -10,7 +10,7 @@ export interface AdminCoursesItem {
   name: string;
   credits: string;
   career: string;
-  
+  available: string;
 }
 
 // TODO: replace this with real data from your application
