@@ -36,7 +36,7 @@ export class LoginComponent{
   toStudentLayout(){
     localStorage.setItem("accountType", "STUDENT");
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['student_dashboard']));
+    this.router.navigate(['student_courses']));
   }
 
   //VERIFICA QUE LOS DATOS INGRESADOS PERTENEZCAN A UN USUARIO REGISTRADO

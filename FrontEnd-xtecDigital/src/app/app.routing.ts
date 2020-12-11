@@ -41,8 +41,8 @@ export const AppRoutes: Routes = [
   }]},
 
   {
-    path: 'student_dashboard',
-    redirectTo: 'student_dashboard',
+    path: 'student_courses',
+    redirectTo: 'student_courses',
     pathMatch: 'full',
     runGuardsAndResolvers: 'always'
   }, {

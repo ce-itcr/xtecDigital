@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 import { StudentLayoutRoutes } from './student-layout.routing';
 
-import { DashboardComponent }       from '../../pages/student-pages/dashboard/dashboard.component';
 import { UserComponent }            from '../../pages/student-pages/user/user.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -24,7 +23,6 @@ import { AssignmentsComponent } from 'app/pages/student-pages/assignments/assign
     NgbModule
   ],
   declarations: [
-    DashboardComponent,
     CoursesComponent,
     UserComponent,
     CourseComponent,
