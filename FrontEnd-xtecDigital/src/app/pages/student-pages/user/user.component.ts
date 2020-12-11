@@ -44,14 +44,6 @@ export class UserComponent implements OnInit{
 
   public state: boolean = true;
 
-  changeSidebarColor(color){
-    var sidebar = <HTMLElement>document.querySelector('.sidebar');
-
-    this.sidebarColor = color;
-    if(sidebar != undefined){
-        sidebar.setAttribute('data-color',color);
-    }
-  }
 
   //SE INICIALIZA LA VENTANA EMERGENTE (pop-up)
   openModal(content){ this.modal.open(content,{size:'ms', centered:true});}

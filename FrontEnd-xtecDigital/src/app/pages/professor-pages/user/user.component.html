@@ -2,38 +2,106 @@
   <div class="col-md-4">
     <div class="card card-user">
       <div class="image">
-        <img src="assets/img/default-profile-header.jpg" alt="...">
+        <img src="assets/img/default-profile-header.jpg" alt="Imagen de Portada">
       </div>
       <div class="card-body">
         <div class="author">
-            <img class="avatar border-gray" src="{{userImage}}" alt="Imagen de Perfil de Usuario">
-            <h5 style="color: #14447c;" class="title">{{userFullName}}</h5>
-          <p class="description">
-            @{{username}}
-          </p>
+            <img class="avatar border-gray" src="{{img_url}}" alt="Imagen de Perfil de Usuario">
+            <h2 class="title" style="color: #14447c;">{{fullName}}</h2>
+            <h5 class="subtitle" style="color: #14447c;">{{userId}}</h5>
+          <p class="card-description">{{nationality}} <br> {{birthDate}} <br></p>
         </div>
       </div>
       <div class="card-footer">
+        <hr>
         <div>
-          <button class="btn btn-primary btn-block text-uppercase" style="background-color: #14447c;"  (click)="openModal(close_this)">Cerrar Sesión</button>
+          <button class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm"  (click)="openModal(close_this)">Cerrar Sesión</button>
         </div>
       </div>
     </div>
   </div>
 
-</div>
+  <div class="col-md-8">
+    <div class="card card-user">
+      <div class="card-header">
+        <h2 class="card-title">Editar Perfil de Usuario</h2>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Número de Cédula</label>
+                <input disabled id="carnet" #username type="text" required class="form-control" value="{{userId}}" placeholder="{{userId}}" >
+              </div>
+            </div>
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Nombre Completo</label>
+                <input disabled id="fullname" #fullname type="text" required class="form-control" value="{{fullName}}" placeholder="{{fullName}}" >
+              </div>
+            </div>
+          </div>
 
-<ng-template #close_this let-modal>
-  <div class="modal-header">
-    <img src="../../../../assets/img/xtecdigital-logo.png" class="display-4" style="margin-left: auto;margin-right: auto; display: block; width: 60%;">
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Contraseña</label>
+                <input #password type="text" required class="form-control" value="{{userPassword}}" placeholder="{{userPassword}}">
+              </div>
+            </div>
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Teléfono</label>
+                <input id="phone" #phone type="text" required class="form-control" value="{{cellPhone}}" placeholder="{{cellPhone}}" >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Dirección de Correo Electrónico</label>
+                <input #address type="text" required class="form-control" value="{{userMail}}" placeholder="{{userMail}}" >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Nacionalidad</label>
+                <input #nacionality disabled type="text" required class="form-control" value="{{nationality}}" placeholder="{{nationality}}">
+              </div>
+            </div>
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Fecha de Nacimiento</label>
+                <input #birth_date disabled type="date" required class="form-control" value="{{birthDate}}">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="update ml-auto mr-auto">
+              <button type="button" (click)="updateData(password.value, phone.value, address.value)" class="btn btn-primary btn-round">Actualizar Perfil</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
+
+  <ng-template #close_this let-modal>
+    <div class="modal-header">
+      <img src="../../../../assets/img/xtecdigital-logo.png" class="display-4" style="margin-left: auto;margin-right: auto; display: block; width: 60%;">
+
+    </div>
+    <div class="modal-body">
+      <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>¿Seguro que desea salir?</b></h4>
+      xtecDigital - Sistema de la Universidad XTEC que permite gestionar el proceso de enseñanza - aprendizaje.
   </div>
-  <div class="modal-body">
-    <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>¿Seguro que desea salir?</b></h4>
-    xtecDigital - Sistema de la Universidad XTEC que permite gestionar el proceso de enseñanza - aprendizaje.
-</div>
-  <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Si</button>
-      <button type="button" class="btn btn-outline-danger" (click)="modal.close()">No</button>
-  </div>
-</ng-template>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Si</button>
+        <button type="button" class="btn btn-warning" (click)="modal.close()">No</button>
+    </div>
+  </ng-template>
+
