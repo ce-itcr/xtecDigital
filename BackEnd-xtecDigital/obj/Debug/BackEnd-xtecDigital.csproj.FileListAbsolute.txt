@@ -429,3 +429,7 @@ C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\mon
 C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\snappy32.dll
 C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\snappy64.dll
 C:\Users\Usuario\Documents\Github\xtecDigitalBackEnd\BackEnd-xtecDigital\bin\libzstd.dll
+C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\bin\mongocrypt.dll
+C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\bin\snappy32.dll
+C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\bin\snappy64.dll
+C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\bin\libzstd.dll

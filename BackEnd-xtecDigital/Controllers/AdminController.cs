@@ -168,6 +168,7 @@ namespace BackEnd_xtecDigital.Controllers
             }
             foreach (var item in arr)
             {
+          
                 JObject courseInfo = new JObject(
                 new JProperty("year", item[0]),
                 new JProperty("period", item[1]),
