@@ -53,11 +53,12 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 conn.Open();
                 SqlCommand insertRequest = conn.CreateCommand();
-                insertRequest.CommandText = "EXEC sp_AddCourse @CID, @CName, @Credits, @Career";
+                insertRequest.CommandText = "EXEC sp_AddCourse @CID, @CName, @Credits, @Career, @Available";
                 insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = courseInfo["id"];
                 insertRequest.Parameters.Add("@CName", SqlDbType.VarChar, 50).Value = courseInfo["name"];
                 insertRequest.Parameters.Add("@Credits", SqlDbType.Int).Value = (int)courseInfo["credits"];
                 insertRequest.Parameters.Add("@Career", SqlDbType.VarChar, 50).Value = courseInfo["career"];
+                insertRequest.Parameters.Add("@Available", SqlDbType.VarChar, 20).Value = courseInfo["available"];
                 insertRequest.ExecuteNonQuery();
                 conn.Close();
                 return Ok("Curso agregado");
@@ -111,6 +112,26 @@ namespace BackEnd_xtecDigital.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/admin/courses/update/availability")]
+        public IHttpActionResult updateCourseAvailability([FromBody] JObject courseInfo)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_UpdateCourseAvailability @Available";
+                updateRequest.Parameters.Add("@Available", SqlDbType.VarChar, 20).Value = courseInfo["available"];
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Curso actualizado");
+            }
+            catch
+            {
+                return BadRequest("Error al eliminar");
+            }
+        }
+
         [HttpGet]
         [Route("api/admin/semester")]
         public JArray obtainSemester()
@@ -133,7 +154,7 @@ namespace BackEnd_xtecDigital.Controllers
                     {
                         if (data.GetValue(0).ToString() == item[0] && data.GetValue(1).ToString() == item[1])
                         {
-                            item[2] += " ," + data.GetValue(2).ToString();
+                            item[2] += ", " + data.GetValue(2).ToString();
                         }
                     }
                 }
@@ -147,10 +168,8 @@ namespace BackEnd_xtecDigital.Controllers
             }
             foreach (var item in arr)
             {
-                int first = item[0].IndexOf("/");
-                int second = item[0].Substring(first + 1, 10).IndexOf("/") + first + 1;
                 JObject courseInfo = new JObject(
-                new JProperty("year", item[0].Substring(second + 1, 4)),
+                new JProperty("year", item[0]),
                 new JProperty("period", item[1]),
                 new JProperty("course", item[2])
                 );
@@ -195,12 +214,9 @@ namespace BackEnd_xtecDigital.Controllers
                 insertRequest.Parameters.Add("@Period", SqlDbType.Char, 1).Value = semesterInfo["period"];
                 insertRequest.ExecuteNonQuery();
                 conn.Close();
-                Debug.Print("hola1");
                 string currentSemester = semesterInfo["year"] + "-" + semesterInfo["period"];
                 foreach (var item in semesterInfo["courses"]) {
-                    Debug.Print("hola2");
                     string GID = currentSemester + "-" + item[0].ToString() + "-" + item[2].ToString();
-                    Debug.Print("hola3");
                     conn.Open();
                     insertRequest = conn.CreateCommand();
                     insertRequest.CommandText = "EXEC sp_AddGroup @GID, @Number, @CID, @SemID";
@@ -210,7 +226,7 @@ namespace BackEnd_xtecDigital.Controllers
                     insertRequest.Parameters.Add("@SemID", SqlDbType.VarChar, 50).Value = currentSemester;
                     insertRequest.ExecuteNonQuery();
                     conn.Close();
-                    Debug.Print("1");
+                    Debug.Print(GID);
 
                     foreach (var element in item[3])
                     {
