@@ -32,7 +32,7 @@ export class UserComponent implements OnInit{
         this.router.navigateByUrl("/admin_coursesManagement");
         globalThis.flag = 0;
       }else if(globalThis.flag == 2){
-        this.router.navigateByUrl("/admin_semestersManagement");
+        this.router.navigateByUrl("/admin_semesterManagement");
         globalThis.flag = 0;
       }
     }

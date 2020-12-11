@@ -30,6 +30,7 @@ export class SemesterManagementComponent implements OnInit {
   students = [];
 
   ngOnInit(): void {
+    var x = [1,2,3,4,5];
     this.CS.getSemesterCourses().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -63,17 +64,25 @@ export class SemesterManagementComponent implements OnInit {
   }
 
   courseOnCheck(course){
+    this.selectedStudents = [];
     this.cont = 0;
-    if(this.includes(course)){
-      this.deleteCourses(course);
-      this.closeModal = true;
-    }else{
-      this.selectedCourse = course;
-      this.modal.activeInstances
-    }
+
+    this.CS.getSemesterStudents().subscribe(res => {
+      this.students = res;
+      if(this.includes(course)){
+        this.deleteCourses(course);
+        this.closeModal = true;
+      }else{
+        this.selectedCourse = course;
+        this.modal.activeInstances
+      }
+    }, error => {
+      alert("ERROR")
+    });
   }
   groupInfo(teacher1, teacher2, number){
     this.teacher = [];
+    this.putOffStudents();
     if((teacher1 != "" || teacher2 != "") && number != ""){
       if(teacher2 == ""){
         this.teacher.push(teacher1);
@@ -96,7 +105,6 @@ export class SemesterManagementComponent implements OnInit {
     var data = [];
     data.push(this.selectedCourse, this.teacher, this.number, this.selectedStudents);
     this.semesterCourses.push(data);
-    this.erase();
   }
 
   createSemester(){
@@ -110,10 +118,6 @@ export class SemesterManagementComponent implements OnInit {
     }, error => {
       alert("ERROR SEMESTER");
     });
-  }
-
-  erase(){
-    this.selectedStudents = [];
   }
 
   includes(courseCode){
@@ -131,6 +135,21 @@ export class SemesterManagementComponent implements OnInit {
       this.semesterCourses = this.semesterCourses.slice(0,this.cont).concat(this.semesterCourses.slice(this.cont+1,this.semesterCourses.length));
       this.cont = 0;
     }
+  }
+
+
+
+  putOffStudents(){
+    var cont = 0;
+    while(cont < this.selectedStudents.length){
+      if(this.students.includes(this.selectedStudents[cont])){
+        var slice = this.students.indexOf(this.selectedStudents[cont]);
+        this.students = this.students.slice(0,slice).concat(this.students.slice(slice+1,this.students.length));
+      }
+      cont++;
+    }
+    alert(this.students);
+
   }
 
 }
