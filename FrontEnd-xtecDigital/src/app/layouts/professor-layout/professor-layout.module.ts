@@ -9,6 +9,11 @@ import { DashboardComponent }       from '../../pages/professor-pages/dashboard/
 import { UserComponent }            from '../../pages/professor-pages/user/user.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CourseComponent } from 'app/pages/professor-pages/course/course.component';
+import { NewsComponent } from 'app/pages/professor-pages/news/news.component';
+import { DocumentsComponent } from 'app/pages/professor-pages/documents/documents.component';
+import { DocumentComponent } from 'app/pages/professor-pages/document/document.component';
+import { AssignmentsComponent } from 'app/pages/professor-pages/assignments/assignments.component';
 
 @NgModule({
   imports: [
@@ -20,6 +25,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   declarations: [
     DashboardComponent,
     UserComponent,
+    CourseComponent,
+    NewsComponent,
+    DocumentsComponent,
+    DocumentComponent,
+    AssignmentsComponent
   ]
 })
 

@@ -14,8 +14,8 @@ import {Md5} from 'ts-md5/dist/md5';
 
 export class LoginComponent{
   constructor(private router: Router, private CS:CommunicationService) {
-    this.CS.getAdminCourses(false);
-    this.CS.getAdminSemesters(false);
+    //this.CS.getAdminCourses(false);
+    //this.CS.getAdminSemesters(false);
   }
 
   //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE ADMINISTRADOR
@@ -36,7 +36,7 @@ export class LoginComponent{
   toStudentLayout(){
     localStorage.setItem("accountType", "STUDENT");
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['student_dashboard']));
+    this.router.navigate(['student_courses']));
   }
 
   //VERIFICA QUE LOS DATOS INGRESADOS PERTENEZCAN A UN USUARIO REGISTRADO

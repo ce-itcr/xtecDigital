@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-lg-4 col-md-4 col-sm-6">
-    <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="toCurrentSection()">{{courseName}} </button>
+    <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg">{{courseName}} </button>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-6">
     <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="toDocumentsSection()">Documentos </button>
@@ -17,10 +17,16 @@
     <div class="card">
       <div class="card-header">
         <h4 class="card-title"  style="color:#14447c">Sección de Noticias</h4>
+        <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(create_news_modal)"><i class="fa fa-plus"></i></button>
       </div>
       <div class="card-body">
         <div fxflex="30%" *ngFor="let item of news">
             <div class="row">
+              <div class="col-md-2 col-2">
+                <div class="">
+                  <img src="../../../../assets/img/xtecdigital-favicon.png"  style="width: 30%;" class="img-circle img-no-padding img-responsive">
+                </div>
+              </div>
               <div class="col-md-7 col-7">
                 {{item[0]}}
                 <br />
@@ -33,7 +39,6 @@
               </div>
             </div>
         </div>
-
      </div>
     </div>
   </div>
@@ -98,4 +103,51 @@
     </div>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title"  style="color:#14447c">Reporte de Notas y Estudiantes Matriculados</h4>
+      </div>
+      <div class="card-body">
+        <embed src="http://127.0.0.1:8887/Participants.pdf"  width= "750" height= "600" style="margin-left: 10px;">
+          <embed src="http://127.0.0.1:8887/Positions.pdf" width= "750" height= "600" style="margin-left: 10px;">
+      </div>
+      <div class="card-footer">
+        <i class="fa fa-history"></i> Fecha de Actualización del Reporte: <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #create_news_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Crear Noticia</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-6">
+          <label for="title"><b>Título de Noticia</b></label>
+          <input type="text" #title placeholder="Título de la Noticia" required style="width: 100%;">
+        </div>
+      <div class="form-group mb-3">
+        <label for="body"><b>Mensaje de la Noticia</b></label>
+        <textarea type="text" #body placeholder="Mensaje de la Noticia" required style="width: 100%; height:100px;display: inline-block;"></textarea>
+      </div>
+      <div class="form-group mb-6">
+        <label for="date"><b>Fecha de Publicación</b></label>
+        <input type="date" #date placeholder="asdas" required style="width: 100%;" disabled>
+      </div>
+      <div class="form-group mb-6">
+        <label for="author"><b>Autor</b></label>
+        <input type="text" #author placeholder="{{currentUser}}" required style="width: 100%;" disabled>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="createNew(title.value, body.value)" (click)="modal.close()">Crear</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
 

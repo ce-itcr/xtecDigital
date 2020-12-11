@@ -1,4 +1,31 @@
 <div class="row">
+        <div class="col-md-12">
+          <div fxflex="30%" *ngFor="let item of _courses">
 
+          <div class="card">
+            <div class="card-header">
+              <h1 class="card-title"  style="color: #14447c;">{{item[0][0]}}</h1>
+            </div>
+
+            <div class="card-body">
+              <span  class="text-muted">
+
+                <a (click)="toSingleCourse(item[1])"><p style="padding-left: 10px;">{{item[1]}}</p></a>
+                <a (click)="toSingleCourse(item[2])"><p style="padding-left: 10px;">{{item[2]}}</p></a>
+                <a (click)="toSingleCourse(item[3])"><p style="padding-left: 10px;">{{item[3]}}</p></a>
+                <a (click)="toSingleCourse(item[4])"><p style="padding-left: 10px;">{{item[4]}}</p></a>
+                <a (click)="toSingleCourse(item[5])"><p style="padding-left: 10px;">{{item[5]}}</p></a>
+
+              </span>
+            </div>
+
+            <div class="card-footer">
+              <i class="fa fa-history"></i> Fecha de Actualización: <b>{{item[0][1]}}</b><br>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
 </div>
-
