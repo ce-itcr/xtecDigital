@@ -34,7 +34,8 @@ namespace BackEnd_xtecDigital.Controllers
                 new JProperty("id", data.GetValue(0).ToString()),
                 new JProperty("name", data.GetValue(1).ToString()),
                 new JProperty("credits", data.GetValue(2).ToString()),
-                new JProperty("career", data.GetValue(3).ToString())
+                new JProperty("career", data.GetValue(3).ToString()),
+                new JProperty("available", data.GetValue(4).ToString())
                 );
                 obj.Add(courseInfo);
             }
