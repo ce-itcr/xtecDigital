@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommunicationService } from 'app/communication/communication.service';
 import { Alert } from 'bootstrap';
@@ -10,7 +11,7 @@ import { Alert } from 'bootstrap';
 })
 export class SemesterManagementComponent implements OnInit {
 
-  constructor(private modal:NgbModal, private CS: CommunicationService) { }
+  constructor(private modal:NgbModal, private CS: CommunicationService, private router: Router) { }
 
   semesterYear;
   semesterPeriod;
@@ -101,9 +102,14 @@ export class SemesterManagementComponent implements OnInit {
   createSemester(){
     this.semesterData.push(this.semesterPeriod, this.semesterYear, this.semesterCourses);
     console.log(this.semesterData);
-    this.semesterYear = "";
-    this.semesterPeriod = "";
-    this.semesterCourses = [];
+    this.CS.sendNewSemester(this.semesterData[1], this.semesterData[0], this.semesterData[2]).subscribe(res => {
+      this.semesterYear = "";
+      this.semesterPeriod = "";
+      this.semesterCourses = [];
+      this.CS.getAdminSemesters(true);
+    }, error => {
+      alert("ERROR SEMESTER");
+    });
   }
 
   erase(){

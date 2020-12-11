@@ -80,12 +80,16 @@ export class CommunicationService {
     return this.http.get<any[]>("api/admin/student");
   }
 
-  sendNewSemester(year, period){
-    return this.http.post<JSON>("api/admin/student",
+  sendNewSemester(year, period, courses){
+    alert(year)
+    alert(period)
+    alert(courses)
+    return this.http.post<JSON>("api/admin/semester/add",
     {
       "year":year,
       "period":period,
-    }
+      "courses":courses
+    } 
     );
   }
 }
