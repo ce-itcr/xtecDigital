@@ -1,23 +1,23 @@
 <div class="row">
-  <div class="col-lg-12">
+
+  <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h6 class="card-title">{{courseName}} -> DOCUMENTOS -> {{currentDocumentSection}}</h6>
+        <h1 class="card-title"  style="color: #14447c;">{{courseName}} -> DOCUMENTOS -> {{currentDocumentSection}}</h1>
       </div>
 
       <div class="card-body">
-        <ul>
-          <ng-template #recursiveList let-list>
-            <li *ngFor="let item of list">
-              {{item.title}}
-              <ul *ngIf="item.children.length > 0">
-                <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children }"></ng-container>
-              </ul>
-            </li>
-          </ng-template>
-          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: foldersStructure }"></ng-container>
-        </ul>
+        <div fxflex="30%" *ngFor="let item of documents">
 
+          <div class="row">
+            <div class="col-md-7 col-7">
+              {{item}}
+            </div>
+            <div class="col-md-3 col-3 text-right">
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="downloadFile(item)"><i class="fa fa-arrow-down"></i></button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

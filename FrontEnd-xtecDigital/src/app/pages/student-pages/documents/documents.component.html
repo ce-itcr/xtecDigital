@@ -1,28 +1,23 @@
 <div class="row">
-  <div class="col-lg-12">
+
+  <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h6 class="card-title">{{courseName}} -> DOCUMENTOS</h6>
+        <h1 class="card-title"  style="color: #14447c;">{{courseName}} -> DOCUMENTOS</h1>
       </div>
+
       <div class="card-body">
-        <ul>
-          <ng-template #recursiveList let-list>
-            <li *ngFor="let item of list">
+        <div fxflex="30%" *ngFor="let item of folders">
 
-              <div class="card-columns">
-                <a (click)="toSingleDocumentSection(item.title)" >
-                  <p class="card-title">{{item.title}}</p>
-                  <p class="card-title">{{item.courseId}}</p>
-                  <p class="card-title">{{item.owner}}</p>
-                </a>
-              </div>
+          <div class="text-muted card-columns">
 
+            <a (click)="toSingleDocumentSection(item[0])"><p><i class="fa fa-folder"></i>  {{item[0]}}</p>
+              <p>{{item[1]}}</p>
+              <p>{{item[2]}}</p>
+            </a>
 
-            </li>
-          </ng-template>
-          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: foldersStructure }"></ng-container>
-        </ul>
-
+          </div>
+        </div>
       </div>
     </div>
   </div>
