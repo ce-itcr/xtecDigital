@@ -11,6 +11,8 @@ import { UserComponent }            from '../../pages/professor-pages/user/user.
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CourseComponent } from 'app/pages/professor-pages/course/course.component';
 import { NewsComponent } from 'app/pages/professor-pages/news/news.component';
+import { DocumentsComponent } from 'app/pages/professor-pages/documents/documents.component';
+import { DocumentComponent } from 'app/pages/professor-pages/document/document.component';
 
 @NgModule({
   imports: [
@@ -23,7 +25,9 @@ import { NewsComponent } from 'app/pages/professor-pages/news/news.component';
     DashboardComponent,
     UserComponent,
     CourseComponent,
-    NewsComponent
+    NewsComponent,
+    DocumentsComponent,
+    DocumentComponent
   ]
 })
 

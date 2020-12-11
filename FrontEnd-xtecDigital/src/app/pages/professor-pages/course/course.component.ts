@@ -49,7 +49,7 @@ export class CourseComponent implements OnInit{
 
   toDocumentsSection(){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['student_documents']));
+    this.router.navigate(['professor_documents']));
   }
 
   toAssignmentsSection(){
