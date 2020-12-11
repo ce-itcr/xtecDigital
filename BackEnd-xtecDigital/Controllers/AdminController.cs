@@ -54,12 +54,11 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 conn.Open();
                 SqlCommand insertRequest = conn.CreateCommand();
-                insertRequest.CommandText = "EXEC sp_AddCourse @CID, @CName, @Credits, @Career, @Available";
+                insertRequest.CommandText = "EXEC sp_AddCourse @CID, @CName, @Credits, @Career";
                 insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = courseInfo["id"];
                 insertRequest.Parameters.Add("@CName", SqlDbType.VarChar, 50).Value = courseInfo["name"];
                 insertRequest.Parameters.Add("@Credits", SqlDbType.Int).Value = (int)courseInfo["credits"];
                 insertRequest.Parameters.Add("@Career", SqlDbType.VarChar, 50).Value = courseInfo["career"];
-                insertRequest.Parameters.Add("@Available", SqlDbType.VarChar, 20).Value = courseInfo["available"];
                 insertRequest.ExecuteNonQuery();
                 conn.Close();
                 return Ok("Curso agregado");
@@ -121,7 +120,8 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 conn.Open();
                 SqlCommand updateRequest = conn.CreateCommand();
-                updateRequest.CommandText = "EXEC sp_UpdateCourseAvailability @Available";
+                updateRequest.CommandText = "EXEC sp_UpdateCourseAvailability @CID, @Available";
+                updateRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = courseInfo["id"];
                 updateRequest.Parameters.Add("@Available", SqlDbType.VarChar, 20).Value = courseInfo["available"];
                 updateRequest.ExecuteNonQuery();
                 conn.Close();
