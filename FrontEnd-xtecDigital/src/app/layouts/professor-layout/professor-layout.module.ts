@@ -13,6 +13,7 @@ import { CourseComponent } from 'app/pages/professor-pages/course/course.compone
 import { NewsComponent } from 'app/pages/professor-pages/news/news.component';
 import { DocumentsComponent } from 'app/pages/professor-pages/documents/documents.component';
 import { DocumentComponent } from 'app/pages/professor-pages/document/document.component';
+import { AssignmentsComponent } from 'app/pages/professor-pages/assignments/assignments.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { DocumentComponent } from 'app/pages/professor-pages/document/document.c
     CourseComponent,
     NewsComponent,
     DocumentsComponent,
-    DocumentComponent
+    DocumentComponent,
+    AssignmentsComponent
   ]
 })
 
