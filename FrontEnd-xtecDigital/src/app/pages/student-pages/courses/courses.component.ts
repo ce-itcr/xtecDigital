@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommunicationService } from 'app/communication/communication.service';
 
 
 @Component({
@@ -10,9 +11,37 @@ import { Router } from '@angular/router';
 
 export class CoursesComponent implements OnInit{
 
-    constructor(private router:Router){}
+    constructor(private router:Router, private CS: CommunicationService){}
 
-    ngOnInit(){}
+    ngOnInit(){
+      this.CS.getStudentCourses().subscribe(res => {
+        var cont = 0;
+        while(cont < res.length){
+          var data = JSON.parse(res[cont]);
+          var semester = [];
+          var courses = [];
+
+          semester.push(data["semester"]);
+          var coursesCont = 0;
+
+          var dataCourses = data["courses"];
+
+          while(coursesCont < dataCourses.length){
+            var course = [];
+            var readCourse = data["courses"][coursesCont];
+            course.push(readCourse[0]);
+            course.push(readCourse[1]);
+            courses.push(course);
+            coursesCont ++;
+          }
+          semester.push(courses);
+          this._courses.push(semester);
+          cont ++;
+        }
+      }, error => {
+        alert("ERROR");
+      });
+    }
 
     test(name){
       //alert(name);
@@ -23,10 +52,7 @@ export class CoursesComponent implements OnInit{
     }
 
 
-    public _courses = [["SEMESTRE 2 2020", ["CIRCUITOS EN CORRIENTE ALTERNA GRUPO 3","BASES DE DATOS GRUPO 2"]],
-                       ["SEMESTRE 1 2020", ["CIRCUITOS EN CORRIENTE ALTERNA GRUPO 3","BASES DE DATOS GRUPO 2","ELEMENTOS ACTIVOS GRUPO 2"]],
-                       ["VERANO 2019-2020", ["CIRCUITOS EN CORRIENTE ALTERNA GRUPO 3"]],
-                       ["SEMESTRE 2 2019", ["CIRCUITOS EN CORRIENTE ALTERNA GRUPO 3","BASES DE DATOS GRUPO 2","ELEMENTOS ACTIVOS GRUPO 2","ARTES DRAMATICAS GRUPO 2"]]]
+    public _courses = [];
 
 
 

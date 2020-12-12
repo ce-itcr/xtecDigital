@@ -92,4 +92,9 @@ export class CommunicationService {
     } 
     );
   }
+
+  getStudentCourses(){
+    return this.http.post<any[]>("api/student/semester", {"id":"2018367254"});
+  }
+
 }
