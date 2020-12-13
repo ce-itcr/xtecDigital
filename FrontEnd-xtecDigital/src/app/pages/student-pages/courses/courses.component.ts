@@ -43,14 +43,28 @@ export class CoursesComponent implements OnInit{
       });
     }
 
-    test(name){
-      //alert(name);
-      //localStorage.setItem("currentCourseId", id);
+    goToCourse(code, name, semester){
+
+      var year = this.getSemester(semester);
+      var period = this.getPeriod(semester);
+
       localStorage.setItem("currentCourseName", name);
+      localStorage.setItem("currentCourse", code);
+      localStorage.setItem("currentYear", year);
+      localStorage.setItem("currentPeriod", period);
+
       this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
       this.router.navigate(['course']));
+      
     }
 
+    getSemester(semester: string){
+      return semester.slice(11,15);
+    }
+
+    getPeriod(semester: string){
+      return semester.slice(9,10);
+    }
 
     public _courses = [];
 
