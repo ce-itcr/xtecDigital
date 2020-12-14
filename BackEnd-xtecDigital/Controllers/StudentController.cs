@@ -91,5 +91,34 @@ namespace BackEnd_xtecDigital.Controllers
                 this.courses = courses;
             }
         }
+
+        [HttpPost]
+        [Route("api/student/group/news")]
+        public JArray getGroupNews([FromBody] JObject groupInfo)
+        {
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_GetStudentNews @GID";
+            getRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = groupInfo["id"];
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            JArray obj = new JArray();
+            while (data.Read())
+            {
+                int pos1 = data.GetValue(1).ToString().IndexOf("/") + 1;
+                pos1 += data.GetValue(1).ToString().Substring(pos1).IndexOf("/") + 5;
+                JObject newsInfo = new JObject(
+                new JProperty("title", data.GetValue(0).ToString()),
+                new JProperty("publicationDate", data.GetValue(1).ToString().Substring(0, pos1)),
+                new JProperty("publicationTime", data.GetValue(2).ToString()),
+                new JProperty("author", data.GetValue(3).ToString()),
+                new JProperty("message", data.GetValue(4).ToString())
+                );
+                obj.Add(newsInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
     }
 }
