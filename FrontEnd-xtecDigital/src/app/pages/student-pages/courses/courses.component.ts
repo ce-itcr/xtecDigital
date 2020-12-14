@@ -47,15 +47,17 @@ export class CoursesComponent implements OnInit{
 
       var year = this.getSemester(semester);
       var period = this.getPeriod(semester);
+      var groupNum = this.getGroup(name);
 
       localStorage.setItem("currentCourseName", name);
       localStorage.setItem("currentCourse", code);
       localStorage.setItem("currentYear", year);
       localStorage.setItem("currentPeriod", period);
+      localStorage.setItem("currentGroup", groupNum);
 
       this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
       this.router.navigate(['course']));
-      
+
     }
 
     getSemester(semester: string){
@@ -64,6 +66,10 @@ export class CoursesComponent implements OnInit{
 
     getPeriod(semester: string){
       return semester.slice(9,10);
+    }
+
+    getGroup(courseName: string){
+      return courseName.slice(courseName.length-1,courseName.length);
     }
 
     public _courses = [];

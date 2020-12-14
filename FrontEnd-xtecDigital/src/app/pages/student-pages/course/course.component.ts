@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommunicationService } from 'app/communication/communication.service';
 
 
 @Component({
@@ -10,15 +11,46 @@ import { Router } from '@angular/router';
 
 export class CourseComponent implements OnInit{
 
-  constructor(private router:Router){}
+  constructor(private router:Router, private CS: CommunicationService){}
 
   ngOnInit(){
-    this.courseId = localStorage.getItem("currentCourseId");
+
     this.courseName = localStorage.getItem("currentCourseName");
+    this.year = localStorage.getItem("currentYear");
+    this.period = localStorage.getItem("currentPeriod");
+    this.courseId = localStorage.getItem("currentCourse");
+    this.courseGroup = localStorage.getItem("currentGroup");
+
+    this.newsId = this.year + "-" + this.period + "-" + this.courseId + "-" + this.courseGroup;
+
+    this.CS.getNews(this.newsId).subscribe(res => {
+      var cont = 0;
+      while(cont < res.length){
+        var data = [];
+        var newInfo = res[cont];
+        data.push(newInfo["title"]);
+        data.push(newInfo["publicationTime"]);
+        data.push(newInfo["author"]);
+        data.push(newInfo["message"]);
+        data.push(newInfo["publicationTime"]);
+        this.news.push(data);
+        cont++;
+      }
+    }, error => {
+      alert("ERROR");
+    });
+    alert(this.newsId);
+
   }
 
-  courseId;
   courseName;
+  year;
+  period;
+  courseId;
+  courseGroup;
+
+  newsId;
+
   students = [["Nombre Estudiante 1","user01@gmail.com","../../../../assets/img/default-avatar.png"],
               ["Nombre Estudiante 2","user02@gmail.com","../../../../assets/img/default-avatar.png"],
               ["Nombre Estudiante 3","user03@gmail.com","../../../../assets/img/default-avatar.png"],
@@ -27,8 +59,7 @@ export class CourseComponent implements OnInit{
   professors = [["Nombre Profesor 1","prof01@gmail.com","../../../../assets/img/default-avatar.png"],
                 ["Nombre Profesor 2","prof02@gmail.com","../../../../assets/img/default-avatar.png"]]
 
-  news = [["Horario de Consulta 04/12/2020","2020-04-12","PROFESOR 01","Estimados estudiantes el horario de consulta para el día de hoy es a las 11:00am por el siguiente link: http://localhost:4200/#/course",],
-          ["Link para el II Examen Parcial","2020-04-12","PROFESOR 01","Estimados estudiantes el horario de consulta para el día de hoy es a las 11:00am por el siguiente link: http://localhost:4200/#/course"]]
+  news = []
 
 
   toCurrentSection(){

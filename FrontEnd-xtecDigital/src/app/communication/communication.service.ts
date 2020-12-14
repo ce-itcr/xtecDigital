@@ -81,9 +81,6 @@ export class CommunicationService {
   }
 
   sendNewSemester(year, period, courses){
-    alert(year)
-    alert(period)
-    alert(courses)
     return this.http.post<JSON>("api/admin/semester/add",
     {
       "year":year,
@@ -95,6 +92,14 @@ export class CommunicationService {
 
   getStudentCourses(){
     return this.http.post<any[]>("api/student/semester", {"id":"2018367254"});
+  }
+
+  getNews(newsId){
+    return this.http.post<any[]>("api/student/group/news",
+    {
+      "id":newsId
+    }
+    );
   }
 
 }
