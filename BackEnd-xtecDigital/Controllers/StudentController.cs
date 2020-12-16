@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using System.Data;
 using Newtonsoft.Json;
 using BackEnd_xtecDigital.Models;
+using System.Globalization;
 
 namespace BackEnd_xtecDigital.Controllers
 {
@@ -97,9 +98,11 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 int pos1 = data.GetValue(1).ToString().IndexOf("/") + 1;
                 pos1 += data.GetValue(1).ToString().Substring(pos1).IndexOf("/") + 5;
+                DateTime date = DateTime.ParseExact(data.GetValue(1).ToString().Substring(0, pos1), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                string correctdate = date.ToString("yyyy/MM/dd");
                 JObject newsInfo = new JObject(
                 new JProperty("title", data.GetValue(0).ToString()),
-                new JProperty("publicationDate", data.GetValue(1).ToString().Substring(0, pos1)),
+                new JProperty("publicationDate", correctdate),
                 new JProperty("publicationTime", data.GetValue(2).ToString()),
                 new JProperty("author", data.GetValue(3).ToString()),
                 new JProperty("message", data.GetValue(4).ToString())
