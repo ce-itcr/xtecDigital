@@ -15,19 +15,20 @@ using BackEnd_xtecDigital.Models;
 namespace BackEnd_xtecDigital.Controllers
 {
     [EnableCors(origins: "http://localhost:4200/", headers: "*", methods: "*")]
-    public class StudentController : ApiController
+    public class TeacherController : ApiController
     {
         static string stringconnection = @"Data Source=(localdb)\xTecDigital; Initial Catalog=xTecDigital; Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
+
         [HttpPost]
-        [Route("api/student/semester")]
-        public JArray obtainStudentSemester([FromBody] JObject studentInfo)
+        [Route("api/teacher/semester")]
+        public JArray obtainTeacherSemester([FromBody] JObject teacherInfo)
         {
             conn.Open();
             SqlCommand getRequest = conn.CreateCommand();
-            getRequest.CommandText = "EXEC sp_GetStudentSemester @Student";
-            getRequest.Parameters.Add("@Student", SqlDbType.Int).Value = studentInfo["id"];
+            getRequest.CommandText = "EXEC sp_GetTeacherSemester @Teacher";
+            getRequest.Parameters.Add("@Teacher", SqlDbType.Int).Value = teacherInfo["id"];
             getRequest.ExecuteNonQuery();
             SqlDataReader data = getRequest.ExecuteReader();
             JArray obj = new JArray();
@@ -68,7 +69,7 @@ namespace BackEnd_xtecDigital.Controllers
                 }
             }
             int j = 0;
-            foreach(var item in semester)
+            foreach (var item in semester)
             {
 
                 SemesterCourse course = new SemesterCourse("SEMESTRE " + item[1] + " " + item[0], courses[j]);
@@ -81,34 +82,5 @@ namespace BackEnd_xtecDigital.Controllers
 
         }
 
-
-        [HttpPost]
-        [Route("api/student/group/news")]
-        public JArray getGroupNews([FromBody] JObject groupInfo)
-        {
-            conn.Open();
-            SqlCommand getRequest = conn.CreateCommand();
-            getRequest.CommandText = "EXEC sp_GetStudentNews @GID";
-            getRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = groupInfo["id"];
-            getRequest.ExecuteNonQuery();
-            SqlDataReader data = getRequest.ExecuteReader();
-            JArray obj = new JArray();
-            while (data.Read())
-            {
-                int pos1 = data.GetValue(1).ToString().IndexOf("/") + 1;
-                pos1 += data.GetValue(1).ToString().Substring(pos1).IndexOf("/") + 5;
-                JObject newsInfo = new JObject(
-                new JProperty("title", data.GetValue(0).ToString()),
-                new JProperty("publicationDate", data.GetValue(1).ToString().Substring(0, pos1)),
-                new JProperty("publicationTime", data.GetValue(2).ToString()),
-                new JProperty("author", data.GetValue(3).ToString()),
-                new JProperty("message", data.GetValue(4).ToString())
-                );
-                obj.Add(newsInfo);
-            }
-            data.Close();
-            conn.Close();
-            return obj;
-        }
     }
 }
