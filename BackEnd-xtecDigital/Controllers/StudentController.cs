@@ -113,5 +113,32 @@ namespace BackEnd_xtecDigital.Controllers
             conn.Close();
             return obj;
         }
+
+        [HttpPost]
+        [Route("api/student/group/folder")]
+        public JArray getGroupfolder([FromBody] JObject groupInfo)
+        {
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_GetGroupFolder @GID";
+            getRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = groupInfo["id"];
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            JArray obj = new JArray();
+            while (data.Read())
+            {
+                int pos1 = data.GetValue(2).ToString().IndexOf("/") + 1;
+                pos1 += data.GetValue(2).ToString().Substring(pos1).IndexOf("/") + 5;
+                JObject newsInfo = new JObject(
+                new JProperty("name", data.GetValue(0).ToString()),
+                new JProperty("Teacher", data.GetValue(1).ToString()),
+                new JProperty("creationDate", data.GetValue(2).ToString().Substring(0, pos1))
+                );
+                obj.Add(newsInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
     }
 }
