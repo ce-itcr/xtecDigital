@@ -91,13 +91,14 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 conn.Open();
                 SqlCommand insertRequest = conn.CreateCommand();
-                insertRequest.CommandText = "EXEC sp_AddNews @PublicationTime, @PublicationDate, @Author, @NMessage, @Title, @GID";
+                insertRequest.CommandText = "EXEC sp_AddNews @PublicationTime, @PublicationDate, @Author, @NMessage, @Title, @GID, @NID";
                 insertRequest.Parameters.Add("@PublicationTime", SqlDbType.Time).Value = newsInfo["hour"];
                 insertRequest.Parameters.Add("@PublicationDate", SqlDbType.Date).Value = newsInfo["date"];
                 insertRequest.Parameters.Add("@Author", SqlDbType.VarChar, 50).Value = newsInfo["author"];
                 insertRequest.Parameters.Add("@NMessage", SqlDbType.VarChar, 300).Value = newsInfo["body"];
                 insertRequest.Parameters.Add("@Title", SqlDbType.VarChar, 30).Value = newsInfo["title"];
                 insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = newsInfo["id"];
+                insertRequest.Parameters.Add("@NID", SqlDbType.VarChar, 100).Value = newsInfo["id"];
                 insertRequest.ExecuteNonQuery();
                 conn.Close();
                 return Ok("Noticia agregada");
@@ -108,6 +109,48 @@ namespace BackEnd_xtecDigital.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/teacher/group/news/update")]
+        public IHttpActionResult updateNews([FromBody] JObject newsInfo)
+        {
 
+            try
+            {
+                conn.Open();
+                SqlCommand updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_UpdateNews @NMessage, @Title, @NID";
+                updateRequest.Parameters.Add("@NMessage", SqlDbType.VarChar, 300).Value = newsInfo["body"];
+                updateRequest.Parameters.Add("@Title", SqlDbType.VarChar, 30).Value = newsInfo["title"];
+                updateRequest.Parameters.Add("@NID", SqlDbType.VarChar, 100).Value = newsInfo["id"];
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Noticia acualizada");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/news/delete")]
+        public IHttpActionResult deleteNews([FromBody] JObject newsInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_DeleteNews @NID";
+                updateRequest.Parameters.Add("@NID", SqlDbType.VarChar, 100).Value = newsInfo["id"];
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Noticia delete");
+            }
+            catch
+            {
+                return BadRequest("Error al borrar");
+            }
+        }
     }
 }
