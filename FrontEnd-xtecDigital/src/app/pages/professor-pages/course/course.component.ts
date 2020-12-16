@@ -96,11 +96,12 @@ export class CourseComponent implements OnInit{
     this.router.navigate(['professor_assignments']));
   }
 
-  toNewsSection(title, date, author, body){
+  toNewsSection(title, date, author, body, time){
     localStorage.setItem("currentNewsBody",body);
     localStorage.setItem("currentNewsTitle",title);
     localStorage.setItem("currentNewsDate",date);
     localStorage.setItem("currentNewsAuthor",author);
+    localStorage.setItem("currentNewsTime",time);
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['professor_news']));
   }

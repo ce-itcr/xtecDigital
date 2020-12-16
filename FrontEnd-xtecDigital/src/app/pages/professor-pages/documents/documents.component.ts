@@ -16,16 +16,28 @@ export class DocumentsComponent implements OnInit{
   ngOnInit(){
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentUser = localStorage.getItem("currentUser");
+    this.CS.getDocuments().subscribe(res => {
+      var cont = 0;
+      while(cont < res.length){
+        var data = [];
+        data.push(res[cont][0]);
+        data.push(res[cont][1]);
+        data.push(res[cont][2]);
+        this.folders.push(data);
+        cont++;
+      }
+    }, error => {
+      alert("ERROR");
+    });
   }
 
   courseName;
   closeModal = false;
   currentUser;
-  folders = [["PRESENTACIONES","NOMBRE PROFESOR","2020-07-10",["Lesson_01_Introduction_to_Databases.pdf"]],
-             ["QUICES","NOMBRE PROFESOR","2020-07-10",["Lesson_01_Introduction_to_Databases.pdf"]],
-             ["EXAMENES","NOMBRE PROFESOR","2020-07-10",["Lesson_01_Introduction_to_Databases.pdf"]],
-             ["PROYECTOS","NOMBRE PROFESOR","2020-07-10",["Lesson_01_Introduction_to_Databases.pdf"]]
-            ]
+  folders = [];
+
+  n = new Date();
+  date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
 
   openModal(content){
     if(this.closeModal){
@@ -42,8 +54,7 @@ export class DocumentsComponent implements OnInit{
   }
 
   createFolder(title, author){
-    let date: Date = new Date();
-    alert(title + date + author)
+    alert(this.date);
   }
 
 }

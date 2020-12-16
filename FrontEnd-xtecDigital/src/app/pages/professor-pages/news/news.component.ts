@@ -19,12 +19,14 @@ export class NewsComponent implements OnInit{
     this.newTitle = localStorage.getItem("currentNewsTitle");
     this.newDate = localStorage.getItem("currentNewsDate");
     this.newAuthor = localStorage.getItem("currentNewsAuthor");
+    this.newTime = localStorage.getItem("currentNewsTime");
   }
 
   newBody;
   newTitle;
   newDate;
   newAuthor;
+  newTime;
   closeModal = false
 
   openModal(content){
@@ -35,7 +37,23 @@ export class NewsComponent implements OnInit{
     }
   }
 
-  updateNew(title, body){
+  deleteNews(){
+    var toDelete = this.newAuthor + "-" + this.newDate + "-" + this.newTime;
+    this.CS.deleteNews(toDelete).subscribe(res => {
+      this.router.navigateByUrl("/professor_course");
+    }, error => {
+      this.router.navigateByUrl("/professor_course");
+      alert("ERROR");
+    });
+  }
+
+  updateNews(title, body){
+    var toDelete = this.newAuthor + "-" + this.newDate + "-" + this.newTime;
+    this.CS.updateNews(toDelete, title, body).subscribe(res => {
+      this.router.navigateByUrl("/professor_course");
+    }, error => {
+      alert("ERROR");
+    });
   }
 
 }

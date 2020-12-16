@@ -119,4 +119,31 @@ export class CommunicationService {
     );
   }
 
+  deleteNews(newsId){
+    alert(newsId);
+    return this.http.post<any[]>("api/teacher/group/news/delete",
+    {
+      "id":newsId
+    }
+    );
+  }
+
+  updateNews(newsId, title, body){
+    return this.http.post<any[]>("api/teacher/group/news/update",
+    {
+      "id":newsId,
+      "title":title,
+      "body":body
+    }
+    );
+  }
+
+  getDocuments(){
+    return this.http.post<any[]>("api/teacher/group/news/update",
+    {
+      "id":localStorage.getItem("newsId")
+    }
+    );
+  }
+
 }

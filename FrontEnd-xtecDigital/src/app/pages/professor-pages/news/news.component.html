@@ -1,6 +1,8 @@
 <div style="margin-left: auto;margin-right: auto; display: block;">
   <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" (click)="openModal(update_news_modal)">Actualizar Noticia</button>
+  <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" (click)="openModal(delete_news_modal)">Eliminar Noticia</button>
 </div>
+
 <div class="row">
   <div class="col-md-12">
     <div class="card">
@@ -43,7 +45,22 @@
     </form>
   </div>
   <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="updateNew(title.value, body.value)" (click)="modal.close()">Actualizar</button>
+      <button type="button" class="btn btn-success" (click)="updateNews(title.value, body.value)" (click)="modal.close()">Actualizar</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #delete_news_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Eliminar Noticia</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      ¿Está seguro de que desea eliminar esta noticia?
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="deleteNews()" (click)="modal.close()">Eliminar</button>
       <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>
