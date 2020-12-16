@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommunicationService } from 'app/communication/communication.service';
 
-
 @Component({
     selector: 'student_document-cmp',
     moduleId: module.id,
@@ -38,8 +37,9 @@ export class DocumentComponent implements OnInit{
     }
   }
 
-  downloadFile(document){
-    alert(document);
+  onNavigate(){
+    //this.router.navigateByUrl("https://www.google.com");
+    window.location.href="https://drive.google.com/file/d/1XoyVt6QgcJWDvBRMVo4sQ_3DA_PcGwO0/view?usp=sharing";
   }
 
 }

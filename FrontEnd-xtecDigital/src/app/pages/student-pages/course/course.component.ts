@@ -22,6 +22,7 @@ export class CourseComponent implements OnInit{
     this.courseGroup = localStorage.getItem("currentGroup");
 
     this.newsId = this.year + "-" + this.period + "-" + this.courseId + "-" + this.courseGroup;
+    localStorage.setItem("newsId",this.newsId);
 
     this.CS.getNews(this.newsId).subscribe(res => {
       var cont = 0;
@@ -29,7 +30,7 @@ export class CourseComponent implements OnInit{
         var data = [];
         var newInfo = res[cont];
         data.push(newInfo["title"]);
-        data.push(newInfo["publicationTime"]);
+        data.push(newInfo["publicationDate"]);
         data.push(newInfo["author"]);
         data.push(newInfo["message"]);
         data.push(newInfo["publicationTime"]);

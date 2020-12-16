@@ -94,10 +94,27 @@ export class CommunicationService {
     return this.http.post<any[]>("api/student/semester", {"id":"2018367254"});
   }
 
+  getTeacherCourses(){
+    return this.http.post<any[]>("api/teacher/semester", {"id":"10001000"});
+  }
+
   getNews(newsId){
     return this.http.post<any[]>("api/student/group/news",
     {
       "id":newsId
+    }
+    );
+  }
+
+  createNews(author, title, body, date, hour, newsId){
+    return this.http.post<any[]>("api/teacher/group/news/add",
+    {
+      "id":newsId,
+      "author":author,
+      "title":title,
+      "body":body,
+      "date":date,
+      "hour":hour
     }
     );
   }

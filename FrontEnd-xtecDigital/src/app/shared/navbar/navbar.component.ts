@@ -4,6 +4,7 @@ import { ROUTES_PROFESSOR } from '../sidebar/professor-sidebar/sidebar.component
 import { ROUTES_STUDENT } from '../sidebar/student-sidebar/sidebar.component';
 import { Router } from '@angular/router';
 import { Location} from '@angular/common';
+import { CommunicationService } from 'app/communication/communication.service';
 
 @Component({
     moduleId: module.id,
@@ -12,51 +13,50 @@ import { Location} from '@angular/common';
 })
 
 export class NavbarComponent implements OnInit{
+
+    
+
     private listTitles: any[];
     location: Location;
     private nativeElement: Node;
     private toggleButton;
     private sidebarVisible: boolean;
     allRoutes = ROUTES.concat(ROUTES_PROFESSOR).concat(ROUTES_STUDENT);
-    newsData = [
-      {
-        title: 'Horario de Consulta 04/12/2020',
-        date: '04-12-2020',
-        body: 'Estimados estudiantes el horario de consulta para el día de hoy es a las 11:00am por el siguiente link: http://localhost:4200/#/course'
-      },
-      {
-        title: 'Link para el Examen Parcial II',
-        date: '04-10-2020',
-        body: ''
-      },
-      {
-        title: 'Link para el Examen Parcial I',
-        date: '12-09-2020',
-        body: ''
-      },
-      {
-        title: 'Horario de Consulta día de hoy',
-        date: '25-07-2020',
-        body: ''
-      },
-    ];
+    news = [];
 
 
     public isCollapsed = true;
     @ViewChild("navbar-cmp", {static: false}) button;
 
-    constructor(location:Location, private renderer : Renderer2, private element : ElementRef, private router: Router) {
+    constructor(location:Location, private renderer : Renderer2, private element : ElementRef, private router: Router, private CS: CommunicationService) {
         this.location = location;
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
     }
 
     ngOnInit(){
+
+        this.news = [];
+
         this.listTitles = this.allRoutes.filter(listTitle => listTitle);
         var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         this.router.events.subscribe((event) => {
           this.sidebarClose();
+       });
+       this.CS.getNews(localStorage.getItem("newsId")).subscribe(res => {
+        var cont = 0;
+        while(cont < res.length){
+          var data = [];
+          var newInfo = res[cont];
+          data.push(newInfo["title"]);
+          data.push(newInfo["publicationDate"]);
+          data.push(newInfo["message"]);
+          this.news.push(data);
+          cont++;
+      }
+       }, error => {
+         alert("ERROR")
        });
     }
     getTitle(){
@@ -139,4 +139,7 @@ export class NavbarComponent implements OnInit{
         this.router.navigate(['news']));
       }
 
+      test(){
+        alert("HOLA");
+      }
 }
