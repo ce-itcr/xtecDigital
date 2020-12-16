@@ -98,7 +98,8 @@ namespace BackEnd_xtecDigital.Controllers
                 insertRequest.Parameters.Add("@NMessage", SqlDbType.VarChar, 300).Value = newsInfo["body"];
                 insertRequest.Parameters.Add("@Title", SqlDbType.VarChar, 30).Value = newsInfo["title"];
                 insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = newsInfo["id"];
-                insertRequest.Parameters.Add("@NID", SqlDbType.VarChar, 100).Value = newsInfo["id"];
+                insertRequest.Parameters.Add("@NID", SqlDbType.VarChar, 100).Value = newsInfo["author"] + "-" + newsInfo["date"] + "-" + newsInfo["hour"];
+                Debug.Print(newsInfo["author"] + "-" + newsInfo["date"] + "-" + newsInfo["hour"]);
                 insertRequest.ExecuteNonQuery();
                 conn.Close();
                 return Ok("Noticia agregada");
