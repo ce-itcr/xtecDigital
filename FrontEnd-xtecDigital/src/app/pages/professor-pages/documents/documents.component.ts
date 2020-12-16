@@ -20,9 +20,9 @@ export class DocumentsComponent implements OnInit{
       var cont = 0;
       while(cont < res.length){
         var data = [];
-        data.push(res[cont][0]);
-        data.push(res[cont][1]);
-        data.push(res[cont][2]);
+        data.push(res[cont]["name"]);
+        data.push(res[cont]["Teacher"]);
+        data.push(res[cont]["creationDate"]);
         this.folders.push(data);
         cont++;
       }
@@ -54,7 +54,11 @@ export class DocumentsComponent implements OnInit{
   }
 
   createFolder(title, author){
-    alert(this.date);
+    this.CS.createDocument(title, author, this.date).subscribe(res => {
+      this.ngOnInit();
+    }, error => {
+      alert("ERROR");
+    });
   }
 
 }

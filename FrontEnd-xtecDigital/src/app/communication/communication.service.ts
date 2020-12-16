@@ -139,9 +139,20 @@ export class CommunicationService {
   }
 
   getDocuments(){
-    return this.http.post<any[]>("api/teacher/group/news/update",
+    return this.http.post<any[]>("api/student/group/folder",
     {
       "id":localStorage.getItem("newsId")
+    }
+    );
+  }
+
+  createDocument(title, author, date){
+    return this.http.post<any[]>("api/teacher/group/news/update",
+    {
+      "id":localStorage.getItem("newsId"),
+      "title":title,
+      "author":author,
+      "date":date
     }
     );
   }
