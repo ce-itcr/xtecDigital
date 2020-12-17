@@ -25,6 +25,7 @@ export class DocumentComponent implements OnInit{
       while(cont < res.length){
         var data = [];
         data.push(res[cont]["name"]);
+        data.push(res[cont]["date"].slice(0,10));
         data.push(res[cont]["url"]);
         this.files.push(data);
         cont++;
@@ -37,8 +38,13 @@ export class DocumentComponent implements OnInit{
 
   courseName;
   currentDocumentSection;
+  currentFileName;
 
-  files = [["tarea1.pdf","https://drive.google.com/file/d/1XoyVt6QgcJWDvBRMVo4sQ_3DA_PcGwO0/view?usp=sharing"]];
+  files = [];
+
+  n = new Date();
+  date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
+  
 
   closeModal = false;
   public imagePath;
@@ -52,11 +58,32 @@ export class DocumentComponent implements OnInit{
   }
 
   createFile(name, url){
-    this.CS.createDocumentFile(this.currentDocumentSection, name, url).subscribe(res => {
+    var size = 50
+    this.CS.createDocumentFile(this.currentDocumentSection, name, this.date, size, url).subscribe(res => {
       this.ngOnInit();
     }, error => {
       alert("ERROR"); 
     });
+  }
+
+  deleteFile(name){
+    this.CS.deleteDocumentFile(this.currentDocumentSection, name).subscribe(res => {
+      this.ngOnInit();
+    }, error => {
+      alert("ERROR");
+    })
+  }
+
+  updateFile(name, url){
+    this.CS.updateDocumentFile(this.currentDocumentSection, name, url).subscribe(res => {
+      this.ngOnInit();
+    }, error => {
+      alert("ERROR");
+    })
+  }
+
+  asign(name){
+    this.currentFileName = name;
   }
 
   onNavigate(url){

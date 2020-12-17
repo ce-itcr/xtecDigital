@@ -14,32 +14,30 @@ export class DocumentComponent implements OnInit{
   ngOnInit(){
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentDocumentSection = localStorage.getItem("currentDocumentSection");
-    //this.test("PRESENTACIONES");
-    this.populateDocs(this.currentDocumentSection);
+    this.files = [];
+
+    this.CS.getDocumentFiles(this.currentDocumentSection).subscribe(res => {
+      var cont = 0;
+      while(cont < res.length){
+        var data = [];
+        data.push(res[cont]["name"]);
+        data.push(res[cont]["date"].slice(0,10));
+        data.push(res[cont]["url"]);
+        this.files.push(data);
+        cont++;
+      }
+    }, error => {
+      alert("ERROR");
+    })
   }
 
   courseName;
   currentDocumentSection;
   documents;
-  folders = [["PRESENTACIONES","NOMBRE PROFESOR","2020-07-10",["Lesson_01_Introduction_to_Databases.pdf","Lesson_02_Conceptual_Model.pdf"]],
-             ["QUICES","NOMBRE PROFESOR","2020-07-10",["Quiz_1.pdf","Quiz2_test.pdf"]],
-             ["EXAMENES","NOMBRE PROFESOR","2020-07-10",["Examen_1.pdf"]],
-             ["PROYECTOS","NOMBRE PROFESOR","2020-07-10",["Proyecto_1.pdf"]]
-            ]
+  files = [];
 
-  populateDocs(name){
-    for(var i=0; i<this.folders.length; i++){
-      if(name == this.folders[i][0]){
-        //console.log(this.folders[i][3]);
-        this.documents = this.folders[i][3];
-        break;
-      }
-    }
-  }
-
-  onNavigate(){
-    //this.router.navigateByUrl("https://www.google.com");
-    window.location.href="https://drive.google.com/file/d/1XoyVt6QgcJWDvBRMVo4sQ_3DA_PcGwO0/view?usp=sharing";
+  onNavigate(url){
+    window.location.href=url;
   }
 
 }

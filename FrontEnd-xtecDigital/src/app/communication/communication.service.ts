@@ -169,14 +169,49 @@ export class CommunicationService {
     }
     );
   }
-s
-  createDocumentFile(folder ,name, url){
+
+  createDocumentFile(folder ,name, date, size, url){
     var id = localStorage.getItem("newsId") + "-" + folder;
     return this.http.post<any[]>("api/teacher/group/folder/document/add",
     {
       "id":id,
       "file":name,
+      "date":date,
+      "size":size,
       "url":url
+    }
+    );
+  }
+
+  deleteDocumentFile(folder, name){
+    var id = localStorage.getItem("newsId") + "-" + folder;
+    return this.http.post<any[]>("api/teacher/group/folder/document/delete",
+    {
+      "id":id,
+      "file":name
+    }
+    );
+  }
+
+  updateDocumentFile(folder, name, url){
+    var id = localStorage.getItem("newsId") + "-" + folder;
+    alert(id);
+    alert(name);
+    alert(url);
+    return this.http.post<any[]>("api/teacher/group/folder/document/update",
+    {
+      "id":id,
+      "file":name,
+      "url":url
+    }
+    );
+  }
+
+  deleteFolder(folder){
+    var id = localStorage.getItem("newsId") + "-" + folder;
+    return this.http.post<any[]>("api/teacher/group/folder/delete",
+    {
+      "id":id
     }
     );
   }

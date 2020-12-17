@@ -62,4 +62,12 @@ export class DocumentsComponent implements OnInit{
     });
   }
 
+  deleteFolder(folder){
+    this.CS.deleteFolder(folder).subscribe(res => {
+      this.ngOnInit();
+    }, error => {
+      alert("ERROR");
+    });
+  }
+
 }

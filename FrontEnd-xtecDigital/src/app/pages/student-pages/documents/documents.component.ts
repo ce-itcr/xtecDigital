@@ -14,14 +14,26 @@ export class DocumentsComponent implements OnInit{
 
   ngOnInit(){
     this.courseName = localStorage.getItem("currentCourseName");
+    this.user = localStorage.getItem("currentUser");
+    this.folders = [];
+    this.CS.getDocuments().subscribe(res => {
+      var cont = 0;
+      while(cont < res.length){
+        var data = [];
+        data.push(res[cont]["name"]);
+        data.push(res[cont]["Teacher"]);
+        data.push(res[cont]["creationDate"]);
+        this.folders.push(data);
+        cont++;
+      }
+    }, error => {
+      alert("ERROR");
+    });
   }
 
   courseName;
-  folders = [["PRESENTACIONES","NOMBRE PROFESOR","2020-07-10",["Lesson_01_Introduction_to_Databases.pdf"]],
-             ["QUICES","NOMBRE PROFESOR","2020-07-10",["Lesson_01_Introduction_to_Databases.pdf"]],
-             ["EXAMENES","NOMBRE PROFESOR","2020-07-10",["Lesson_01_Introduction_to_Databases.pdf"]],
-             ["PROYECTOS","NOMBRE PROFESOR","2020-07-10",["Lesson_01_Introduction_to_Databases.pdf"]]
-            ]
+  user;
+  folders = []
 
 
 
