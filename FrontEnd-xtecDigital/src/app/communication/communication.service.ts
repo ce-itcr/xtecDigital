@@ -147,10 +147,6 @@ export class CommunicationService {
   }
 
   createDocument(title, author, date){
-    alert(localStorage.getItem("newsId"));
-    alert(title);
-    alert(author);
-    alert(date);
     return this.http.post<any[]>("api/teacher/group/folder/add",
     {
       "id":localStorage.getItem("newsId"),
@@ -195,9 +191,6 @@ export class CommunicationService {
 
   updateDocumentFile(folder, name, url){
     var id = localStorage.getItem("newsId") + "-" + folder;
-    alert(id);
-    alert(name);
-    alert(url);
     return this.http.post<any[]>("api/teacher/group/folder/document/update",
     {
       "id":id,

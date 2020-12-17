@@ -40,8 +40,6 @@ export class CourseComponent implements OnInit{
     }, error => {
       alert("ERROR");
     });
-    alert(this.newsId);
-
   }
 
   courseName;
