@@ -195,7 +195,9 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 JObject documentInfo = new JObject(
                 new JProperty("name", data.GetValue(0).ToString()),
-                new JProperty("url", data.GetValue(1).ToString())
+                new JProperty("url", data.GetValue(1).ToString()),
+                new JProperty("date", data.GetValue(2).ToString()),
+                new JProperty("size", data.GetValue(3).ToString())
                 );
                 obj.Add(documentInfo);
             }
@@ -213,10 +215,12 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 conn.Open();
                 SqlCommand insertRequest = conn.CreateCommand();
-                insertRequest.CommandText = "EXEC sp_AddFolderDocument @FID, @DocName, @DocLink";
+                insertRequest.CommandText = "EXEC sp_AddFolderDocument @FID, @DocName, @DocLink, @UploadDate, @DocSize";
                 insertRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = documentInfo["id"];
                 insertRequest.Parameters.Add("@DocName", SqlDbType.VarChar, 50).Value = documentInfo["file"];
                 insertRequest.Parameters.Add("@DocLink", SqlDbType.VarChar, Int32.MaxValue).Value = documentInfo["url"];
+                insertRequest.Parameters.Add("@UploadDate", SqlDbType.Date).Value = documentInfo["date"];
+                insertRequest.Parameters.Add("@DocSize", SqlDbType.Int).Value = documentInfo["size"];
                 insertRequest.ExecuteNonQuery();
                 conn.Close();
                 return Ok("Documento agregado");
@@ -224,6 +228,51 @@ namespace BackEnd_xtecDigital.Controllers
             catch
             {
                 return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/folder/document/delete")]
+        public IHttpActionResult deleteDocument([FromBody] JObject documentInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand deleteRequest = conn.CreateCommand();
+                deleteRequest.CommandText = "EXEC sp_DeleteFolderDocument @FID, @DocName";
+                deleteRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = documentInfo["id"];
+                deleteRequest.Parameters.Add("@DocName", SqlDbType.VarChar, 50).Value = documentInfo["file"];
+                deleteRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Documento eliminado");
+            }
+            catch
+            {
+                return BadRequest("Error al eliminar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/folder/document/update")]
+        public IHttpActionResult updateDocument([FromBody] JObject documentInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_UpdateFolderDocument @FID, @DocName, @DocLink";
+                updateRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = documentInfo["id"];
+                updateRequest.Parameters.Add("@DocName", SqlDbType.VarChar, 50).Value = documentInfo["file"];
+                updateRequest.Parameters.Add("@DocLink", SqlDbType.VarChar, Int32.MaxValue).Value = documentInfo["url"];
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Documento actualizado");
+            }
+            catch
+            {
+                return BadRequest("Error al actulizar");
             }
         }
     }
