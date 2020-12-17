@@ -179,5 +179,52 @@ namespace BackEnd_xtecDigital.Controllers
                 return BadRequest("Error al insertar");
             }
         }
+
+        [HttpPost]
+        [Route("api/teacher/group/folder/document")]
+        public JArray getGroupfolder([FromBody] JObject folderInfo)
+        {
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_GetFolderDocument @FID";
+            getRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = folderInfo["id"];
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            JArray obj = new JArray();
+            while (data.Read())
+            {
+                JObject documentInfo = new JObject(
+                new JProperty("name", data.GetValue(0).ToString()),
+                new JProperty("url", data.GetValue(1).ToString())
+                );
+                obj.Add(documentInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/folder/document/add")]
+        public IHttpActionResult addDocument([FromBody] JObject documentInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddFolderDocument @FID, @DocName, @DocLink";
+                insertRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = documentInfo["id"];
+                insertRequest.Parameters.Add("@DocName", SqlDbType.VarChar, 50).Value = documentInfo["file"];
+                insertRequest.Parameters.Add("@DocLink", SqlDbType.VarChar, Int32.MaxValue).Value = documentInfo["url"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Documento agregado");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
     }
 }

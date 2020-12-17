@@ -129,12 +129,12 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 int pos1 = data.GetValue(2).ToString().IndexOf("/") + 1;
                 pos1 += data.GetValue(2).ToString().Substring(pos1).IndexOf("/") + 5;
-                JObject newsInfo = new JObject(
+                JObject folderInfo = new JObject(
                 new JProperty("name", data.GetValue(0).ToString()),
                 new JProperty("Teacher", data.GetValue(1).ToString()),
                 new JProperty("creationDate", data.GetValue(2).ToString().Substring(0, pos1))
                 );
-                obj.Add(newsInfo);
+                obj.Add(folderInfo);
             }
             data.Close();
             conn.Close();
