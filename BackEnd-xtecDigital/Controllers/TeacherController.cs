@@ -153,5 +153,31 @@ namespace BackEnd_xtecDigital.Controllers
                 return BadRequest("Error al borrar");
             }
         }
+
+        [HttpPost]
+        [Route("api/teacher/group/folder/add")]
+        public IHttpActionResult addFolders([FromBody] JObject folderInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddFolder @FID, @FolderName, @GID, @Editable, @Teacher, @CreationDate";
+                insertRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = folderInfo["id"].ToString() + "-" + folderInfo["title"].ToString();
+                insertRequest.Parameters.Add("@FolderName", SqlDbType.VarChar, 50).Value = folderInfo["title"];
+                insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = folderInfo["id"];
+                insertRequest.Parameters.Add("@Editable", SqlDbType.VarChar, 10).Value = "true";
+                insertRequest.Parameters.Add("@Teacher", SqlDbType.Int).Value = folderInfo["author"];
+                insertRequest.Parameters.Add("@CreationDate", SqlDbType.Date).Value = folderInfo["date"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Folder agregado");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
     }
 }
