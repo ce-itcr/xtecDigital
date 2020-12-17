@@ -14,6 +14,7 @@ import { NewsComponent } from 'app/pages/professor-pages/news/news.component';
 import { DocumentsComponent } from 'app/pages/professor-pages/documents/documents.component';
 import { DocumentComponent } from 'app/pages/professor-pages/document/document.component';
 import { AssignmentsComponent } from 'app/pages/professor-pages/assignments/assignments.component';
+import { RubrosComponent } from 'app/pages/professor-pages/rubros/rubros.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { AssignmentsComponent } from 'app/pages/professor-pages/assignments/assi
     NewsComponent,
     DocumentsComponent,
     DocumentComponent,
-    AssignmentsComponent
+    AssignmentsComponent,
+    RubrosComponent
   ]
 })
 

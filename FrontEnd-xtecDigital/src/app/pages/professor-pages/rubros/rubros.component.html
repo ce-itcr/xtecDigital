@@ -1,0 +1,53 @@
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title"  style="color: #14447c;">{{courseName}} -> RUBROS</h1>
+      </div>
+
+      <div class="card-body">
+        <div fxflex="30%" *ngFor="let item of rubros">
+
+          <div class="text-muted card-columns">
+
+            <a (click)="toAssignmentSection(item[0])"><p><i class="fa fa-folder">
+
+              </i>{{item[0]}}</p>
+              <p>Autor: {{item[1]}}-Fecha: {{item[2]}}</p>
+
+            </a>
+            <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="deleteRubro(item[0])"><i class="fa fa-shopping-basket"></i></button>
+          </div>
+        </div>
+        <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(create_folder_modal)"><i class="fa fa-plus"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #create_folder_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Crear Rubro</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-6">
+          <label for="title"><b>Nombre del Rubro</b></label>
+          <input type="text" #title placeholder="Nombre del Rubro" required style="width: 100%;">
+        </div>
+        <div class="form-group mb-6">
+          <label for="percentage"><b>Porcentaje</b></label>
+          <input type="number" #percentage placeholder="Porcentaje del Rubro" required style="width: 100%;">
+        </div>
+      <div class="form-group mb-6">
+        <label for="author"><b>Autor</b></label>
+        <input type="text" #author placeholder="{{currentUser}}" required style="width: 100%;" disabled>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="createRubro(title.value, percentage.value, author.value)" (click)="modal.close()">Crear</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>

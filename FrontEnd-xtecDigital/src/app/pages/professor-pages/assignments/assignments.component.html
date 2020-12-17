@@ -3,47 +3,118 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h1 class="card-title"  style="color: #14447c;">{{courseName}} -> EVALUACIONES</h1>
+        <h1 class="card-title"  style="color: #14447c;">{{courseName}} -> RUBROS -> {{currentRubroSection}}</h1>
       </div>
 
       <div class="card-body">
-        <div fxflex="30%" *ngFor="let item of assignments">
+        <div fxflex="30%" *ngFor="let item of files">
 
-          <div class="text-muted card-columns">
-            <a (click)="populateDocs(item[0])"><p><i class="fa fa-folder"></i>  {{item[0]}} </p></a>
-            <!--<p>{{item[1]}}</p>-->
-              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="downloadFile(item)"><i class="fa fa-edit"></i></button>
-              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="downloadFile(item)"><i class="fa fa-shopping-basket"></i></button>
-
+          <div class="row">
+            <div class="col-md-7 col-7">
+              {{item[0]}}
+              <br />
+                <span class="text-muted">
+                  <small>Fecha: {{item[1]}}</small>
+                </span>
+            </div>
+            <div class="col-md-3 col-3 text-right">
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="onNavigate(item[2])"><i class="fa fa-arrow-down"></i></button>
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="asign(item[0])" (click)="openModal(update_file_modal)"><i class="fa fa-refresh"></i></button>
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="deleteFile(item[0])"><i class="fa fa-shopping-basket"></i></button>
+            </div>
           </div>
-
         </div>
-        <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(create_header_modal)"><i class="fa fa-plus"></i></button>
       </div>
+      <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(add_assignment_modal)"><i class="fa fa-plus"></i></button>
+
     </div>
   </div>
 </div>
 
-
-<ng-template #create_header_modal let-modal>
+<ng-template #add_assignment_modal let-modal>
   <div class="modal-header">
-      <h4 class="modal-title">Crear Rubro</h4>
+      <h4 class="modal-title">Añadir Evaluación</h4>
   </div>
   <div class="modal-body" >
     <form>
       <div class="form-group mb-6">
-          <label for="title"><b>Título del Rubro</b></label>
-          <input type="text" #title placeholder="Título del Rubro" required style="width: 100%;">
-        </div>
-        <div class="form-group mb-6">
-          <label for="title"><b>Porcentaje</b></label>
-          <input type="text" #title placeholder="Porcentaje" required style="width: 100%;">
-        </div>
+        <label for="rubro"><b>Rubro </b></label>
+        <input type="text" #rubro placeholder="{{currentRubroSection}}" disabled style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="title"><b>Nombre </b></label>
+        <input type="text" #name placeholder="Nombre del Archivo" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="percentage"><b>Porcentaje</b></label>
+        <input type="text" #percentage placeholder="Porcentaje de a Asignación" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="date"><b>Fecha Máxima</b></label>
+        <input type="date" #date placeholder="Porcentaje de a Asignación" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="url_file"><b>Especificación</b></label>
+        <input type="text" #url_file placeholder="Especificación de la Evaluación" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="a_type"><b>Tipo</b></label>
+        <input type="text" #a_type placeholder="Grupal o Individual" required style="width: 100%;">
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-danger" (click)="openModal()">Conformar Grupos</button>
+      </div>
     </form>
   </div>
   <div class="modal-footer">
-      <button type="button" class="btn btn-success"  (click)="modal.close()">Crear</button>
+      <button type="button" class="btn btn-success" (click)="createFile(name.value, url.value)" (click)="modal.close()">Añadir</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close(add_groups_modal)">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #update_file_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Añadir Archivo</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-6">
+        <label for="title"><b>Nombre del Archivo</b></label>
+        <input type="text" #name placeholder="{{currentFileName}}" value="{{currentFileName}}" required style="width: 100%;" disabled>
+      </div>
+      <div class="form-group mb-6">
+        <label for="title"><b>URL del Archivo</b></label>
+        <input type="text" #url placeholder="Url del Archivo" required style="width: 100%;">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="updateFile(name.value, url.value)" (click)="modal.close()">Actualizar</button>
       <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>
+
+
+<ng-template #add_groups_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Añadir Grupos</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-6">
+        <label for="title"><b>Nombre del Archivo</b></label>
+        <input type="text" #name placeholder="{{currentFileName}}" value="{{currentFileName}}" required style="width: 100%;" disabled>
+      </div>
+      <div class="form-group mb-6">
+        <label for="title"><b>URL del Archivo</b></label>
+        <input type="text" #url placeholder="Url del Archivo" required style="width: 100%;">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="updateFile(name.value, url.value)" (click)="modal.close()">Actualizar</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
+
 
