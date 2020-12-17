@@ -207,6 +207,27 @@ namespace BackEnd_xtecDigital.Controllers
         }
 
         [HttpPost]
+        [Route("api/teacher/group/folder/delete")]
+        public IHttpActionResult deleteFolder([FromBody] JObject FolderInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand deleteRequest = conn.CreateCommand();
+                deleteRequest.CommandText = "EXEC sp_DeleteFolder @FID";
+                deleteRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = FolderInfo["id"];
+                deleteRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Documento eliminado");
+            }
+            catch
+            {
+                return BadRequest("Error al eliminar");
+            }
+        }
+
+        [HttpPost]
         [Route("api/teacher/group/folder/document/add")]
         public IHttpActionResult addDocument([FromBody] JObject documentInfo)
         {
