@@ -14,6 +14,7 @@ export class DocumentsComponent implements OnInit{
   constructor(private router: Router, private CS:CommunicationService, private modal:NgbModal) {}
 
   ngOnInit(){
+    this.folders = [];
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentUser = localStorage.getItem("currentUser");
     this.CS.getDocuments().subscribe(res => {
@@ -53,8 +54,8 @@ export class DocumentsComponent implements OnInit{
     this.router.navigate(['professor_single_document']));
   }
 
-  createFolder(title, author){
-    this.CS.createDocument(title, author, this.date).subscribe(res => {
+  createFolder(title){
+    this.CS.createDocument(title, this.currentUser, this.date).subscribe(res => {
       this.ngOnInit();
     }, error => {
       alert("ERROR");

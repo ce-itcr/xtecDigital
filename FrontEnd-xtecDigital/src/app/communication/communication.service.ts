@@ -147,12 +147,36 @@ export class CommunicationService {
   }
 
   createDocument(title, author, date){
-    return this.http.post<any[]>("api/teacher/group/news/update",
+    alert(localStorage.getItem("newsId"));
+    alert(title);
+    alert(author);
+    alert(date);
+    return this.http.post<any[]>("api/teacher/group/folder/add",
     {
       "id":localStorage.getItem("newsId"),
       "title":title,
       "author":author,
       "date":date
+    }
+    );
+  }
+
+  getDocumentFiles(folder){
+    var id = localStorage.getItem("newsId") + "-" + folder;
+    return this.http.post<any[]>("api/teacher/group/folder/document",
+    {
+      "id":id
+    }
+    );
+  }
+s
+  createDocumentFile(folder ,name, url){
+    var id = localStorage.getItem("newsId") + "-" + folder;
+    return this.http.post<any[]>("api/teacher/group/folder/document/add",
+    {
+      "id":id,
+      "file":name,
+      "url":url
     }
     );
   }

@@ -7,14 +7,14 @@
       </div>
 
       <div class="card-body">
-        <div fxflex="30%" *ngFor="let item of documents">
+        <div fxflex="30%" *ngFor="let item of files">
 
           <div class="row">
             <div class="col-md-7 col-7">
-              {{item}}
+              {{item[0]}}
             </div>
             <div class="col-md-3 col-3 text-right">
-              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="downloadFile(item)"><i class="fa fa-arrow-down"></i></button>
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="onNavigate(item[1])" target="_blank"><i class="fa fa-arrow-down"></i></button>
               <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="downloadFile(item)"><i class="fa fa-shopping-basket"></i></button>
             </div>
           </div>
@@ -32,15 +32,18 @@
   </div>
   <div class="modal-body" >
     <form>
-      <div class=" ">
-          <span style="color:red;" *ngIf="message">{{message}}</span>
-          <input #file type="file" accept='image/*'  (change)="preview(file.files)" />
-          <img [src]="imgURL" style="width: 100px;" class="avatar border-gray" *ngIf="imgURL">
+      <div class="form-group mb-6">
+        <label for="title"><b>Nombre del Archivo</b></label>
+        <input type="text" #name placeholder="Nombre del Archivo" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="title"><b>URL del Archivo</b></label>
+        <input type="text" #url placeholder="Url del Archivo" required style="width: 100%;">
       </div>
     </form>
   </div>
   <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="modal.close()">Subir</button>
+      <button type="button" class="btn btn-success" (click)="createFile(name.value, url.value)" (click)="modal.close()">Subir</button>
       <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>
