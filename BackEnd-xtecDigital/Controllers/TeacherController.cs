@@ -216,6 +216,7 @@ namespace BackEnd_xtecDigital.Controllers
                 conn.Open();
                 SqlCommand deleteRequest = conn.CreateCommand();
                 deleteRequest.CommandText = "EXEC sp_DeleteFolder @FID";
+                Debug.Print(FolderInfo["id"].ToString());
                 deleteRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = FolderInfo["id"];
                 deleteRequest.ExecuteNonQuery();
                 conn.Close();
