@@ -10,6 +10,8 @@ using System.Diagnostics;
 using Newtonsoft.Json.Linq;
 using System.Data;
 using Newtonsoft.Json;
+using BackEnd_xtecDigital.Models;
+using System.Globalization;
 
 namespace BackEnd_xtecDigital.Controllers
 {
@@ -70,7 +72,7 @@ namespace BackEnd_xtecDigital.Controllers
             foreach(var item in semester)
             {
 
-                StudentCourse course = new StudentCourse("SEMESTER " + item[1] + " " + item[0], courses[j]);
+                SemesterCourse course = new SemesterCourse("SEMESTRE " + item[1] + " " + item[0], courses[j]);
                 obj.Add(JsonConvert.SerializeObject(course));
                 j++;
             }
@@ -80,17 +82,6 @@ namespace BackEnd_xtecDigital.Controllers
 
         }
 
-        public class StudentCourse
-        {
-            public string semester;
-            public string[][] courses;
-
-            public StudentCourse(string semester, string[][] courses)
-            {
-                this.semester = semester;
-                this.courses = courses;
-            }
-        }
 
         [HttpPost]
         [Route("api/student/group/news")]
@@ -107,14 +98,43 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 int pos1 = data.GetValue(1).ToString().IndexOf("/") + 1;
                 pos1 += data.GetValue(1).ToString().Substring(pos1).IndexOf("/") + 5;
+                DateTime date = DateTime.ParseExact(data.GetValue(1).ToString().Substring(0, pos1), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                string correctdate = date.ToString("yyyy/MM/dd");
                 JObject newsInfo = new JObject(
                 new JProperty("title", data.GetValue(0).ToString()),
-                new JProperty("publicationDate", data.GetValue(1).ToString().Substring(0, pos1)),
+                new JProperty("publicationDate", correctdate),
                 new JProperty("publicationTime", data.GetValue(2).ToString()),
                 new JProperty("author", data.GetValue(3).ToString()),
                 new JProperty("message", data.GetValue(4).ToString())
                 );
                 obj.Add(newsInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
+
+        [HttpPost]
+        [Route("api/student/group/folder")]
+        public JArray getGroupfolder([FromBody] JObject groupInfo)
+        {
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_GetGroupFolder @GID";
+            getRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = groupInfo["id"];
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            JArray obj = new JArray();
+            while (data.Read())
+            {
+                int pos1 = data.GetValue(2).ToString().IndexOf("/") + 1;
+                pos1 += data.GetValue(2).ToString().Substring(pos1).IndexOf("/") + 5;
+                JObject folderInfo = new JObject(
+                new JProperty("name", data.GetValue(0).ToString()),
+                new JProperty("Teacher", data.GetValue(1).ToString()),
+                new JProperty("creationDate", data.GetValue(2).ToString().Substring(0, pos1))
+                );
+                obj.Add(folderInfo);
             }
             data.Close();
             conn.Close();

@@ -274,12 +274,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MongoDBController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\MD5Encoding.cs" />
     <Compile Include="Models\MongoConnection.cs" />
+    <Compile Include="Models\SemesterCourse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
