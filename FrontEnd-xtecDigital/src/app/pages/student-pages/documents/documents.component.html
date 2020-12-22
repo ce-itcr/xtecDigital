@@ -1,5 +1,4 @@
 <div class="row">
-
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
@@ -11,11 +10,13 @@
 
           <div class="text-muted card-columns">
 
-            <a (click)="toSingleDocumentSection(item[0])"><p><i class="fa fa-folder"></i>  {{item[0]}}</p>
-              <p>{{item[1]}}</p>
-              <p>{{item[2]}}</p>
-            </a>
+            <a (click)="toSingleDocumentSection(item[0])"><p><i class="fa fa-folder">
 
+              </i>{{item[0]}}</p>
+              <p>Autor: {{item[1]}}-Fecha: {{item[2]}}</p>
+
+            </a>
+            <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="deleteFolder(item[0])"><i class="fa fa-shopping-basket"></i></button>
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommunicationService } from 'app/communication/communication.service';
+
 
 @Component({
     selector: 'student_document-cmp',
@@ -9,12 +11,14 @@ import { CommunicationService } from 'app/communication/communication.service';
 })
 
 export class DocumentComponent implements OnInit{
-  constructor(private router: Router, private CS:CommunicationService) {}
+  constructor(private router: Router, private CS:CommunicationService, private modal:NgbModal) {}
 
   ngOnInit(){
+
+    this.files = [];
+
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentDocumentSection = localStorage.getItem("currentDocumentSection");
-    this.files = [];
 
     this.CS.getDocumentFiles(this.currentDocumentSection).subscribe(res => {
       var cont = 0;
@@ -29,12 +33,33 @@ export class DocumentComponent implements OnInit{
     }, error => {
       alert("ERROR");
     })
+
   }
 
   courseName;
   currentDocumentSection;
-  documents;
+  currentFileName;
+
   files = [];
+
+  n = new Date();
+  date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
+
+
+  closeModal = false;
+  public imagePath;
+
+  openModal(content){
+    if(this.closeModal){
+      this.closeModal = false;
+    }else{
+      this.modal.open(content,{size:'md', centered:true});
+    }
+  }
+
+  assign(name){
+    this.currentFileName = name;
+  }
 
   onNavigate(url){
     window.location.href=url;
