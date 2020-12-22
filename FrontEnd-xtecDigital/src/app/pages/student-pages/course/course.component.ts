@@ -73,7 +73,7 @@ export class CourseComponent implements OnInit{
 
   toAssignmentsSection(){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['student_assignments']));
+    this.router.navigate(['student_rubros']));
   }
 
   toNewsSection(title, date, author, body){

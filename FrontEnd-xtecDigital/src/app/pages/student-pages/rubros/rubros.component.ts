@@ -5,26 +5,25 @@ import { CommunicationService } from 'app/communication/communication.service';
 
 
 @Component({
-    selector: 'student_documents-cmp',
+    selector: 'student_rubros-cmp',
     moduleId: module.id,
-    templateUrl: 'documents.component.html'
+    templateUrl: 'rubros.component.html'
 })
 
-export class DocumentsComponent implements OnInit{
+export class RubrosComponent implements OnInit{
   constructor(private router: Router, private CS:CommunicationService, private modal:NgbModal) {}
 
   ngOnInit(){
-    this.folders = [];
+    this.rubros = [];
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentUser = localStorage.getItem("currentUser");
-    this.CS.getDocuments().subscribe(res => {
+    this.CS.getRubros().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
         var data = [];
-        data.push(res[cont]["name"]);
-        data.push(res[cont]["Teacher"]);
-        data.push(res[cont]["creationDate"]);
-        this.folders.push(data);
+        data.push(res[cont]["rubro"]);
+        data.push(res[cont]["percentage"] + "%");
+        this.rubros.push(data);
         cont++;
       }
     }, error => {
@@ -35,7 +34,10 @@ export class DocumentsComponent implements OnInit{
   courseName;
   closeModal = false;
   currentUser;
-  folders = [];
+  rubros = [];
+
+  lastRubro;
+  lastPercentage;
 
   n = new Date();
   date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
@@ -48,26 +50,15 @@ export class DocumentsComponent implements OnInit{
     }
   }
 
-  toSingleDocumentSection(title){
-    localStorage.setItem("currentDocumentSection", title)
+  lastRubroInfo(rubro, percentage){
+    this.lastRubro = rubro;
+    this.lastPercentage = percentage;
+  }
+
+  toAssignmentSection(title){
+    localStorage.setItem("currentRubroSection", title)
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['student_single_document']));
-  }
-
-  createFolder(title){
-    this.CS.createDocument(title, this.currentUser, this.date).subscribe(res => {
-      this.ngOnInit();
-    }, error => {
-      alert("ERROR");
-    });
-  }
-
-  deleteFolder(folder){
-    this.CS.deleteFolder(folder).subscribe(res => {
-      this.ngOnInit();
-    }, error => {
-      alert("ERROR");
-    });
+    this.router.navigate(['student_assignments']));
   }
 
 }
