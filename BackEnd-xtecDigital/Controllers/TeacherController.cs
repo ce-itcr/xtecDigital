@@ -299,7 +299,7 @@ namespace BackEnd_xtecDigital.Controllers
         }
 
         [HttpPost]
-        [Route("api/teacher/group/rubro")]
+        [Route("api/teacher/group/rubros")]
         public JArray getGroupRubros([FromBody] JObject groupInfo)
         {
             conn.Open();
@@ -331,7 +331,7 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 conn.Open();
                 SqlCommand insertRequest = conn.CreateCommand();
-                insertRequest.CommandText = "EXEC sp_AddRubro @FID, @DocName, @DocLink, @UploadDate, @DocSize";
+                insertRequest.CommandText = "EXEC sp_AddRubro @GID, @Rubro, @RPercentage";
                 insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = rubroInfo["id"];
                 insertRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = rubroInfo["rubro"];
                 insertRequest.Parameters.Add("@RPercentage", SqlDbType.Int).Value = rubroInfo["percentage"];
@@ -354,7 +354,7 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 conn.Open();
                 SqlCommand deleteRequest = conn.CreateCommand();
-                deleteRequest.CommandText = "EXEC sp_DeleteRubro @FID, @DocName";
+                deleteRequest.CommandText = "EXEC sp_DeleteRubro @GID, @Rubro";
                 deleteRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = rubroInfo["id"];
                 deleteRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = rubroInfo["rubro"];
                 deleteRequest.ExecuteNonQuery();
@@ -376,11 +376,123 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 conn.Open();
                 SqlCommand updateRequest = conn.CreateCommand();
-                updateRequest.CommandText = "EXEC sp_UpdateRubro @FID, @DocName, @DocLink";
+                updateRequest.CommandText = "EXEC sp_UpdateRubro @LRubro, @GID, @Rubro, @RPercentage";
                 updateRequest.Parameters.Add("@LRubro", SqlDbType.VarChar, 50).Value = rubroInfo["lRubro"];
                 updateRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = rubroInfo["id"];
                 updateRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = rubroInfo["rubro"];
                 updateRequest.Parameters.Add("@RPercentage", SqlDbType.Int).Value = rubroInfo["percentage"];
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Rubro actualizado");
+            }
+            catch
+            {
+                return BadRequest("Error al actulizar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/assignments")]
+        public JArray getAssignments([FromBody] JObject rubroInfo)
+        {
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_GetAssignment @GID, @Rubro";
+            getRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = rubroInfo["id"];
+            getRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = rubroInfo["rubro"];
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            JArray obj = new JArray();
+            while (data.Read())
+            {
+                JObject documentInfo = new JObject(
+                new JProperty("Rubro", data.GetValue(0).ToString()),
+                new JProperty("APercentage", data.GetValue(1).ToString()),
+                new JProperty("AName", data.GetValue(2).ToString()),
+                new JProperty("DueTime", data.GetValue(3).ToString()),
+                new JProperty("DueDate", data.GetValue(4).ToString()),
+                new JProperty("ADescription", data.GetValue(5).ToString()),
+                new JProperty("ALink", data.GetValue(6).ToString())
+                );
+                obj.Add(documentInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/assignments/add")]
+        public IHttpActionResult addAssignment([FromBody] JObject assignmentInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddRubro @GID, @Rubro, @RPercentage";
+
+                insertRequest.CommandText = "EXEC sp_AddAssignment @AID, @GID, @Rubro, @AStarted, @APercentage, @AName, @DueTime, @DueDate, @ADescription, @ALink";
+                insertRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = assignmentInfo["AID"];
+                insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = assignmentInfo["GID"];
+                insertRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = assignmentInfo["rubro"];
+                insertRequest.Parameters.Add("@AStarted", SqlDbType.VarChar, 50).Value = assignmentInfo["started"];
+                insertRequest.Parameters.Add("@APercentage", SqlDbType.Int).Value = assignmentInfo["percentage"];
+                insertRequest.Parameters.Add("@AName", SqlDbType.VarChar, 50).Value = assignmentInfo["name"];
+                insertRequest.Parameters.Add("@DueTime", SqlDbType.Time).Value = assignmentInfo["time"];
+                insertRequest.Parameters.Add("@DueDate", SqlDbType.Date).Value = assignmentInfo["date"];
+                insertRequest.Parameters.Add("@ADescription", SqlDbType.VarChar, 20).Value = assignmentInfo["desc"];
+                insertRequest.Parameters.Add("@ALink", SqlDbType.VarChar, Int32.MaxValue).Value = assignmentInfo["link"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Asignación agregada");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/assignments/delete")]
+        public IHttpActionResult deleteAssignment([FromBody] JObject assignmentInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand deleteRequest = conn.CreateCommand();
+                deleteRequest.CommandText = "EXEC sp_DeleteAssignment @AID";
+                deleteRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = assignmentInfo["id"];
+                deleteRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Asignación eliminada");
+            }
+            catch
+            {
+                return BadRequest("Error al eliminar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/assignemts/update")]
+        public IHttpActionResult updateAssignment([FromBody] JObject assignmentInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_UpdateAssignment @AID, @Rubro, @AStarted, @APercentage, @AName, @DueTime, @DueDate, @ADescription, @ALink";
+                updateRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = assignmentInfo["AID"];
+                updateRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = assignmentInfo["rubro"];
+                updateRequest.Parameters.Add("@AStarted", SqlDbType.VarChar, 50).Value = assignmentInfo["started"];
+                updateRequest.Parameters.Add("@APercentage", SqlDbType.Int).Value = assignmentInfo["percentage"];
+                updateRequest.Parameters.Add("@AName", SqlDbType.VarChar, 50).Value = assignmentInfo["name"];
+                updateRequest.Parameters.Add("@DueTime", SqlDbType.Time).Value = assignmentInfo["time"];
+                updateRequest.Parameters.Add("@DueDate", SqlDbType.Date).Value = assignmentInfo["date"];
+                updateRequest.Parameters.Add("@ADescription", SqlDbType.VarChar, 20).Value = assignmentInfo["desc"];
+                updateRequest.Parameters.Add("@ALink", SqlDbType.VarChar, Int32.MaxValue).Value = assignmentInfo["link"];
                 updateRequest.ExecuteNonQuery();
                 conn.Close();
                 return Ok("Rubro actualizado");
