@@ -297,5 +297,98 @@ namespace BackEnd_xtecDigital.Controllers
                 return BadRequest("Error al actulizar");
             }
         }
+
+        [HttpPost]
+        [Route("api/teacher/group/rubro")]
+        public JArray getGroupRubros([FromBody] JObject groupInfo)
+        {
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_GetRubros @GID";
+            getRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = groupInfo["id"];
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            JArray obj = new JArray();
+            while (data.Read())
+            {
+                JObject documentInfo = new JObject(
+                new JProperty("rubro", data.GetValue(0).ToString()),
+                new JProperty("percentage", data.GetValue(1).ToString())
+                );
+                obj.Add(documentInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/rubros/add")]
+        public IHttpActionResult addRubro([FromBody] JObject rubroInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_AddRubro @FID, @DocName, @DocLink, @UploadDate, @DocSize";
+                insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = rubroInfo["id"];
+                insertRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = rubroInfo["rubro"];
+                insertRequest.Parameters.Add("@RPercentage", SqlDbType.Int).Value = rubroInfo["percentage"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Rubro agregado");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/rubros/delete")]
+        public IHttpActionResult deleteRubro([FromBody] JObject rubroInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand deleteRequest = conn.CreateCommand();
+                deleteRequest.CommandText = "EXEC sp_DeleteRubro @FID, @DocName";
+                deleteRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = rubroInfo["id"];
+                deleteRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = rubroInfo["rubro"];
+                deleteRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Rubro eliminado");
+            }
+            catch
+            {
+                return BadRequest("Error al eliminar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/rubros/update")]
+        public IHttpActionResult updateRubro([FromBody] JObject rubroInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand updateRequest = conn.CreateCommand();
+                updateRequest.CommandText = "EXEC sp_UpdateRubro @FID, @DocName, @DocLink";
+                updateRequest.Parameters.Add("@LRubro", SqlDbType.VarChar, 50).Value = rubroInfo["lRubro"];
+                updateRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = rubroInfo["id"];
+                updateRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = rubroInfo["rubro"];
+                updateRequest.Parameters.Add("@RPercentage", SqlDbType.Int).Value = rubroInfo["percentage"];
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Rubro actualizado");
+            }
+            catch
+            {
+                return BadRequest("Error al actulizar");
+            }
+        }
     }
 }
