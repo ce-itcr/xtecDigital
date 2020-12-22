@@ -40,34 +40,11 @@ export class DocumentsComponent implements OnInit{
   n = new Date();
   date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
 
-  openModal(content){
-    if(this.closeModal){
-      this.closeModal = false;
-    }else{
-      this.modal.open(content,{size:'sm', centered:true});
-    }
-  }
-
   toSingleDocumentSection(title){
     localStorage.setItem("currentDocumentSection", title)
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['student_single_document']));
   }
 
-  createFolder(title){
-    this.CS.createDocument(title, this.currentUser, this.date).subscribe(res => {
-      this.ngOnInit();
-    }, error => {
-      alert("ERROR");
-    });
-  }
-
-  deleteFolder(folder){
-    this.CS.deleteFolder(folder).subscribe(res => {
-      this.ngOnInit();
-    }, error => {
-      alert("ERROR");
-    });
-  }
 
 }

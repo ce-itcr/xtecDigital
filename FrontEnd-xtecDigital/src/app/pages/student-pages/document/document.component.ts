@@ -45,17 +45,7 @@ export class DocumentComponent implements OnInit{
   n = new Date();
   date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
 
-
-  closeModal = false;
   public imagePath;
-
-  openModal(content){
-    if(this.closeModal){
-      this.closeModal = false;
-    }else{
-      this.modal.open(content,{size:'md', centered:true});
-    }
-  }
 
   assign(name){
     this.currentFileName = name;

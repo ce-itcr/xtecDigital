@@ -42,14 +42,6 @@ export class RubrosComponent implements OnInit{
   n = new Date();
   date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
 
-  openModal(content){
-    if(this.closeModal){
-      this.closeModal = false;
-    }else{
-      this.modal.open(content,{size:'sm', centered:true});
-    }
-  }
-
   lastRubroInfo(rubro, percentage){
     this.lastRubro = rubro;
     this.lastPercentage = percentage;
