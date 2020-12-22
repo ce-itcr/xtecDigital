@@ -11,16 +11,19 @@
 
           <div class="row">
             <div class="col-md-7 col-7">
-              {{item[0]}}
+              Título: {{item[1]}}
               <br />
-                <span class="text-muted">
-                  <small>Fecha: {{item[1]}}</small>
-                </span>
+              Fecha: {{item[2]}} 
+              <br />
+              Porcentaje: {{item[0]}}
+              <br />
+              Descripcion: {{item[3]}}
+              <br />
+              <br />
             </div>
             <div class="col-md-3 col-3 text-right">
-              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="onNavigate(item[2])"><i class="fa fa-arrow-down"></i></button>
-              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="asign(item[0])" (click)="openModal(update_file_modal)"><i class="fa fa-refresh"></i></button>
-              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="deleteFile(item[0])"><i class="fa fa-shopping-basket"></i></button>
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="onNavigate(item[4])"><i class="fa fa-arrow-down"></i></button>
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="deleteAssignment(item[1])"><i class="fa fa-shopping-basket"></i></button>
             </div>
           </div>
         </div>
@@ -38,28 +41,32 @@
   <div class="modal-body" >
     <form>
       <div class="form-group mb-6">
-        <label for="rubro"><b>Rubro </b></label>
-        <input type="text" #rubro placeholder="{{currentRubroSection}}" disabled style="width: 100%;">
+        <label for="text"><b>Nombre </b></label>
+        <input type="text" #name placeholder="Nombre de la Asignación" required style="width: 100%;">
       </div>
       <div class="form-group mb-6">
-        <label for="title"><b>Nombre </b></label>
-        <input type="text" #name placeholder="Nombre del Archivo" required style="width: 100%;">
+        <label for="date"><b>Fecha de Inicio</b></label>
+        <input type="date" #start placeholder="Porcentaje de a Asignación" required style="width: 100%;">
       </div>
       <div class="form-group mb-6">
-        <label for="percentage"><b>Porcentaje</b></label>
+        <label for="text"><b>Porcentaje</b></label>
         <input type="text" #percentage placeholder="Porcentaje de a Asignación" required style="width: 100%;">
       </div>
       <div class="form-group mb-6">
-        <label for="date"><b>Fecha Máxima</b></label>
+        <label for="time"><b>Hora de Finalización</b></label>
+        <input type="time" #time placeholder="Porcentaje de a Asignación" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="date"><b>Fecha de Finalización</b></label>
         <input type="date" #date placeholder="Porcentaje de a Asignación" required style="width: 100%;">
       </div>
       <div class="form-group mb-6">
-        <label for="url_file"><b>Especificación</b></label>
-        <input type="text" #url_file placeholder="Especificación de la Evaluación" required style="width: 100%;">
+        <label for="text"><b>Descripción</b></label>
+        <input type="text" #desc placeholder="Especificación de la Evaluación" required style="width: 100%;">
       </div>
       <div class="form-group mb-6">
-        <label for="a_type"><b>Tipo</b></label>
-        <input type="text" #a_type placeholder="Grupal o Individual" required style="width: 100%;">
+        <label for="url_file"><b>Link</b></label>
+        <input type="text" #url placeholder="Especificación de la Evaluación" required style="width: 100%;">
       </div>
       <div class="form-group">
         <button type="button" class="btn btn-danger" (click)="openModal()">Conformar Grupos</button>
@@ -67,54 +74,7 @@
     </form>
   </div>
   <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="createFile(name.value, url.value)" (click)="modal.close()">Añadir</button>
+      <button type="button" class="btn btn-success" (click)="createAssignment(name.value, start.value, percentage.value, time.value, date.value, desc.value, url.value)" (click)="modal.close()">Añadir</button>
       <button type="button" class="btn btn-warning" (click)="modal.close(add_groups_modal)">Cancelar</button>
   </div>
 </ng-template>
-
-<ng-template #update_file_modal let-modal>
-  <div class="modal-header">
-      <h4 class="modal-title">Añadir Archivo</h4>
-  </div>
-  <div class="modal-body" >
-    <form>
-      <div class="form-group mb-6">
-        <label for="title"><b>Nombre del Archivo</b></label>
-        <input type="text" #name placeholder="{{currentFileName}}" value="{{currentFileName}}" required style="width: 100%;" disabled>
-      </div>
-      <div class="form-group mb-6">
-        <label for="title"><b>URL del Archivo</b></label>
-        <input type="text" #url placeholder="Url del Archivo" required style="width: 100%;">
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="updateFile(name.value, url.value)" (click)="modal.close()">Actualizar</button>
-      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
-  </div>
-</ng-template>
-
-
-<ng-template #add_groups_modal let-modal>
-  <div class="modal-header">
-      <h4 class="modal-title">Añadir Grupos</h4>
-  </div>
-  <div class="modal-body" >
-    <form>
-      <div class="form-group mb-6">
-        <label for="title"><b>Nombre del Archivo</b></label>
-        <input type="text" #name placeholder="{{currentFileName}}" value="{{currentFileName}}" required style="width: 100%;" disabled>
-      </div>
-      <div class="form-group mb-6">
-        <label for="title"><b>URL del Archivo</b></label>
-        <input type="text" #url placeholder="Url del Archivo" required style="width: 100%;">
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="updateFile(name.value, url.value)" (click)="modal.close()">Actualizar</button>
-      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
-  </div>
-</ng-template>
-
-

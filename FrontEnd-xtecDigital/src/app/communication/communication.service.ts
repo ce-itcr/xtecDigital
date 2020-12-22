@@ -209,4 +209,78 @@ export class CommunicationService {
     );
   }
 
+  getRubros(){
+    return this.http.post<any[]>("api/teacher/group/rubros",
+    {
+      "id":localStorage.getItem("newsId")
+    }
+    );
+  }
+
+  createRubro(rubro, percentage){
+    return this.http.post<any[]>("api/teacher/group/rubros/add",
+    {
+      "id":localStorage.getItem("newsId"),
+      "rubro":rubro,
+      "percentage":percentage
+    }
+    );
+  }
+
+  deleteRubro(rubro){
+    return this.http.post<any[]>("api/teacher/group/rubros/delete",
+    {
+      "id":localStorage.getItem("newsId"),
+      "rubro":rubro
+    }
+    );
+  }
+
+  updateRubro(lRubro, rubro, percentage){
+    return this.http.post<any[]>("api/teacher/group/rubros/update",
+    {
+      "lRubro":lRubro,
+      "id":localStorage.getItem("newsId"),
+      "rubro":rubro,
+      "percentage":percentage
+    }
+    );
+  }
+
+  getAssignments(){
+    return this.http.post<any[]>("api/teacher/group/assignments",
+    {
+      "id":localStorage.getItem("newsId"),
+      "rubro":localStorage.getItem("currentRubroSection")
+    }
+    );
+  }
+
+  createAssignment(name, started, percentage, time, date, desc, link){
+    var AID = localStorage.getItem("newsId") + "-" + name;
+    return this.http.post<any[]>("api/teacher/group/assignments/add",
+    {
+      "AID":AID,
+      "GID":localStorage.getItem("newsId"),
+      "rubro":localStorage.getItem("currentRubroSection"),
+      "started":started,
+      "percentage":percentage,
+      "name":name,
+      "time":time,
+      "date":date,
+      "desc":desc,
+      "link":link
+    }
+    );
+  }
+
+  deleteAssignment(name){
+    var AID = localStorage.getItem("newsId") + "-" + name;
+    return this.http.post<any[]>("api/teacher/group/assignments/delete",
+    {
+      "id":AID
+    }
+    );
+  }
+
 }

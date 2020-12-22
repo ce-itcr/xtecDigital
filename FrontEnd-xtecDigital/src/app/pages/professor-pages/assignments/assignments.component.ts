@@ -20,13 +20,15 @@ export class AssignmentsComponent implements OnInit{
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentRubroSection = localStorage.getItem("currentRubroSection");
 
-    this.CS.getDocumentFiles(this.currentRubroSection).subscribe(res => {
+    this.CS.getAssignments().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
         var data = [];
-        data.push(res[cont]["name"]);
-        data.push(res[cont]["date"].slice(0,10));
-        data.push(res[cont]["url"]);
+        data.push(res[cont]["APercentage"] + "%");
+        data.push(res[cont]["AName"]);
+        data.push(res[cont]["DueDate"].slice(0,10) + " Hora: " + res[cont]["DueTime"]);
+        data.push(res[cont]["ADesc"]);
+        data.push(res[cont]["ALink"]);
         this.files.push(data);
         cont++;
       }
@@ -57,33 +59,20 @@ export class AssignmentsComponent implements OnInit{
     }
   }
 
-  createFile(name, url){
-    var size = 50
-    this.CS.createDocumentFile(this.currentRubroSection, name, this.date, size, url).subscribe(res => {
+  createAssignment(name, started, percentage, time, date, desc, link){
+    this.CS.createAssignment(name, started, percentage, time+":00", date, desc, link).subscribe(res => {
       this.ngOnInit();
     }, error => {
       alert("ERROR");
     });
   }
 
-  deleteFile(name){
-    this.CS.deleteDocumentFile(this.currentRubroSection, name).subscribe(res => {
+  deleteAssignment(name){
+    this.CS.deleteAssignment(name).subscribe(res => {
       this.ngOnInit();
     }, error => {
       alert("ERROR");
     })
-  }
-
-  updateFile(name, url){
-    this.CS.updateDocumentFile(this.currentRubroSection, name, url).subscribe(res => {
-      this.ngOnInit();
-    }, error => {
-      alert("ERROR");
-    })
-  }
-
-  asign(name){
-    this.currentFileName = name;
   }
 
   onNavigate(url){

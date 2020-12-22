@@ -17,13 +17,12 @@ export class RubrosComponent implements OnInit{
     this.rubros = [];
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentUser = localStorage.getItem("currentUser");
-    this.CS.getDocuments().subscribe(res => {
+    this.CS.getRubros().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
         var data = [];
-        data.push(res[cont]["name"]);
-        data.push(res[cont]["Teacher"]);
-        data.push(res[cont]["creationDate"]);
+        data.push(res[cont]["rubro"]);
+        data.push(res[cont]["percentage"] + "%");
         this.rubros.push(data);
         cont++;
       }
@@ -37,6 +36,9 @@ export class RubrosComponent implements OnInit{
   currentUser;
   rubros = [];
 
+  lastRubro;
+  lastPercentage;
+
   n = new Date();
   date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
 
@@ -48,22 +50,35 @@ export class RubrosComponent implements OnInit{
     }
   }
 
+  lastRubroInfo(rubro, percentage){
+    this.lastRubro = rubro;
+    this.lastPercentage = percentage;
+  }
+
   toAssignmentSection(title){
     localStorage.setItem("currentRubroSection", title)
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['professor_assignments']));
   }
 
-  createRubro(title, percentage){
-    this.CS.createDocument(title, this.currentUser, this.date).subscribe(res => {
+  createRubro(rubro, percentage){
+    this.CS.createRubro(rubro, percentage).subscribe(res => {
       this.ngOnInit();
     }, error => {
       alert("ERROR");
     });
   }
 
-  deleteRubro(folder){
-    this.CS.deleteFolder(folder).subscribe(res => {
+  updateRubro(rubro, percentage){
+    this.CS.updateRubro(this.lastRubro, rubro, percentage).subscribe(res => {
+      this.ngOnInit();
+    }, error => {
+      alert("ERROR");
+    });
+  }
+
+  deleteRubro(rubro){
+    this.CS.deleteRubro(rubro).subscribe(res => {
       this.ngOnInit();
     }, error => {
       alert("ERROR");

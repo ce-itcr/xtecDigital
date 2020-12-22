@@ -82,7 +82,7 @@ export class DocumentComponent implements OnInit{
     })
   }
 
-  asign(name){
+  assign(name){
     this.currentFileName = name;
   }
 
