@@ -406,13 +406,12 @@ namespace BackEnd_xtecDigital.Controllers
             while (data.Read())
             {
                 JObject documentInfo = new JObject(
-                new JProperty("Rubro", data.GetValue(0).ToString()),
-                new JProperty("APercentage", data.GetValue(1).ToString()),
-                new JProperty("AName", data.GetValue(2).ToString()),
-                new JProperty("DueTime", data.GetValue(3).ToString()),
-                new JProperty("DueDate", data.GetValue(4).ToString()),
-                new JProperty("ADescription", data.GetValue(5).ToString()),
-                new JProperty("ALink", data.GetValue(6).ToString())
+                new JProperty("APercentage", data.GetValue(0).ToString()),
+                new JProperty("AName", data.GetValue(1).ToString()),
+                new JProperty("DueTime", data.GetValue(2).ToString()),
+                new JProperty("DueDate", data.GetValue(3).ToString()),
+                new JProperty("ADesc", data.GetValue(4).ToString()),
+                new JProperty("ALink", data.GetValue(5).ToString())
                 );
                 obj.Add(documentInfo);
             }
@@ -483,9 +482,8 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 conn.Open();
                 SqlCommand updateRequest = conn.CreateCommand();
-                updateRequest.CommandText = "EXEC sp_UpdateAssignment @AID, @Rubro, @AStarted, @APercentage, @AName, @DueTime, @DueDate, @ADescription, @ALink";
+                updateRequest.CommandText = "EXEC sp_UpdateAssignment @AID, @AStarted, @APercentage, @AName, @DueTime, @DueDate, @ADescription, @ALink";
                 updateRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = assignmentInfo["AID"];
-                updateRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = assignmentInfo["rubro"];
                 updateRequest.Parameters.Add("@AStarted", SqlDbType.VarChar, 50).Value = assignmentInfo["started"];
                 updateRequest.Parameters.Add("@APercentage", SqlDbType.Int).Value = assignmentInfo["percentage"];
                 updateRequest.Parameters.Add("@AName", SqlDbType.VarChar, 50).Value = assignmentInfo["name"];
