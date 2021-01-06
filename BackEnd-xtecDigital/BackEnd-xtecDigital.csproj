@@ -279,6 +279,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\MongoTeacher.cs" />
+    <Compile Include="Models\MongoStudent.cs" />
     <Compile Include="Models\MD5Encoding.cs" />
     <Compile Include="Models\MongoConnection.cs" />
     <Compile Include="Models\SemesterCourse.cs" />
