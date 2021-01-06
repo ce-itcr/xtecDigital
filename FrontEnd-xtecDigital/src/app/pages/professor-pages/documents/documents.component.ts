@@ -16,7 +16,7 @@ export class DocumentsComponent implements OnInit{
   ngOnInit(){
     this.folders = [];
     this.courseName = localStorage.getItem("currentCourseName");
-    this.currentUser = localStorage.getItem("currentUser");
+    this.currentUser = localStorage.getItem("current_username");
     this.CS.getDocuments().subscribe(res => {
       var cont = 0;
       while(cont < res.length){

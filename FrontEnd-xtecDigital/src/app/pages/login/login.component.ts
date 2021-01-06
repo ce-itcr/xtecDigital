@@ -42,28 +42,50 @@ export class LoginComponent{
   //VERIFICA QUE LOS DATOS INGRESADOS PERTENEZCAN A UN USUARIO REGISTRADO
   //POSTERIORMENTE SE ENVÍA AL COMPONENTE RESPECTIVO
   //RECIBE: NOMBRE DE USUARIO Y CONTRASEÑA, RESPECTIVAMENTE
-  verifyLogin(username, password){
+  verifyLogin(username, password, type){
     localStorage.setItem('current_username', username);
     localStorage.setItem("current_password", password);
-    this.CS.verifyUser(username, password).subscribe(
-      res => {
-        if(res['userType'] == 'Admin'){
-          this.router.navigateByUrl('/dashboard');
-        }
-        else if(res['userType'] == 'Professor'){
-          this.router.navigateByUrl('/dashboard');
-        }
-        else if(res['userType'] == 'Student'){
-          this.router.navigateByUrl('/dashboard');
+    
+    if(type == "S"){
+      this.CS.studentLogIn(username, password).subscribe(res => {
+        alert(res["_id"] == 0);
+        if(!(res["_id"] == 0)){
+          alert("fdsfs");
+          localStorage.setItem("accountType", "STUDENT");
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['student_courses']));
         }
         else{
-          alert(res);
+          alert("Usuario inexistente");
         }
-      },
-      error => {
-        alert("Nombre de usuario o contraseña incorrectos");
+      }, error => { 
+        alert("Usuario inexistente");
+      });
+    }
+    else if(type == "T"){
+      this.CS.teacherLogIn(username, password).subscribe(res => {
+        if(!(res["_id"] == 0)){
+          localStorage.setItem("accountType", "PROFESSOR");
+          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['professor_dashboard']));
+        }
+        else{
+          alert("Usuario inexistente");
+        }
+      }, error => {
+        alert("Usuario inexistente");
+      });
+    }
+    else if(type == "A"){
+      if(username == "admin" && password == "admin"){
+        localStorage.setItem("accountType", "ADMIN");
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['admin_semesterManagement']));
       }
-    )
+      else{
+        alert("Usuario inexistente");
+      }
+    }
   }
 
   testMD5(password){

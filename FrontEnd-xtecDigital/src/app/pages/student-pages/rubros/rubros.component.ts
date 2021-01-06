@@ -16,7 +16,7 @@ export class RubrosComponent implements OnInit{
   ngOnInit(){
     this.rubros = [];
     this.courseName = localStorage.getItem("currentCourseName");
-    this.currentUser = localStorage.getItem("currentUser");
+    this.currentUser = localStorage.getItem("current_username");
     this.CS.getRubros().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -29,6 +29,10 @@ export class RubrosComponent implements OnInit{
     }, error => {
       alert("ERROR");
     });
+  }
+
+  public ddd(){
+    alert(this.rubros)
   }
 
   courseName;

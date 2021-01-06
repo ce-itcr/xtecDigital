@@ -50,7 +50,7 @@ export class CourseComponent implements OnInit{
   period;
   courseId;
   courseGroup;
-  currentUser = localStorage.getItem("currentUser");
+  currentUser = localStorage.getItem("current_username");
 
   newsId;
 

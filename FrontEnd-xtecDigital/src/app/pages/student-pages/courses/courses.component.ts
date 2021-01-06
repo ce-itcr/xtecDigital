@@ -54,7 +54,6 @@ export class CoursesComponent implements OnInit{
       localStorage.setItem("currentYear", year);
       localStorage.setItem("currentPeriod", period);
       localStorage.setItem("currentGroup", groupNum);
-      localStorage.setItem("currentUser", "2018367254");
 
       this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
       this.router.navigate(['course']));

@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit{
 
     constructor(private router:Router, private CS: CommunicationService){}
     ngOnInit(){
-      this.CS.getStudentCourses().subscribe(res => {
+      this.CS.getTeacherCourses().subscribe(res => {
         var cont = 0;
         while(cont < res.length){
           var data = JSON.parse(res[cont]);

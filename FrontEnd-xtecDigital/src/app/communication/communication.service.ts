@@ -91,11 +91,11 @@ export class CommunicationService {
   }
 
   getStudentCourses(){
-    return this.http.post<any[]>("api/student/semester", {"id":"2018367254"});
+    return this.http.post<any[]>("api/student/semester", {"id":localStorage.getItem("current_username")});
   }
 
   getTeacherCourses(){
-    return this.http.post<any[]>("api/teacher/semester", {"id":"10001000"});
+    return this.http.post<any[]>("api/teacher/semester", {"id":localStorage.getItem("current_username")});
   }
 
   getNews(newsId){
@@ -279,6 +279,24 @@ export class CommunicationService {
     return this.http.post<any[]>("api/teacher/group/assignments/delete",
     {
       "id":AID
+    }
+    );
+  }
+
+  studentLogIn(id, pass){
+    return this.http.post<any[]>("api/StudentData",
+    {
+      "id":id,
+      "pass":pass
+    }
+    );
+  }
+
+  teacherLogIn(id, pass){
+    return this.http.post<any[]>("api/TeacherData",
+    {
+      "id":id,
+      "pass":pass
     }
     );
   }
