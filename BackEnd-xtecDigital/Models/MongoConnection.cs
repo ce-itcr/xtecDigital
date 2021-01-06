@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -51,32 +52,41 @@ namespace BackEnd_xtecDigital.Models
 
         public JObject getStudentData(JObject json)
         {
-            Debug.Print(json.ToString());
-            Debug.Print(json["id"].ToString());
-            Debug.Print(json["pass"].ToString());
-            MongoClient dbClient = new MongoClient("mongodb+srv://admin:admin@cluster0.8aanu.mongodb.net/<dbname>?retryWrites=true&w=majority");
-            var db = dbClient.GetDatabase("xtecDigital");
-            var builder = Builders<BsonDocument>.Filter;
-            var filter = builder.Eq("_id", json["id"]) & builder.Eq("Password", json["pass"]);
-            var col = db.GetCollection<BsonDocument>("Students");
-            var res = col.Find(new BsonDocument()).FirstOrDefault().ToJson();
-            Debug.Print(res);
-            return JObject.Parse(res);
+            try
+            {
+                MongoClient dbClient = new MongoClient("mongodb+srv://admin:admin@cluster0.8aanu.mongodb.net/<dbname>?retryWrites=true&w=majority");
+                var db = dbClient.GetDatabase("xtecDigital");
+                var builder = Builders<MongoStudent>.Filter;
+                var filter1 = builder.Eq(u => u._id, json["id"]);
+                var filter2 = builder.Eq(u => u.Password, MD5Encoding.MD5Encryption(json["pass"].ToString()));
+                var fullFilter = builder.And(new[] { filter1, filter2 });
+                var col = db.GetCollection<MongoStudent>("Students");
+                var student = col.Find(fullFilter).FirstOrDefault().ToJson();
+                return JObject.Parse(student);
+            } catch
+            {
+                return JObject.Parse(new MongoStudent().ToJson());
+            }
         }
 
         public JObject getTeacherData(JObject json)
         {
-            Debug.Print(json.ToString());
-            Debug.Print(json["id"].ToString());
-            Debug.Print(json["pass"].ToString());
-            MongoClient dbClient = new MongoClient("mongodb+srv://admin:admin@cluster0.8aanu.mongodb.net/<dbname>?retryWrites=true&w=majority");
-            var db = dbClient.GetDatabase("xtecDigital");
-            var builder = Builders<BsonDocument>.Filter;
-            var filter = builder.Eq("_id", json["id"]) & builder.Eq("Password", json["pass"]);
-            var col = db.GetCollection<BsonDocument>("Teachers");
-            var res = col.Find(new BsonDocument()).FirstOrDefault().ToJson();
-            Debug.Print(res);
-            return JObject.Parse(res);
+            try
+            {
+                MongoClient dbClient = new MongoClient("mongodb+srv://admin:admin@cluster0.8aanu.mongodb.net/<dbname>?retryWrites=true&w=majority");
+                var db = dbClient.GetDatabase("xtecDigital");
+                var builder = Builders<MongoTeacher>.Filter;
+                var filter1 = builder.Eq(u => u._id, json["id"]);
+                var filter2 = builder.Eq(u => u.Password, MD5Encoding.MD5Encryption(json["pass"].ToString()));
+                var fullFilter = builder.And(new[] { filter1, filter2 });
+                var col = db.GetCollection<MongoTeacher>("Teachers");
+                var teacher = col.Find(fullFilter).FirstOrDefault().ToJson();
+                return JObject.Parse(teacher);
+            }
+            catch
+            {
+                return JObject.Parse(new MongoTeacher().ToJson());
+            }
         }
 
         public void insertStudent(JObject json)
