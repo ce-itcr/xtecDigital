@@ -140,5 +140,58 @@ namespace BackEnd_xtecDigital.Controllers
             conn.Close();
             return obj;
         }
+
+        [HttpPost]
+        [Route("api/student/rubros/assignments/upload")]
+        public IHttpActionResult uploadAssignment([FromBody] JObject assignmentInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                Debug.Print(assignmentInfo["id"].ToString());
+                Debug.Print(assignmentInfo["assignment"].ToString());
+                Debug.Print(assignmentInfo["url"].ToString());
+                insertRequest.CommandText = "EXEC sp_uploadAssignment @AID, @SID, @SLink";
+                insertRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = assignmentInfo["assignment"];
+                insertRequest.Parameters.Add("@SID", SqlDbType.Int).Value = assignmentInfo["id"];
+                insertRequest.Parameters.Add("@SLink", SqlDbType.VarChar, Int32.MaxValue).Value = assignmentInfo["url"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Asignación cargada");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/assignments/getFeedback")]
+        public JArray getFeedback([FromBody] JObject feedbackInfo)
+        {
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            Debug.Print(feedbackInfo["assignment"].ToString());
+            Debug.Print(feedbackInfo["studentId"].ToString());
+            getRequest.CommandText = "EXEC  sp_getFeedback @AID, @Student";
+            getRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = feedbackInfo["assignment"];
+            getRequest.Parameters.Add("@Student", SqlDbType.Int).Value = feedbackInfo["studentId"];
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            JArray obj = new JArray();
+            while (data.Read())
+            {
+                JObject documentInfo = new JObject(
+                new JProperty("grade", data.GetValue(0).ToString()),
+                new JProperty("url", data.GetValue(1).ToString())
+                );
+                obj.Add(documentInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
     }
 }

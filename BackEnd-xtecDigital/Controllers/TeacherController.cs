@@ -500,5 +500,58 @@ namespace BackEnd_xtecDigital.Controllers
                 return BadRequest("Error al actulizar");
             }
         }
+
+        [HttpPost]
+        [Route("api/teacher/group/assignments/getStudents")]
+        public JArray getUploadedAssignments([FromBody] JObject assignmentInfo)
+        {
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC  sp_getUploadedAssignmets @AID";
+            getRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = assignmentInfo["assignment"];
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            JArray obj = new JArray();
+            while (data.Read())
+            {
+                JObject documentInfo = new JObject(
+                new JProperty("id", data.GetValue(0).ToString()),
+                new JProperty("url", data.GetValue(1).ToString())
+                );
+                obj.Add(documentInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/assignemts/feedback")]
+        public IHttpActionResult uploadFeedback([FromBody] JObject feedbackInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand updateRequest = conn.CreateCommand();
+                Debug.Print(feedbackInfo["assignment"].ToString());
+                Debug.Print(feedbackInfo["studentId"].ToString());
+                Debug.Print(feedbackInfo["grade"].ToString());
+                Debug.Print(feedbackInfo["url"].ToString());
+                updateRequest.CommandText = "EXEC sp_uploadFeedback @AID, @Student, @Grade, @FLink";
+                updateRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = feedbackInfo["assignment"];
+                updateRequest.Parameters.Add("@Student", SqlDbType.Int).Value = feedbackInfo["studentId"];
+                updateRequest.Parameters.Add("@Grade", SqlDbType.Int).Value = feedbackInfo["grade"];
+                updateRequest.Parameters.Add("@FLink", SqlDbType.VarChar, Int32.MaxValue).Value = feedbackInfo["url"];
+                updateRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Evaluado");
+            }
+            catch
+            {
+                return BadRequest("Error al evaluar");
+            }
+        }
+
     }
 }
