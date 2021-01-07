@@ -42,7 +42,11 @@ export class AssignmentsComponent implements OnInit{
   currentRubroSection;
   currentFileName;
 
+  currentStudentId;
+  currentAssignment;
+
   files = [];
+  students = []; 
 
   n = new Date();
   date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
@@ -77,6 +81,35 @@ export class AssignmentsComponent implements OnInit{
 
   onNavigate(url){
     window.location.href=url;
+  }
+
+  fillStudents(assignment){
+    this.currentAssignment = assignment;
+    this.CS.getStudentAssignments(assignment).subscribe(res => {
+      this.students = [];
+      var cont = 0;
+      while(cont < res.length){
+        var data = [];
+        data.push(res[cont]["id"]);
+        data.push(res[cont]["url"]);
+        this.students.push(data);
+        cont++;
+      }
+    }, error => {
+      alert("ERROR");
+    });
+  }
+
+  currentStudent(studentId){
+    this.currentStudentId = studentId;
+  }
+
+  uploadFeedback(url, grade){
+    this.CS.uploadFeedback(this.currentStudentId ,this.currentAssignment, url, grade).subscribe(res => {
+      alert(res);
+    }, error => {
+      alert("ERROR");
+    });
   }
 
 }

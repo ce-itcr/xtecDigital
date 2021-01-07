@@ -41,6 +41,10 @@ export class AssignmentsComponent implements OnInit{
   courseName;
   currentRubroSection;
   currentFileName;
+  currentAssignment;
+
+  grade;
+  feedbackLink;
 
   files = [];
 
@@ -61,6 +65,27 @@ export class AssignmentsComponent implements OnInit{
 
   onNavigate(url){
     window.location.href=url;
+  }
+
+  public assignment(assignment){
+    this.currentAssignment = assignment;
+  }
+
+  public uploadAssignment(url){
+    this.CS.uploadAssignment(url, this.currentRubroSection, this.currentAssignment).subscribe(res => {
+      this.ngOnInit();
+    }, error => {
+      alert("ERROR");
+    });
+  }
+
+  getFeedback(assignment){
+    this.CS.getFeedback(assignment).subscribe(res => {
+      this.grade = res[0]["grade"];
+      this.feedbackLink = res[0]["url"];
+    }, error => {
+      alert("ERROR")
+    });
   }
 
 }

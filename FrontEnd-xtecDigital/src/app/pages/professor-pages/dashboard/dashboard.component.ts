@@ -14,6 +14,8 @@ export class DashboardComponent implements OnInit{
 
     constructor(private router:Router, private CS: CommunicationService){}
     ngOnInit(){
+      alert(localStorage.getItem("firstName"));
+      alert(localStorage.getItem("email"));
       this.CS.getTeacherCourses().subscribe(res => {
         var cont = 0;
         while(cont < res.length){

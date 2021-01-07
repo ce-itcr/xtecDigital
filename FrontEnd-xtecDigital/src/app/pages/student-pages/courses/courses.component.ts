@@ -14,6 +14,9 @@ export class CoursesComponent implements OnInit{
     constructor(private router:Router, private CS: CommunicationService){}
 
     ngOnInit(){
+      alert(localStorage.getItem("firstName"));
+      alert(localStorage.getItem("phoneNumber"));
+      alert(localStorage.getItem("email"));
       this.CS.getStudentCourses().subscribe(res => {
         var cont = 0;
         while(cont < res.length){

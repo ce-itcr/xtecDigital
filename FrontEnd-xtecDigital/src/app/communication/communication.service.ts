@@ -301,4 +301,51 @@ export class CommunicationService {
     );
   }
 
+  uploadAssignment(url, rubro, assign){
+    var assignmentID = localStorage.getItem("newsId") + "-" + assign;
+    alert(localStorage.getItem("current_username"));
+    alert(assignmentID);
+    alert(url);
+    return this.http.post<any[]>("api/student/rubros/assignments/upload",
+    {
+      "id":localStorage.getItem("current_username"),
+      "assignment":assignmentID,
+      "url":url
+    }
+    );
+  }
+
+  getStudentAssignments(assign){
+    var assignmentID = localStorage.getItem("newsId") + "-" + assign;
+    return this.http.post<any[]>("api/teacher/group/assignments/getStudents",
+    {
+      "assignment":assignmentID
+    }
+    );
+  }
+
+  uploadFeedback(studentId , assignment, url, grade){
+    var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
+    return this.http.post<any[]>("api/teacher/group/assignemts/feedback",
+    {
+      "studentId":studentId,
+      "assignment":assignmentID,
+      "url":url,
+      "grade":grade
+    }
+    );
+  }
+
+  getFeedback(assignment){
+    var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
+    alert(assignmentID);
+    alert(localStorage.getItem("current_username"));
+    return this.http.post<any[]>("api/teacher/group/assignments/getFeedback",
+    {
+      "studentId":localStorage.getItem("current_username"),
+      "assignment":assignmentID
+    }
+    );
+  }
+
 }

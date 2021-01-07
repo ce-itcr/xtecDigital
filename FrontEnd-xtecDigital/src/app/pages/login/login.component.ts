@@ -50,7 +50,9 @@ export class LoginComponent{
       this.CS.studentLogIn(username, password).subscribe(res => {
         alert(res["_id"] == 0);
         if(!(res["_id"] == 0)){
-          alert("fdsfs");
+          localStorage.setItem("firstName", res["Name"]);
+          localStorage.setItem("email", res["Email"]);
+          localStorage.setItem("phoneNumber", res["PhoneNumber"]);
           localStorage.setItem("accountType", "STUDENT");
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
           this.router.navigate(['student_courses']));
@@ -65,6 +67,8 @@ export class LoginComponent{
     else if(type == "T"){
       this.CS.teacherLogIn(username, password).subscribe(res => {
         if(!(res["_id"] == 0)){
+          localStorage.setItem("firstName", res["Name"]);
+          localStorage.setItem("email", res["Email"]);
           localStorage.setItem("accountType", "PROFESSOR");
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
           this.router.navigate(['professor_dashboard']));
