@@ -54,12 +54,37 @@ export class CourseComponent implements OnInit{
 
   newsId;
 
-
-
   n = new Date();
-  newDate = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
-  newHour = this.n.getHours() + ":" + this.n.getMinutes() + ":" + this.n.getSeconds();
+  newDate = this.n.getFullYear() + "/0" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
 
+  public getHour(){
+
+    var n = new Date();
+    var hour = "";
+
+    if(n.getHours()[0] == "0"){
+      hour += n.getHours()[1];
+    }else{
+      hour += n.getHours();
+    }
+
+    hour += ":";
+
+    if(n.getMinutes()[0] == "0"){
+      hour += n.getMinutes()[1];
+    }else{
+      hour += n.getMinutes();
+    }
+
+    hour += ":";
+
+    if(n.getSeconds()[0] == "0"){
+      hour += n.getSeconds()[1];
+    }else{
+      hour += n.getSeconds();
+    }
+    return hour;
+  }
 
   closeModal = false;
 
@@ -107,7 +132,7 @@ export class CourseComponent implements OnInit{
   }
 
   createNew(title, body){
-    this.CS.createNews(this.currentUser , title, body, this.newDate, this.newHour, this.newsId).subscribe(res => {
+    this.CS.createNews(this.currentUser , title, body, this.newDate, this.getHour(), this.newsId).subscribe(res => {
       this.ngOnInit();
     }, error => {
       alert("ERROR");
