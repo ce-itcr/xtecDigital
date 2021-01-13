@@ -98,7 +98,10 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 int pos1 = data.GetValue(1).ToString().IndexOf("/") + 1;
                 pos1 += data.GetValue(1).ToString().Substring(pos1).IndexOf("/") + 5;
-                DateTime date = DateTime.ParseExact(data.GetValue(1).ToString().Substring(0, pos1), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                string y = data.GetValue(1).ToString().Substring(0, pos1);
+                Debug.Print("No funca: " + y);
+                Debug.Print("Funca:" + "01/12/2021");
+                DateTime date = DateTime.ParseExact(y, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 string correctdate = date.ToString("yyyy/MM/dd");
                 JObject newsInfo = new JObject(
                 new JProperty("title", data.GetValue(0).ToString()),
