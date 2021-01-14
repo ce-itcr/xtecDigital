@@ -324,11 +324,11 @@ export class CommunicationService {
     );
   }
 
-  uploadFeedback(studentId , assignment, url, grade){
+  uploadFeedback(group , assignment, url, grade){
     var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
     return this.http.post<any[]>("api/teacher/group/assignemts/feedback",
     {
-      "studentId":studentId,
+      "groupNum":group,
       "assignment":assignmentID,
       "url":url,
       "grade":grade

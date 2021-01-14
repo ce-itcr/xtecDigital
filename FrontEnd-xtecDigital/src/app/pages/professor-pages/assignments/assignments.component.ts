@@ -52,6 +52,7 @@ export class AssignmentsComponent implements OnInit{
 
   currentStudentId;
   currentAssignment;
+  currentGroup;
 
   files = [];
   students = []; 
@@ -103,6 +104,7 @@ export class AssignmentsComponent implements OnInit{
         var data = [];
         data.push(res[cont]["id"]);
         data.push(res[cont]["url"]);
+        data.push(res[cont]["group"]);
         this.students.push(data);
         cont++;
       }
@@ -111,12 +113,12 @@ export class AssignmentsComponent implements OnInit{
     });
   }
 
-  currentStudent(studentId){
-    this.currentStudentId = studentId;
+  currentStudent(group){
+    this.currentGroup = group;
   }
 
   uploadFeedback(url, grade){
-    this.CS.uploadFeedback(this.currentStudentId ,this.currentAssignment, url, grade).subscribe(res => {
+    this.CS.uploadFeedback(this.currentGroup ,this.currentAssignment, url, grade).subscribe(res => {
       alert(res);
     }, error => {
       alert("ERROR");
@@ -128,6 +130,9 @@ export class AssignmentsComponent implements OnInit{
   }
 
   addGroup(){
+    alert(this.groupNum);
+    alert(this.currentAssignment);
+    alert(this.workGroup);
     this.CS.createWorkGroup(this.groupNum, this.currentAssignment, this.workGroup).subscribe(res => {
       this.groupNum ++;
       this.deleteStudents();
