@@ -152,15 +152,15 @@ namespace BackEnd_xtecDigital.Controllers
             try
             {
                 conn.Open();
-                SqlCommand insertRequest = conn.CreateCommand();
+                SqlCommand updateRequest = conn.CreateCommand();
                 Debug.Print(assignmentInfo["id"].ToString());
                 Debug.Print(assignmentInfo["assignment"].ToString());
                 Debug.Print(assignmentInfo["url"].ToString());
-                insertRequest.CommandText = "EXEC sp_uploadAssignment @AID, @SID, @SLink";
-                insertRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = assignmentInfo["assignment"];
-                insertRequest.Parameters.Add("@SID", SqlDbType.Int).Value = assignmentInfo["id"];
-                insertRequest.Parameters.Add("@SLink", SqlDbType.VarChar, Int32.MaxValue).Value = assignmentInfo["url"];
-                insertRequest.ExecuteNonQuery();
+                updateRequest.CommandText = "EXEC sp_uploadAssignment @AID, @SLink, @SID";
+                updateRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = assignmentInfo["assignment"];
+                updateRequest.Parameters.Add("@SLink", SqlDbType.VarChar, Int32.MaxValue).Value = assignmentInfo["url"];
+                updateRequest.Parameters.Add("@SID", SqlDbType.Int).Value = assignmentInfo["id"];
+                updateRequest.ExecuteNonQuery();
                 conn.Close();
                 return Ok("Asignación cargada");
             }

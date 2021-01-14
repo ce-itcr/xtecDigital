@@ -516,7 +516,8 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 JObject documentInfo = new JObject(
                 new JProperty("id", data.GetValue(0).ToString()),
-                new JProperty("url", data.GetValue(1).ToString())
+                new JProperty("url", data.GetValue(1).ToString()),
+                new JProperty("group", data.GetValue(2).ToString())
                 );
                 obj.Add(documentInfo);
             }
@@ -535,12 +536,11 @@ namespace BackEnd_xtecDigital.Controllers
                 conn.Open();
                 SqlCommand updateRequest = conn.CreateCommand();
                 Debug.Print(feedbackInfo["assignment"].ToString());
-                Debug.Print(feedbackInfo["studentId"].ToString());
                 Debug.Print(feedbackInfo["grade"].ToString());
                 Debug.Print(feedbackInfo["url"].ToString());
-                updateRequest.CommandText = "EXEC sp_uploadFeedback @AID, @Student, @Grade, @FLink";
+                updateRequest.CommandText = "EXEC sp_uploadFeedback @AID, @SGroup, @Grade, @FLink";
                 updateRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = feedbackInfo["assignment"];
-                updateRequest.Parameters.Add("@Student", SqlDbType.Int).Value = feedbackInfo["studentId"];
+                updateRequest.Parameters.Add("@SGroup", SqlDbType.Int).Value = feedbackInfo["groupNum"];
                 updateRequest.Parameters.Add("@Grade", SqlDbType.Int).Value = feedbackInfo["grade"];
                 updateRequest.Parameters.Add("@FLink", SqlDbType.VarChar, Int32.MaxValue).Value = feedbackInfo["url"];
                 updateRequest.ExecuteNonQuery();
@@ -590,6 +590,15 @@ namespace BackEnd_xtecDigital.Controllers
                     insertRequest.Parameters.Add("@GroupNum", SqlDbType.Int).Value = groupInfo["GID"];
                     insertRequest.ExecuteNonQuery();
                     conn.Close();
+
+                    conn.Open();
+                    insertRequest = conn.CreateCommand();
+                    insertRequest.CommandText = "EXEC sp_studentAssignment @AID, @SID, @SGroup";
+                    insertRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = groupInfo["AID"];
+                    insertRequest.Parameters.Add("@SID", SqlDbType.Int).Value = student;
+                    insertRequest.Parameters.Add("@SGroup", SqlDbType.Int).Value = groupInfo["GID"];
+                    insertRequest.ExecuteNonQuery();
+                    conn.Close();
                 }
                 
                 return Ok("Asignación agregada");
@@ -618,6 +627,16 @@ namespace BackEnd_xtecDigital.Controllers
                     insertRequest.Parameters.Add("@GroupNum", SqlDbType.Int).Value = cont;
                     insertRequest.ExecuteNonQuery();
                     conn.Close();
+
+                    conn.Open();
+                    insertRequest = conn.CreateCommand();
+                    insertRequest.CommandText = "EXEC sp_studentAssignment @AID, @SID, @SGroup";
+                    insertRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = groupInfo["AID"];
+                    insertRequest.Parameters.Add("@SID", SqlDbType.Int).Value = student;
+                    insertRequest.Parameters.Add("@SGroup", SqlDbType.Int).Value = cont;
+                    insertRequest.ExecuteNonQuery();
+                    conn.Close();
+
                     cont++;
                 }
 
