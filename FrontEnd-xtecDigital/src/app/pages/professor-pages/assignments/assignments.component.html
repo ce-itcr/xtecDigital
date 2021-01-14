@@ -69,13 +69,10 @@
         <label for="url_file"><b>Link</b></label>
         <input type="text" #url placeholder="Especificación de la Evaluación" required style="width: 100%;">
       </div>
-      <div class="form-group">
-        <button type="button" class="btn btn-danger" (click)="openModal()">Conformar Grupos</button>
-      </div>
     </form>
   </div>
   <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="createAssignment(name.value, start.value, percentage.value, time.value, date.value, desc.value, url.value)" (click)="modal.close()">Añadir</button>
+      <button type="button" class="btn btn-success" (click)="createAssignment(name.value, start.value, percentage.value, time.value, date.value, desc.value, url.value)" (click)="openModal(create_groups_modal)" (click)="modal.close()">Añadir</button>
       <button type="button" class="btn btn-warning" (click)="modal.close(add_groups_modal)">Cancelar</button>
   </div>
 </ng-template>
@@ -124,5 +121,39 @@
   <div class="modal-footer">
       <button type="button" class="btn btn-success" (click)="uploadFeedback(url.value, grade.value)" (click)="modal.close()">Enviar</button>
       <button type="button" class="btn btn-warning" (click)="modal.close(add_groups_modal)">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #addStudents_group_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Ingrese los grupos</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div fxFlex="30%" *ngFor="let item of students">
+          <input #ref type="checkbox" id="{{item}}" name="{{item}}" value="{{item}}" (click)="studentsOnCheck(ref.value)">
+          <label for="{{item}}"> {{ref.value}}</label><br>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-success" (click)="addGroup()" (click)="openModal(addStudents_group_modal)" (click)="modal.close()">Crear grupo</button>
+      <button type="button" class="btn btn-warning" (click)="countReset()" (click)="modal.close()">Listo</button>
+  </div>
+</ng-template>
+
+<ng-template #create_groups_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">¿El trabajo será grupal?</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group">
+        <button type="button" class="btn btn-danger" (click)="openModal(addStudents_group_modal)" (click)="modal.close()">Conformar Grupos</button>
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-danger" (click)="individualAssignment()" (click)="modal.close()">Individual</button>
+      </div>
+    </form>
   </div>
 </ng-template>

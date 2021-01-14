@@ -348,4 +348,33 @@ export class CommunicationService {
     );
   }
 
+  getGroupStudents(){
+    return this.http.post<any[]>("api/teacher/group/students/get",
+    {
+      "id":localStorage.getItem("newsId")
+    }
+    );
+  }
+
+  createWorkGroup(groupNum, assignment, students){
+    var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
+    return this.http.post<any[]>("api/teacher/group/workgroups/add",
+    {
+      "AID":assignmentID,
+      "GID":groupNum,
+      "Students":students
+    }
+    );
+  }
+
+  createIndividualAssignemnt(assignment, students){
+    var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
+    return this.http.post<any[]>("api/teacher/group/individual/add",
+    {
+      "AID":assignmentID,
+      "Students":students
+    }
+    );
+  }
+
 }

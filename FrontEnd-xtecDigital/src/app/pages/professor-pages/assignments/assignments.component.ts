@@ -19,7 +19,7 @@ export class AssignmentsComponent implements OnInit{
 
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentRubroSection = localStorage.getItem("currentRubroSection");
-
+    this.students = [];
     this.CS.getAssignments().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -35,7 +35,15 @@ export class AssignmentsComponent implements OnInit{
     }, error => {
       alert("ERROR");
     })
-
+    this.CS.getGroupStudents().subscribe(res => {
+      var cont = 0;
+      while(cont < res.length){
+        this.students.push(res[cont]);
+        cont++;
+      }
+    }, error => {
+      alert("Error");
+    });
   }
 
   courseName;
@@ -47,6 +55,8 @@ export class AssignmentsComponent implements OnInit{
 
   files = [];
   students = []; 
+  workGroup = [];
+  groupNum = 1;
 
   n = new Date();
   date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
@@ -64,6 +74,7 @@ export class AssignmentsComponent implements OnInit{
   }
 
   createAssignment(name, started, percentage, time, date, desc, link){
+    this.currentAssignment = name;
     this.CS.createAssignment(name, started, percentage, time+":00", date, desc, link).subscribe(res => {
       this.ngOnInit();
     }, error => {
@@ -110,6 +121,46 @@ export class AssignmentsComponent implements OnInit{
     }, error => {
       alert("ERROR");
     });
+  }
+
+  studentsOnCheck(student){
+    this.workGroup.push(student);
+  }
+
+  addGroup(){
+    this.CS.createWorkGroup(this.groupNum, this.currentAssignment, this.workGroup).subscribe(res => {
+      this.groupNum ++;
+      this.deleteStudents();
+      this.workGroup = [];
+    }, error => {
+      alert("Error")
+    });
+  }
+
+  individualAssignment(){
+    this.CS.createIndividualAssignemnt(this.currentAssignment, this.students).subscribe(res => {
+      this.ngOnInit();
+    }, error => {
+      alert("Error")
+    });
+  }
+
+  deleteStudents(){
+    var cont = 0;
+    var newList = [];
+    while(cont<this.students.length){
+      if(this.students.includes(this.workGroup[cont])){
+        cont++;
+      }else{
+        newList.push(this.students[cont]);
+        cont++;
+      }
+    }
+    this.students = newList;
+  }
+
+  countReset(){
+    this.groupNum = 1;
   }
 
 }
