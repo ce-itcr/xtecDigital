@@ -553,5 +553,81 @@ namespace BackEnd_xtecDigital.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("api/teacher/group/students/get")]
+        public string[] obtainStudents([FromBody] JObject groupInfo)
+        {
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_getCourseStudents @GID";
+            getRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = groupInfo["id"];
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            List<string> list = new List<string> { };
+            while (data.Read())
+            {
+                list.Add(data.GetValue(0).ToString());
+            }
+            data.Close();
+            conn.Close();
+            return list.ToArray();
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/workgroups/add")]
+        public IHttpActionResult addWorkGroup([FromBody] JObject groupInfo)
+        {
+
+            try
+            {
+                foreach(var student in groupInfo["Students"])
+                {
+                    conn.Open();
+                    SqlCommand insertRequest = conn.CreateCommand();
+                    insertRequest.CommandText = "EXEC sp_addWorkGroup @Student, @AID, @GroupNum";
+                    insertRequest.Parameters.Add("@Student", SqlDbType.Int).Value = student;
+                    insertRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = groupInfo["AID"];
+                    insertRequest.Parameters.Add("@GroupNum", SqlDbType.Int).Value = groupInfo["GID"];
+                    insertRequest.ExecuteNonQuery();
+                    conn.Close();
+                }
+                
+                return Ok("Asignación agregada");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/teacher/group/individual/add")]
+        public IHttpActionResult addIndividualAssignment([FromBody] JObject groupInfo)
+        {
+
+            try
+            {
+                int cont = 1;
+                foreach (var student in groupInfo["Students"])
+                {
+                    conn.Open();
+                    SqlCommand insertRequest = conn.CreateCommand();
+                    insertRequest.CommandText = "EXEC sp_addWorkGroup @Student, @AID, @GroupNum";
+                    insertRequest.Parameters.Add("@Student", SqlDbType.Int).Value = student;
+                    insertRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = groupInfo["AID"];
+                    insertRequest.Parameters.Add("@GroupNum", SqlDbType.Int).Value = cont;
+                    insertRequest.ExecuteNonQuery();
+                    conn.Close();
+                    cont++;
+                }
+
+                return Ok("Asignación agregada");
+            }
+            catch
+            {
+                return BadRequest("Error al insertar");
+            }
+        }
+
     }
 }
