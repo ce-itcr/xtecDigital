@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommunicationService } from 'app/communication/communication.service';
-import { Alert } from 'bootstrap';
 
 @Component({
   selector: 'app-semester-management',
@@ -150,6 +149,16 @@ export class SemesterManagementComponent implements OnInit {
     }
     alert(this.students);
 
+  }
+
+  addSemesterByExcel(file){
+    var url = "C:/Users/Usuario/Desktop/xTecDigitalFE/xtecDigital/FrontEnd-xtecDigital/src/assets/semesters/" + file.slice(12);
+    alert(url);
+    this.CS.createSemesterByExcel(url).subscribe(res => {
+      this.CS.getAdminSemesters(true);
+    }, error => {
+      alert("ERROR")
+    });
   }
 
 }

@@ -377,4 +377,12 @@ export class CommunicationService {
     );
   }
 
+  createSemesterByExcel(url){
+    return this.http.post<any[]>("api/admin/semester/uploadExcel",
+    {
+      "url":url
+    }
+    );
+  }
+
 }

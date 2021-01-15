@@ -2,8 +2,9 @@
 <h4><b>Descripción: </b>El sistema permite crear semestres, estableciendo cursos, grupos, profesores y estudiantes asociados.</h4>
 <div>
   <admin-semesters></admin-semesters>
-  <div style="margin-left: auto;margin-right: auto; display: block;">
+  <div style="margin-left: auto;margin-right: auto; display: block;">  
     <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" (click)="openModal(create_semester_modal)">Inicializar Semestre</button>
+    <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" (click)="openModal(addStudentsByExcel_modal)">Cargar Semestre</button>
   </div>
 </div>
 
@@ -95,3 +96,20 @@
       <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
   </div>
 </ng-template>
+
+<ng-template #addStudentsByExcel_modal let-modal>
+  <div class="modal-body" >
+      <body>
+      <form id="frmMain" name="frmMain">
+          <input #file type="file" id="myFile" name="myFile"/>
+      </form>
+      </body>
+  </div>
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-success" (click)="addSemesterByExcel(file.value)" (click)="modal.close()">Crear semestre</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
+
+
+
