@@ -169,7 +169,7 @@ namespace BackEnd_xtecDigital.Controllers
             }
             foreach (var item in arr)
             {
-          
+
                 JObject courseInfo = new JObject(
                 new JProperty("year", item[0]),
                 new JProperty("period", item[1]),
@@ -251,7 +251,7 @@ namespace BackEnd_xtecDigital.Controllers
                         conn.Close();
                     }
                     string[] baseFolders = { "Presentaciones", "Quices", "Exámenes", "Proyectos" };
-                    foreach(var folder in baseFolders)
+                    foreach (var folder in baseFolders)
                     {
                         conn.Open();
                         insertRequest = conn.CreateCommand();
@@ -265,7 +265,7 @@ namespace BackEnd_xtecDigital.Controllers
                         insertRequest.ExecuteNonQuery();
                         conn.Close();
                     }
-                    string[] baseRubro = { "Quices", "Exámenes", "Proyectos"};
+                    string[] baseRubro = { "Quices", "Exámenes", "Proyectos" };
                     int[] basePercentage = { 30, 30, 40 };
                     for (int i = 0; i < baseRubro.Length; i++)
                     {
@@ -285,6 +285,27 @@ namespace BackEnd_xtecDigital.Controllers
             catch
             {
                 return BadRequest("Error al insertar");
+            }
+        }
+
+        [HttpPost]
+        [Route("api/admin/semester/uploadExcel")]
+        public IHttpActionResult uploadExcel([FromBody] JObject urlInfo)
+        {
+
+            try
+            {
+                conn.Open();
+                SqlCommand insertRequest = conn.CreateCommand();
+                insertRequest.CommandText = "EXEC sp_UploadExcel @Path";
+                insertRequest.Parameters.Add("@Path", SqlDbType.VarChar, Int32.MaxValue).Value = urlInfo["url"];
+                insertRequest.ExecuteNonQuery();
+                conn.Close();
+                return Ok("Semestre creado");
+            }
+            catch
+            {
+                return BadRequest("Error al crear semestre");
             }
         }
 
