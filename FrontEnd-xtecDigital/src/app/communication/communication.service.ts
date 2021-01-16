@@ -120,7 +120,6 @@ export class CommunicationService {
   }
 
   deleteNews(newsId){
-    alert(newsId);
     return this.http.post<any[]>("api/teacher/group/news/delete",
     {
       "id":newsId
@@ -260,7 +259,7 @@ export class CommunicationService {
     var AID = localStorage.getItem("newsId") + "-" + name;
     return this.http.post<any[]>("api/teacher/group/assignments/add",
     {
-      "AID":AID,
+      "id":AID,
       "GID":localStorage.getItem("newsId"),
       "rubro":localStorage.getItem("currentRubroSection"),
       "started":started,
@@ -275,7 +274,10 @@ export class CommunicationService {
   }
 
   deleteAssignment(name){
+
     var AID = localStorage.getItem("newsId") + "-" + name;
+    alert(AID);
+
     return this.http.post<any[]>("api/teacher/group/assignments/delete",
     {
       "id":AID
@@ -303,9 +305,6 @@ export class CommunicationService {
 
   uploadAssignment(url, rubro, assign){
     var assignmentID = localStorage.getItem("newsId") + "-" + assign;
-    alert(localStorage.getItem("current_username"));
-    alert(assignmentID);
-    alert(url);
     return this.http.post<any[]>("api/student/rubros/assignments/upload",
     {
       "id":localStorage.getItem("current_username"),
@@ -338,8 +337,6 @@ export class CommunicationService {
 
   getFeedback(assignment){
     var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
-    alert(assignmentID);
-    alert(localStorage.getItem("current_username"));
     return this.http.post<any[]>("api/teacher/group/assignments/getFeedback",
     {
       "studentId":localStorage.getItem("current_username"),
@@ -356,23 +353,25 @@ export class CommunicationService {
     );
   }
 
-  createWorkGroup(groupNum, assignment, students){
+  createWorkGroup(groupNum, assignment, students, rubro){
     var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
     return this.http.post<any[]>("api/teacher/group/workgroups/add",
     {
-      "AID":assignmentID,
-      "GID":groupNum,
-      "Students":students
+      "id":assignmentID,
+      "Students":students,
+      "rubro":rubro,
+      "GID":groupNum
     }
     );
   }
 
-  createIndividualAssignemnt(assignment, students){
+  createIndividualAssignemnt(assignment, students, rubro){
     var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
     return this.http.post<any[]>("api/teacher/group/individual/add",
     {
-      "AID":assignmentID,
-      "Students":students
+      "id":assignmentID,
+      "Students":students,
+      "rubro":rubro
     }
     );
   }

@@ -84,6 +84,7 @@ export class AssignmentsComponent implements OnInit{
   }
 
   deleteAssignment(name){
+    alert(name);
     this.CS.deleteAssignment(name).subscribe(res => {
       this.ngOnInit();
     }, error => {
@@ -133,7 +134,7 @@ export class AssignmentsComponent implements OnInit{
     alert(this.groupNum);
     alert(this.currentAssignment);
     alert(this.workGroup);
-    this.CS.createWorkGroup(this.groupNum, this.currentAssignment, this.workGroup).subscribe(res => {
+    this.CS.createWorkGroup(this.groupNum, this.currentAssignment, this.workGroup, this.currentRubroSection).subscribe(res => {
       this.groupNum ++;
       this.deleteStudents();
       this.workGroup = [];
@@ -143,7 +144,10 @@ export class AssignmentsComponent implements OnInit{
   }
 
   individualAssignment(){
-    this.CS.createIndividualAssignemnt(this.currentAssignment, this.students).subscribe(res => {
+    alert(this.currentAssignment);
+    alert(this.students);
+    alert(this.currentRubroSection);
+    this.CS.createIndividualAssignemnt(this.currentAssignment, this.students, this.currentRubroSection).subscribe(res => {
       this.ngOnInit();
     }, error => {
       alert("Error")
