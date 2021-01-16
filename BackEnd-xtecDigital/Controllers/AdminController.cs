@@ -221,11 +221,11 @@ namespace BackEnd_xtecDigital.Controllers
                     string GID = currentSemester + "-" + item[0].ToString() + "-" + item[2].ToString();
                     conn.Open();
                     insertRequest = conn.CreateCommand();
-                    insertRequest.CommandText = "EXEC sp_AddGroup @GID, @Number, @CID, @SemID";
-                    insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = GID;
-                    insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = (int)item[2];
+                    insertRequest.CommandText = "EXEC sp_AddGroup @Number, @CID, @Year, @Period";
+                    insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = item[2].ToString();
                     insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = item[0].ToString();
-                    insertRequest.Parameters.Add("@SemID", SqlDbType.VarChar, 50).Value = currentSemester;
+                    insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = semesterInfo["year"];
+                    insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = semesterInfo["period"];
                     insertRequest.ExecuteNonQuery();
                     conn.Close();
 
@@ -233,9 +233,12 @@ namespace BackEnd_xtecDigital.Controllers
                     {
                         conn.Open();
                         insertRequest = conn.CreateCommand();
-                        insertRequest.CommandText = "EXEC sp_AddStudentToGroup @GID, @Student";
+                        insertRequest.CommandText = "EXEC sp_AddStudentToGroup @Number, @CID, @Year, @Period, @Student";
+                        insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = item[2].ToString();
+                        insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = item[0].ToString();
+                        insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = semesterInfo["year"];
+                        insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = semesterInfo["period"];
                         insertRequest.Parameters.Add("@Student", SqlDbType.Int).Value = (int)element;
-                        insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = GID;
                         insertRequest.ExecuteNonQuery();
                         conn.Close();
                     }
@@ -244,9 +247,12 @@ namespace BackEnd_xtecDigital.Controllers
                     {
                         conn.Open();
                         insertRequest = conn.CreateCommand();
-                        insertRequest.CommandText = "EXEC sp_AddTeacherToGroup @GID, @Teacher";
+                        insertRequest.CommandText = "EXEC sp_AddTeacherToGroup @Number, @CID, @Year, @Period, @Teacher";
+                        insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = item[2].ToString();
+                        insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = item[0].ToString();
+                        insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = semesterInfo["year"];
+                        insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = semesterInfo["period"];
                         insertRequest.Parameters.Add("@Teacher", SqlDbType.Int).Value = (int)element;
-                        insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = GID;
                         insertRequest.ExecuteNonQuery();
                         conn.Close();
                     }
@@ -255,10 +261,12 @@ namespace BackEnd_xtecDigital.Controllers
                     {
                         conn.Open();
                         insertRequest = conn.CreateCommand();
-                        insertRequest.CommandText = "EXEC sp_AddFolder @FID, @FolderName, @GID, @Editable, @Teacher, @CreationDate";
-                        insertRequest.Parameters.Add("@FID", SqlDbType.VarChar, 50).Value = GID + "-" + folder;
+                        insertRequest.CommandText = "EXEC sp_AddFolder @FolderName, @Number, @CID, @Year, @Period, @Editable, @Teacher, @CreationDate";
                         insertRequest.Parameters.Add("@FolderName", SqlDbType.VarChar, 50).Value = folder;
-                        insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = GID;
+                        insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = item[2].ToString();
+                        insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = item[0].ToString();
+                        insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = semesterInfo["year"];
+                        insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = semesterInfo["period"];
                         insertRequest.Parameters.Add("@Editable", SqlDbType.VarChar, 10).Value = "false";
                         insertRequest.Parameters.Add("@Teacher", SqlDbType.Int).Value = item[1][0];
                         insertRequest.Parameters.Add("@CreationDate", SqlDbType.Date).Value = DateTime.Now;
@@ -271,8 +279,11 @@ namespace BackEnd_xtecDigital.Controllers
                     {
                         conn.Open();
                         insertRequest = conn.CreateCommand();
-                        insertRequest.CommandText = "EXEC sp_AddRubro @GID, @Rubro, @RPercentage";
-                        insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = GID;
+                        insertRequest.CommandText = "EXEC sp_AddRubro @Number, @CID, @Year, @Period, @Rubro, @RPercentage";
+                        insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = item[2].ToString();
+                        insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = item[0].ToString();
+                        insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = semesterInfo["year"];
+                        insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = semesterInfo["period"];
                         insertRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = baseRubro[i];
                         insertRequest.Parameters.Add("@RPercentage", SqlDbType.Int).Value = basePercentage[i];
                         insertRequest.ExecuteNonQuery();

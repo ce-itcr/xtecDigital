@@ -87,10 +87,26 @@ namespace BackEnd_xtecDigital.Controllers
         [Route("api/student/group/news")]
         public JArray getGroupNews([FromBody] JObject groupInfo)
         {
+
+            Debug.Print(groupInfo["id"].ToString());
+
+            string year = groupInfo["id"].ToString().Substring(0,4);
+            string period = groupInfo["id"].ToString().Substring(5, 1);
+            string CID = groupInfo["id"].ToString().Substring(7, 6);
+            string number = groupInfo["id"].ToString().Substring(14, 1);
+
+            Debug.Print(year);
+            Debug.Print(period);
+            Debug.Print(CID);
+            Debug.Print(number);
+
             conn.Open();
             SqlCommand getRequest = conn.CreateCommand();
-            getRequest.CommandText = "EXEC sp_GetStudentNews @GID";
-            getRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = groupInfo["id"];
+            getRequest.CommandText = "EXEC sp_GetStudentNews @Number, @CID, @Year, @Period";
+            getRequest.Parameters.Add("@Number", SqlDbType.Int).Value = number;
+            getRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = CID;
+            getRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = year;
+            getRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = period;
             getRequest.ExecuteNonQuery();
             SqlDataReader data = getRequest.ExecuteReader();
             JArray obj = new JArray();
