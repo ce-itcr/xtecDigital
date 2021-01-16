@@ -160,7 +160,8 @@ export class CommunicationService {
     var id = localStorage.getItem("newsId") + "-" + folder;
     return this.http.post<any[]>("api/teacher/group/folder/document",
     {
-      "id":id
+      "id":id,
+      "title":folder
     }
     );
   }
@@ -170,6 +171,7 @@ export class CommunicationService {
     return this.http.post<any[]>("api/teacher/group/folder/document/add",
     {
       "id":id,
+      "title":folder,
       "file":name,
       "date":date,
       "size":size,
@@ -183,6 +185,7 @@ export class CommunicationService {
     return this.http.post<any[]>("api/teacher/group/folder/document/delete",
     {
       "id":id,
+      "title":folder,
       "file":name
     }
     );
@@ -193,6 +196,7 @@ export class CommunicationService {
     return this.http.post<any[]>("api/teacher/group/folder/document/update",
     {
       "id":id,
+      "title":folder,
       "file":name,
       "url":url
     }
@@ -203,7 +207,8 @@ export class CommunicationService {
     var id = localStorage.getItem("newsId") + "-" + folder;
     return this.http.post<any[]>("api/teacher/group/folder/delete",
     {
-      "id":id
+      "id":id,
+      "title":folder
     }
     );
   }
@@ -307,8 +312,9 @@ export class CommunicationService {
     var assignmentID = localStorage.getItem("newsId") + "-" + assign;
     return this.http.post<any[]>("api/student/rubros/assignments/upload",
     {
-      "id":localStorage.getItem("current_username"),
-      "assignment":assignmentID,
+      "SID":localStorage.getItem("current_username"),
+      "id":assignmentID,
+      "title":assign,
       "url":url
     }
     );
@@ -318,7 +324,8 @@ export class CommunicationService {
     var assignmentID = localStorage.getItem("newsId") + "-" + assign;
     return this.http.post<any[]>("api/teacher/group/assignments/getStudents",
     {
-      "assignment":assignmentID
+      "id":assignmentID,
+      "title":assign
     }
     );
   }
@@ -328,7 +335,8 @@ export class CommunicationService {
     return this.http.post<any[]>("api/teacher/group/assignemts/feedback",
     {
       "groupNum":group,
-      "assignment":assignmentID,
+      "id":assignmentID,
+      "title":assignment,
       "url":url,
       "grade":grade
     }
@@ -340,7 +348,8 @@ export class CommunicationService {
     return this.http.post<any[]>("api/teacher/group/assignments/getFeedback",
     {
       "studentId":localStorage.getItem("current_username"),
-      "assignment":assignmentID
+      "id":assignmentID,
+      "title":assignment
     }
     );
   }
