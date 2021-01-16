@@ -90,23 +90,15 @@ namespace BackEnd_xtecDigital.Controllers
 
             Debug.Print(groupInfo["id"].ToString());
 
-            string year = groupInfo["id"].ToString().Substring(0,4);
-            string period = groupInfo["id"].ToString().Substring(5, 1);
-            string CID = groupInfo["id"].ToString().Substring(7, 6);
-            string number = groupInfo["id"].ToString().Substring(14, 1);
-
-            Debug.Print(year);
-            Debug.Print(period);
-            Debug.Print(CID);
-            Debug.Print(number);
+            string[] GID = getGID(groupInfo);
 
             conn.Open();
             SqlCommand getRequest = conn.CreateCommand();
             getRequest.CommandText = "EXEC sp_GetStudentNews @Number, @CID, @Year, @Period";
-            getRequest.Parameters.Add("@Number", SqlDbType.Int).Value = number;
-            getRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = CID;
-            getRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = year;
-            getRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = period;
+            getRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+            getRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+            getRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+            getRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
             getRequest.ExecuteNonQuery();
             SqlDataReader data = getRequest.ExecuteReader();
             JArray obj = new JArray();
@@ -137,10 +129,16 @@ namespace BackEnd_xtecDigital.Controllers
         [Route("api/student/group/folder")]
         public JArray getGroupfolder([FromBody] JObject groupInfo)
         {
+
+            string[] GID = getGID(groupInfo);
+
             conn.Open();
             SqlCommand getRequest = conn.CreateCommand();
-            getRequest.CommandText = "EXEC sp_GetGroupFolder @GID";
-            getRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = groupInfo["id"];
+            getRequest.CommandText = "EXEC sp_GetGroupFolder @Number, @CID, @Year, @Period";
+            getRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+            getRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+            getRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+            getRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
             getRequest.ExecuteNonQuery();
             SqlDataReader data = getRequest.ExecuteReader();
             JArray obj = new JArray();
@@ -167,15 +165,19 @@ namespace BackEnd_xtecDigital.Controllers
 
             try
             {
+
+                string[] GID = getGID(assignmentInfo);
+
                 conn.Open();
                 SqlCommand updateRequest = conn.CreateCommand();
-                Debug.Print(assignmentInfo["id"].ToString());
-                Debug.Print(assignmentInfo["assignment"].ToString());
-                Debug.Print(assignmentInfo["url"].ToString());
-                updateRequest.CommandText = "EXEC sp_uploadAssignment @AID, @SLink, @SID";
-                updateRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = assignmentInfo["assignment"];
+                updateRequest.CommandText = "EXEC sp_uploadAssignment @Number, @CID, @Year, @Period, @AName, @SLink, @SID";
+                updateRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+                updateRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+                updateRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+                updateRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
+                updateRequest.Parameters.Add("@AName", SqlDbType.VarChar, 50).Value = assignmentInfo["title"];
                 updateRequest.Parameters.Add("@SLink", SqlDbType.VarChar, Int32.MaxValue).Value = assignmentInfo["url"];
-                updateRequest.Parameters.Add("@SID", SqlDbType.Int).Value = assignmentInfo["id"];
+                updateRequest.Parameters.Add("@SID", SqlDbType.Int).Value = assignmentInfo["SID"];
                 updateRequest.ExecuteNonQuery();
                 conn.Close();
                 return Ok("Asignación cargada");
@@ -190,12 +192,17 @@ namespace BackEnd_xtecDigital.Controllers
         [Route("api/teacher/group/assignments/getFeedback")]
         public JArray getFeedback([FromBody] JObject feedbackInfo)
         {
+
+            string[] GID = getGID(feedbackInfo);
+
             conn.Open();
             SqlCommand getRequest = conn.CreateCommand();
-            Debug.Print(feedbackInfo["assignment"].ToString());
-            Debug.Print(feedbackInfo["studentId"].ToString());
-            getRequest.CommandText = "EXEC  sp_getFeedback @AID, @Student";
-            getRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = feedbackInfo["assignment"];
+            getRequest.CommandText = "EXEC  sp_getFeedback @Number, @CID, @Year, @Period, @AName, @Student";
+            getRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+            getRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+            getRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+            getRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
+            getRequest.Parameters.Add("@AName", SqlDbType.VarChar, 50).Value = feedbackInfo["title"];
             getRequest.Parameters.Add("@Student", SqlDbType.Int).Value = feedbackInfo["studentId"];
             getRequest.ExecuteNonQuery();
             SqlDataReader data = getRequest.ExecuteReader();
@@ -211,6 +218,17 @@ namespace BackEnd_xtecDigital.Controllers
             data.Close();
             conn.Close();
             return obj;
+        }
+
+        public string[] getGID(JObject groupInfo)
+        {
+            string[] info = {
+                groupInfo["id"].ToString().Substring(0, 4), //year
+                groupInfo["id"].ToString().Substring(5, 1), //period
+                groupInfo["id"].ToString().Substring(7, 6), //cid
+                groupInfo["id"].ToString().Substring(14, 1) //number
+            };
+            return info;
         }
     }
 }

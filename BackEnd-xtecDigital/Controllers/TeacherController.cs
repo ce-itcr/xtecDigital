@@ -175,12 +175,17 @@ namespace BackEnd_xtecDigital.Controllers
 
             try
             {
+
+                string[] GID = getGID(folderInfo);
+
                 conn.Open();
                 SqlCommand insertRequest = conn.CreateCommand();
-                insertRequest.CommandText = "EXEC sp_AddFolder @FID, @FolderName, @GID, @Editable, @Teacher, @CreationDate";
-                insertRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = folderInfo["id"].ToString() + "-" + folderInfo["title"].ToString();
+                insertRequest.CommandText = "EXEC sp_AddFolder @FolderName, @Number, @CID, @Year, @Period, @Editable, @Teacher, @CreationDate";
                 insertRequest.Parameters.Add("@FolderName", SqlDbType.VarChar, 50).Value = folderInfo["title"];
-                insertRequest.Parameters.Add("@GID", SqlDbType.VarChar, 50).Value = folderInfo["id"];
+                insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+                insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+                insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+                insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
                 insertRequest.Parameters.Add("@Editable", SqlDbType.VarChar, 10).Value = "true";
                 insertRequest.Parameters.Add("@Teacher", SqlDbType.Int).Value = folderInfo["author"];
                 insertRequest.Parameters.Add("@CreationDate", SqlDbType.Date).Value = folderInfo["date"];
@@ -198,10 +203,17 @@ namespace BackEnd_xtecDigital.Controllers
         [Route("api/teacher/group/folder/document")]
         public JArray getGroupfolder([FromBody] JObject folderInfo)
         {
+
+            string[] GID = getGID(folderInfo);
+
             conn.Open();
             SqlCommand getRequest = conn.CreateCommand();
-            getRequest.CommandText = "EXEC sp_GetFolderDocument @FID";
-            getRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = folderInfo["id"];
+            getRequest.CommandText = "EXEC sp_GetFolderDocument @FolderName, @Number, @CID, @Year, @Period";
+            getRequest.Parameters.Add("@FolderName", SqlDbType.VarChar, 50).Value = folderInfo["title"];
+            getRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+            getRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+            getRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+            getRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
             getRequest.ExecuteNonQuery();
             SqlDataReader data = getRequest.ExecuteReader();
             JArray obj = new JArray();
@@ -222,16 +234,22 @@ namespace BackEnd_xtecDigital.Controllers
 
         [HttpPost]
         [Route("api/teacher/group/folder/delete")]
-        public IHttpActionResult deleteFolder([FromBody] JObject FolderInfo)
+        public IHttpActionResult deleteFolder([FromBody] JObject folderInfo)
         {
 
             try
             {
+
+                string[] GID = getGID(folderInfo);
+
                 conn.Open();
                 SqlCommand deleteRequest = conn.CreateCommand();
-                deleteRequest.CommandText = "EXEC sp_DeleteFolder @FID";
-                Debug.Print(FolderInfo["id"].ToString());
-                deleteRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = FolderInfo["id"];
+                deleteRequest.CommandText = "EXEC sp_DeleteFolder @FolderName, @Number, @CID, @Year, @Period";
+                deleteRequest.Parameters.Add("@FolderName", SqlDbType.VarChar, 50).Value = folderInfo["title"];
+                deleteRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+                deleteRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+                deleteRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+                deleteRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
                 deleteRequest.ExecuteNonQuery();
                 conn.Close();
                 return Ok("Documento eliminado");
@@ -249,10 +267,17 @@ namespace BackEnd_xtecDigital.Controllers
 
             try
             {
+
+                string[] GID = getGID(documentInfo);
+
                 conn.Open();
                 SqlCommand insertRequest = conn.CreateCommand();
-                insertRequest.CommandText = "EXEC sp_AddFolderDocument @FID, @DocName, @DocLink, @UploadDate, @DocSize";
-                insertRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = documentInfo["id"];
+                insertRequest.CommandText = "EXEC sp_AddFolderDocument @FolderName, @Number, @CID, @Year, @Period, @DocName, @DocLink, @UploadDate, @DocSize";
+                insertRequest.Parameters.Add("@FolderName", SqlDbType.VarChar, 50).Value = documentInfo["title"];
+                insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+                insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+                insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+                insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
                 insertRequest.Parameters.Add("@DocName", SqlDbType.VarChar, 50).Value = documentInfo["file"];
                 insertRequest.Parameters.Add("@DocLink", SqlDbType.VarChar, Int32.MaxValue).Value = documentInfo["url"];
                 insertRequest.Parameters.Add("@UploadDate", SqlDbType.Date).Value = documentInfo["date"];
@@ -274,10 +299,17 @@ namespace BackEnd_xtecDigital.Controllers
 
             try
             {
+
+                string[] GID = getGID(documentInfo);
+
                 conn.Open();
                 SqlCommand deleteRequest = conn.CreateCommand();
-                deleteRequest.CommandText = "EXEC sp_DeleteFolderDocument @FID, @DocName";
-                deleteRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = documentInfo["id"];
+                deleteRequest.CommandText = "EXEC sp_DeleteFolderDocument @FolderName, @Number, @CID, @Year, @Period, @DocName";
+                deleteRequest.Parameters.Add("@FolderName", SqlDbType.VarChar, 50).Value = documentInfo["title"];
+                deleteRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+                deleteRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+                deleteRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+                deleteRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
                 deleteRequest.Parameters.Add("@DocName", SqlDbType.VarChar, 50).Value = documentInfo["file"];
                 deleteRequest.ExecuteNonQuery();
                 conn.Close();
@@ -296,10 +328,17 @@ namespace BackEnd_xtecDigital.Controllers
 
             try
             {
+
+                string[] GID = getGID(documentInfo);
+
                 conn.Open();
                 SqlCommand updateRequest = conn.CreateCommand();
-                updateRequest.CommandText = "EXEC sp_UpdateFolderDocument @FID, @DocName, @DocLink";
-                updateRequest.Parameters.Add("@FID", SqlDbType.VarChar, 100).Value = documentInfo["id"];
+                updateRequest.CommandText = "EXEC sp_UpdateFolderDocument @FolderName, @Number, @CID, @Year, @Period, @DocName, @DocLink";
+                updateRequest.Parameters.Add("@FolderName", SqlDbType.VarChar, 50).Value = documentInfo["title"];
+                updateRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+                updateRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+                updateRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+                updateRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
                 updateRequest.Parameters.Add("@DocName", SqlDbType.VarChar, 50).Value = documentInfo["file"];
                 updateRequest.Parameters.Add("@DocLink", SqlDbType.VarChar, Int32.MaxValue).Value = documentInfo["url"];
                 updateRequest.ExecuteNonQuery();
@@ -563,10 +602,17 @@ namespace BackEnd_xtecDigital.Controllers
         [Route("api/teacher/group/assignments/getStudents")]
         public JArray getUploadedAssignments([FromBody] JObject assignmentInfo)
         {
+
+            string[] GID = getGID(assignmentInfo);
+
             conn.Open();
             SqlCommand getRequest = conn.CreateCommand();
-            getRequest.CommandText = "EXEC  sp_getUploadedAssignmets @AID";
-            getRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = assignmentInfo["assignment"];
+            getRequest.CommandText = "EXEC  sp_getUploadedAssignmets @Number, @CID, @Year, @Period, @AName";
+            getRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+            getRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+            getRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+            getRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
+            getRequest.Parameters.Add("@AName", SqlDbType.VarChar, 50).Value = assignmentInfo["title"];
             getRequest.ExecuteNonQuery();
             SqlDataReader data = getRequest.ExecuteReader();
             JArray obj = new JArray();
@@ -591,13 +637,17 @@ namespace BackEnd_xtecDigital.Controllers
 
             try
             {
+
+                string[] GID = getGID(feedbackInfo);
+
                 conn.Open();
                 SqlCommand updateRequest = conn.CreateCommand();
-                Debug.Print(feedbackInfo["assignment"].ToString());
-                Debug.Print(feedbackInfo["grade"].ToString());
-                Debug.Print(feedbackInfo["url"].ToString());
-                updateRequest.CommandText = "EXEC sp_uploadFeedback @AID, @SGroup, @Grade, @FLink";
-                updateRequest.Parameters.Add("@AID", SqlDbType.VarChar, 100).Value = feedbackInfo["assignment"];
+                updateRequest.CommandText = "EXEC sp_uploadFeedback @Number, @CID, @Year, @Period, @AName, @SGroup, @Grade, @FLink";
+                updateRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+                updateRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+                updateRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+                updateRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
+                updateRequest.Parameters.Add("@AName", SqlDbType.VarChar, 50).Value = feedbackInfo["title"];
                 updateRequest.Parameters.Add("@SGroup", SqlDbType.Int).Value = feedbackInfo["groupNum"];
                 updateRequest.Parameters.Add("@Grade", SqlDbType.Int).Value = feedbackInfo["grade"];
                 updateRequest.Parameters.Add("@FLink", SqlDbType.VarChar, Int32.MaxValue).Value = feedbackInfo["url"];
