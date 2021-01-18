@@ -21,7 +21,6 @@ namespace BackEnd_xtecDigital.Models
             var db = dbClient.GetDatabase("xtecDigital");
             var col = db.GetCollection<BsonDocument>("Students").Find(new BsonDocument()).ToList();
             JObject obj = new JObject();
-            Debug.Print(db.GetCollection<BsonDocument>("Students").Find(new BsonDocument()).ToList()[0].ToJson());
             int x = 1;
             foreach (BsonDocument doc in col)
             {
@@ -86,6 +85,24 @@ namespace BackEnd_xtecDigital.Models
             catch
             {
                 return JObject.Parse(new MongoTeacher().ToJson());
+            }
+        }
+
+        public JObject getReportStudentData(int id)
+        {
+            try
+            {
+                MongoClient dbClient = new MongoClient("mongodb+srv://admin:admin@cluster0.8aanu.mongodb.net/<dbname>?retryWrites=true&w=majority");
+                var db = dbClient.GetDatabase("xtecDigital");
+                var builder = Builders<MongoReportStudent>.Filter;
+                var filter = builder.Eq(u => u._id, id);
+                var col = db.GetCollection<MongoReportStudent>("Students");
+                var student = col.Find(filter).FirstOrDefault().ToJson();
+                return JObject.Parse(student);
+            }
+            catch
+            {
+                return JObject.Parse(new MongoStudent().ToJson());
             }
         }
 

@@ -20,7 +20,6 @@ namespace BackEnd_xtecDigital.Controllers
         static string stringconnection = @"Data Source=(localdb)\xTecDigital; Initial Catalog=xTecDigital; Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
-
         [HttpPost]
         [Route("api/teacher/semester")]
         public JArray obtainTeacherSemester([FromBody] JObject teacherInfo)
@@ -784,6 +783,31 @@ namespace BackEnd_xtecDigital.Controllers
             {
                 return BadRequest("Error al insertar");
             }
+        }
+
+        [HttpPost]
+        [Route("api/teacher/course/generate/report/students")]
+        public IHttpActionResult getStudentPerCourse([FromBody] JObject courseInfo)
+        {
+            string[] GID = getGID(courseInfo);
+            StudentsPerCourse studentsPerCourse = new StudentsPerCourse();
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_StudentsPerCourse @CID, @SYear, @SPeriod";
+            getRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+            getRequest.Parameters.Add("@SYear", SqlDbType.VarChar, 4).Value = GID[0];
+            getRequest.Parameters.Add("@SPeriod", SqlDbType.VarChar, 1).Value = GID[1];
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            List<int> students = new List<int>();
+            while (data.Read())
+            {
+                students.Add((int)data.GetValue(0));
+            }
+            data.Close();
+            conn.Close();
+            JObject response = studentsPerCourse.getStudentsPerCourse(students.ToArray());
+            return Ok(response);
         }
 
         public string[] getGID(JObject groupInfo)
