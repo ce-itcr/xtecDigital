@@ -217,7 +217,8 @@ namespace BackEnd_xtecDigital.Controllers
                 insertRequest.ExecuteNonQuery();
                 conn.Close();
                 string currentSemester = semesterInfo["year"] + "-" + semesterInfo["period"];
-                foreach (var item in semesterInfo["courses"]) {
+                foreach (var item in semesterInfo["courses"])
+                {
                     string GID = currentSemester + "-" + item[0].ToString() + "-" + item[2].ToString();
                     conn.Open();
                     insertRequest = conn.CreateCommand();

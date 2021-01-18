@@ -18,11 +18,15 @@ namespace BackEnd_xtecDigital.Models
                 studentDocs.Add(mongoConnection.getReportStudentData(studentID));
             }
             JObject obj = new JObject();
+            int x = 0;
             for (int i = 0; i < students.Length; i++)
             {
-                JProperty property = new JProperty(students[i].ToString(), studentDocs[i]);
+                JProperty property = new JProperty("student" + i.ToString(), studentDocs[i]);
                 obj.Add(property);
+                x++;
             }
+            JProperty sizeProperty = new JProperty("size", x);
+            obj.Add(sizeProperty);
             return obj;
         }
     }
