@@ -98,7 +98,9 @@ namespace BackEnd_xtecDigital.Models
             var doc = new BsonDocument
             {
                 {"_id", (int)json["id"]},
-                {"Name", json["name"].ToString()},
+                {"FName", json["fname"].ToString()},
+                {"LName1", json["lname1"].ToString()},
+                {"LName2", json["lname2"].ToString()},
                 {"Email", json["email"].ToString()},
                 {"PhoneNumber", (int)json["phone"]},
                 {"Password", encryptedPass}
@@ -115,7 +117,9 @@ namespace BackEnd_xtecDigital.Models
             var doc = new BsonDocument
             {
                 {"_id", (int)json["id"]},
-                {"Name", json["name"].ToString()},
+                {"FName", json["fname"].ToString()},
+                {"LName1", json["lname1"].ToString()},
+                {"LName2", json["lname2"].ToString()},
                 {"Email", json["email"].ToString()},
                 {"Password", encryptedPass}
             };

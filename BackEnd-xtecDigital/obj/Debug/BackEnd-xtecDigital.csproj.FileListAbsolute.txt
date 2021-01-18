@@ -433,3 +433,19 @@ C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\bin\mongo
 C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\bin\snappy32.dll
 C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\bin\snappy64.dll
 C:\Users\Usuario\Desktop\xTecDigitalBE\xtecDigital\BackEnd-xtecDigital\bin\libzstd.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.CrystalReports.Engine.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportSource.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.Shared.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.DataDefModel.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.Controllers.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.CommLayer.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.Prompting.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
+C:\Users\isoli\Documents\Bases de Datos\xtecDigital\Backend\xtecDigital\BackEnd-xtecDigital\bin\stdole.dll
