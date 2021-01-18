@@ -549,7 +549,11 @@ namespace BackEnd_xtecDigital.Controllers
                 string[] GID = getGID(assignmentInfo);
                 int end = assignmentInfo["id"].ToString().Length;
 
-                Debug.Print(assignmentInfo["id"].ToString().Substring(15, end - 15));
+                Debug.Print(GID[3]);
+                Debug.Print(GID[2]);
+                Debug.Print(GID[0]);
+                Debug.Print(GID[1]);
+                Debug.Print(assignmentInfo["id"].ToString().Substring(16, end - 16));
 
                 conn.Open();
                 SqlCommand deleteRequest = conn.CreateCommand();
@@ -859,7 +863,7 @@ namespace BackEnd_xtecDigital.Controllers
             insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
             insertRequest.Parameters.Add("@AName", SqlDbType.VarChar, 50).Value = groupInfo["id"].ToString().Substring(16, end - 16);
             insertRequest.Parameters.Add("@PDate", SqlDbType.Date).Value = groupInfo["PDate"];
-            insertRequest.Parameters.Add("@PTime", SqlDbType.Time).Value = DateTime.Now.TimeOfDay.ToString().Substring(0, 8); 
+            insertRequest.Parameters.Add("@PTime", SqlDbType.Time).Value = groupInfo["PTime"]; 
             insertRequest.Parameters.Add("@Author", SqlDbType.Int).Value = groupInfo["author"];
             insertRequest.ExecuteNonQuery();
             conn.Close();
