@@ -17,6 +17,7 @@ export class DocumentsComponent implements OnInit{
     this.folders = [];
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentUser = localStorage.getItem("current_username");
+    //FILL DOCUMENTS
     this.CS.getDocuments().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -36,10 +37,10 @@ export class DocumentsComponent implements OnInit{
   closeModal = false;
   currentUser;
   folders = [];
-
   n = new Date();
   date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
 
+  //OPEN COMPONENT MODALS
   openModal(content){
     if(this.closeModal){
       this.closeModal = false;
@@ -54,6 +55,7 @@ export class DocumentsComponent implements OnInit{
     this.router.navigate(['professor_single_document']));
   }
 
+  //CREATE A NEW FOLDER
   createFolder(title){
     this.CS.createDocument(title, this.currentUser, this.date).subscribe(res => {
       this.ngOnInit();
@@ -62,6 +64,7 @@ export class DocumentsComponent implements OnInit{
     });
   }
 
+  //DELETE A FOLDER
   deleteFolder(folder){
     this.CS.deleteFolder(folder).subscribe(res => {
       this.ngOnInit();

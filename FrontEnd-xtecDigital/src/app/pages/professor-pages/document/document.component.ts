@@ -20,6 +20,7 @@ export class DocumentComponent implements OnInit{
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentDocumentSection = localStorage.getItem("currentDocumentSection");
 
+    //FILL DOCUMENT FILES
     this.CS.getDocumentFiles(this.currentDocumentSection).subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -39,16 +40,13 @@ export class DocumentComponent implements OnInit{
   courseName;
   currentDocumentSection;
   currentFileName;
-
   files = [];
-
   n = new Date();
   date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
-  
-
   closeModal = false;
   public imagePath;
 
+  //OPEN COMPONENT MODALS
   openModal(content){
     if(this.closeModal){
       this.closeModal = false;
@@ -57,6 +55,7 @@ export class DocumentComponent implements OnInit{
     }
   }
 
+  //SEND DATA TO CREATE A NEW FILE
   createFile(name, url){
     var size = 50
     this.CS.createDocumentFile(this.currentDocumentSection, name, this.date, size, url).subscribe(res => {
@@ -66,6 +65,7 @@ export class DocumentComponent implements OnInit{
     });
   }
 
+  //SEND DATA TO DELETE A FILE
   deleteFile(name){
     this.CS.deleteDocumentFile(this.currentDocumentSection, name).subscribe(res => {
       this.ngOnInit();
@@ -74,6 +74,7 @@ export class DocumentComponent implements OnInit{
     })
   }
 
+  //SEND DATA TO UPDATE A FILE
   updateFile(name, url){
     this.CS.updateDocumentFile(this.currentDocumentSection, name, url).subscribe(res => {
       this.ngOnInit();
@@ -82,10 +83,12 @@ export class DocumentComponent implements OnInit{
     })
   }
 
+  //SET CURRENT ASSIGN
   assign(name){
     this.currentFileName = name;
   }
 
+  //OPEN A WINDOW WITH URL
   onNavigate(url){
     window.location.href=url;
   }

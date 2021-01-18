@@ -18,15 +18,17 @@ export class UserComponent implements OnInit{
   constructor(private modal:NgbModal, private router: Router, private CS: CommunicationService){
   }
     ngOnInit(){
+      //SET ADMIN INFO
       this.refresh();
       this.userFullName = "Administrador";
       this.userImage = "../../../../assets/img/default-avatar.png"
       this.username = "admin"
     }
 
-    //SE INICIALIZA LA VENTANA EMERGENTE (pop-up)
+    //OPEN COMPONENT MODALS
     openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
 
+    //REFRESH SEMESTERS TABLE
     refresh(){
       if(globalThis.flag == 1){
         this.router.navigateByUrl("/admin_coursesManagement");

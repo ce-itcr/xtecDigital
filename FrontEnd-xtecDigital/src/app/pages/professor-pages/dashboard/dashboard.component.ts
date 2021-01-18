@@ -14,8 +14,7 @@ export class DashboardComponent implements OnInit{
 
     constructor(private router:Router, private CS: CommunicationService){}
     ngOnInit(){
-      alert(localStorage.getItem("firstName"));
-      alert(localStorage.getItem("email"));
+      //GET CURRENT TEACHER COURSES
       this.CS.getTeacherCourses().subscribe(res => {
         var cont = 0;
         while(cont < res.length){
@@ -45,15 +44,15 @@ export class DashboardComponent implements OnInit{
       });
     }
 
+    public _courses = [];
+
     toSingleCourse(name){
       localStorage.setItem("currentCourseName", name);
       this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
       this.router.navigate(['professor_course']));
     }
 
-
-    public _courses = [];
-
+    //GO TO TEACHER COURSE
     goToCourse(code, name, semester){
 
       var year = this.getSemester(semester);
@@ -72,14 +71,17 @@ export class DashboardComponent implements OnInit{
 
     }
 
+    //GET CURRENT SEMESTER
     getSemester(semester: string){
       return semester.slice(11,15);
     }
 
+    //GET CURRENT PERIOD
     getPeriod(semester: string){
       return semester.slice(9,10);
     }
 
+    //GET CURRENT GROUP
     getGroup(courseName: string){
       return courseName.slice(courseName.length-1,courseName.length);
     }

@@ -22,6 +22,7 @@ export class AssignmentsComponent implements OnInit{
     this.rubroPercentage = localStorage.getItem("currentRubroPercentage");
     this.students = [];
     this.percentages = [];
+    //FILL FILES ARRAY TO COMPONENT DATA
     this.CS.getAssignments().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -38,6 +39,7 @@ export class AssignmentsComponent implements OnInit{
     }, error => {
       alert("ERROR");
     })
+    //GET STUDENTS TO CREATE WORKGROUPS
     this.CS.getGroupStudents().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -73,6 +75,7 @@ export class AssignmentsComponent implements OnInit{
   closeModal = false;
   public imagePath;
 
+  //OPEN COMPONENT MODALS
   openModal(content){
     if(this.closeModal){
       this.closeModal = false;
@@ -86,6 +89,7 @@ export class AssignmentsComponent implements OnInit{
     }
   }
 
+  //SEND NAME, START DATE, PERCENTAGE, TIME, FINAL_DATE, DESCRIPTION AND LINK TO CREATE ASSIGNMENT
   createAssignment(name, started, percentage, time, date, desc, link){
     var cont = 0;
     var result = 0;
@@ -93,9 +97,7 @@ export class AssignmentsComponent implements OnInit{
       result += parseInt(this.percentages[cont]);
       cont++;
     }
-    alert(result);
     result += parseInt(percentage);
-    alert(result);
     if(result <= parseInt(this.rubroPercentage)){
       this.currentAssignment = name;
       this.CS.createAssignment(name, started, percentage, time+":00", date, desc, link).subscribe(res => {
@@ -109,8 +111,8 @@ export class AssignmentsComponent implements OnInit{
     }
   }
 
+  //SEND NAME TO DELETE ASSIGNMENT
   deleteAssignment(name){
-    alert(name);
     this.CS.deleteAssignment(name).subscribe(res => {
       this.ngOnInit();
     }, error => {
@@ -118,10 +120,12 @@ export class AssignmentsComponent implements OnInit{
     })
   }
 
+  //OPEN A WINDOW WITH URL
   onNavigate(url){
     window.location.href=url;
   }
 
+  //GET STUDENTS THAT ALREADY UPLOADED THE ASSIGNMENT
   fillStudents(assignment){
     this.currentAssignment = assignment;
     this.CS.getStudentAssignments(assignment).subscribe(res => {
@@ -140,10 +144,12 @@ export class AssignmentsComponent implements OnInit{
     });
   }
 
+  //SET CURRENT STUDENT (TO UPLOAD FEEDBACK)
   currentStudent(group){
     this.currentGroup = group;
   }
 
+  //UPLOAD FEEDBACK TO STUDENT
   uploadFeedback(url, grade){
     this.CS.uploadFeedback(this.currentGroup ,this.currentAssignment, url, grade).subscribe(res => {
       alert(res);
@@ -152,14 +158,13 @@ export class AssignmentsComponent implements OnInit{
     });
   }
 
+  //SET STUDENTS THAT ALREADY HAVE A WORKGROUP
   studentsOnCheck(student){
     this.workGroup.push(student);
   }
 
+  //ADD NEW WORKGROUP
   addGroup(){
-    alert(this.groupNum);
-    alert(this.currentAssignment);
-    alert(this.workGroup);
     this.CS.createWorkGroup(this.groupNum, this.currentAssignment, this.workGroup, this.currentRubroSection).subscribe(res => {
       this.groupNum ++;
       this.deleteStudents();
@@ -169,10 +174,8 @@ export class AssignmentsComponent implements OnInit{
     });
   }
 
+  //SET ALL STUDENTS IN INDIVIDUAL GROUPS
   individualAssignment(){
-    alert(this.currentAssignment);
-    alert(this.students);
-    alert(this.currentRubroSection);
     this.CS.createIndividualAssignemnt(this.currentAssignment, this.students, this.currentRubroSection).subscribe(res => {
       this.ngOnInit();
     }, error => {
@@ -180,6 +183,7 @@ export class AssignmentsComponent implements OnInit{
     });
   }
 
+  //DELETE STUDENTS THAT ALREADY HAVE WORKGROUP
   deleteStudents(){
     var cont = 0;
     var newList = [];
@@ -194,12 +198,13 @@ export class AssignmentsComponent implements OnInit{
     this.students = newList;
   }
 
+  //RESET GROUP NUMS WHEN ALL GROUPS HAVE CREATED
   countReset(){
     this.groupNum = 1;
   }
 
+  //SHOW GRADES TO ALL STUDENTS
   showGrades(){
-    alert(this.getHour());
     this.CS.showGrades(this.currentAssignment, this.date, this.getHour()).subscribe(res => {
       this.ngOnInit();
     }, error => {
@@ -207,6 +212,7 @@ export class AssignmentsComponent implements OnInit{
     });
   }
 
+  //GET HOUR
   public getHour(){
 
     var n = new Date();

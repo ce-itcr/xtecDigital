@@ -23,7 +23,7 @@ export class CourseComponent implements OnInit{
 
     this.newsId = this.year + "-" + this.period + "-" + this.courseId + "-" + this.courseGroup;
     localStorage.setItem("newsId",this.newsId);
-
+    //FILL COURSE NEWS
     this.CS.getNews(this.newsId).subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -66,16 +66,19 @@ export class CourseComponent implements OnInit{
     this.router.navigate(['course']));
   }
 
+  //GO TO DOCUMENTS COMPONENT
   toDocumentsSection(){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['student_documents']));
   }
 
+  //GO TO ASSIGNMENTS COMPONENT
   toAssignmentsSection(){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['student_rubros']));
   }
 
+  //GO TO NEWS COMPONENT
   toNewsSection(title, date, author, body){
     localStorage.setItem("currentNewsBody",body);
     localStorage.setItem("currentNewsTitle",title);

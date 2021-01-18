@@ -10,11 +10,12 @@ export class CommunicationService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-   // LOGIN - INICIO DE SESIÓN | VERIFICACIÓN DE USUARIO
+   //SEND DATA TO LOGIN - INICIO DE SESIÓN | VERIFICACIÓN DE USUARIO
    public verifyUser(username: string, password: string){
     return this.http.post<JSON>("https://jsonplaceholder.typicode.com/posts", {"username": username, "password": password});
    }
 
+   //SEND DATA TO UPDATE USER DATA
    sendProfileDataToUpdate(userName, fullName, password, phone, address, nationality, birthDate, imgUrl){
     return this.http.post<JSON>("https://jsonplaceholder.typicode.com/posts", {"userName": userName, "fullName": fullName,
                                                                                "password": password, "phone": phone,
@@ -22,19 +23,22 @@ export class CommunicationService {
                                                                                "birthDate": birthDate, "imgUrl": imgUrl});
    }
 
+   //SEND DATA TO CREATE COURSE
    createCourse(id, name, credits, career){
     return this.http.post<JSON>("api/admin/courses/add", {"id":id, "name":name, "credits":credits, "career":career});
    }
 
+   //SEND DATA TO UPDATE COURSE
    updateCourse(id, name, credits, career){
     return this.http.post<JSON>("api/admin/courses/update", {"id":id, "name":name, "credits":credits, "career":career});
    }
 
+   //SEND DATA TO DELETE COURSE
    deleteCourse(id, available){
     return this.http.post<JSON>("api/admin/courses/update/availability", {"id":id, "available":available});
    }
 
-
+   //SEND DATA TO GET ADMIN COURSES
    getAdminCourses(key){
     return this.http.get<any[]>("api/admin/courses").subscribe(res => {
       var data = []
@@ -53,11 +57,12 @@ export class CommunicationService {
     });;
   }
 
+  //SEND DATA TO GET ABAILABILITY COURSE IN SEMESTERS
   getSemesterCourses(){
     return this.http.get<any[]>("api/admin/courses");
   }
 
-
+  //SEND DATA TO GET ADMIN SEMESTERS
   getAdminSemesters(key){
     return this.http.get<any[]>("api/admin/semester").subscribe(res => {
       var data = []
@@ -73,13 +78,15 @@ export class CommunicationService {
       }
     }, error => {
       alert("ERROR");
-    });;
+    });
   }
 
+  //SEND DATA TO GET STUDENTS FOR SEMESTER
   getSemesterStudents(){
     return this.http.get<any[]>("api/admin/student");
   }
 
+  //SEND DATA TO CREATE A NEW SEMESTER
   sendNewSemester(year, period, courses){
     return this.http.post<JSON>("api/admin/semester/add",
     {
@@ -90,14 +97,17 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO GET COURSES FOR STUDENT
   getStudentCourses(){
     return this.http.post<any[]>("api/student/semester", {"id":localStorage.getItem("current_username")});
   }
 
+  //SEND DATA TO GET COURSES FOR TEACHER
   getTeacherCourses(){
     return this.http.post<any[]>("api/teacher/semester", {"id":localStorage.getItem("current_username")});
   }
 
+  //SEND DATA TO GET COURSE NEWS
   getNews(newsId){
     return this.http.post<any[]>("api/student/group/news",
     {
@@ -106,6 +116,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO CREATE NEWS
   createNews(author, title, body, date, hour, newsId){
     return this.http.post<any[]>("api/teacher/group/news/add",
     {
@@ -119,6 +130,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO DELETE NEWS
   deleteNews(newsId){
     return this.http.post<any[]>("api/teacher/group/news/delete",
     {
@@ -127,6 +139,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO UPDATE NEWS
   updateNews(newsId, title, body){
     return this.http.post<any[]>("api/teacher/group/news/update",
     {
@@ -137,6 +150,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO GET COURSE DOCUMENTS
   getDocuments(){
     return this.http.post<any[]>("api/student/group/folder",
     {
@@ -145,6 +159,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO CREATE DOCUMENT
   createDocument(title, author, date){
     return this.http.post<any[]>("api/teacher/group/folder/add",
     {
@@ -156,6 +171,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO GET DOCUMENT FILES
   getDocumentFiles(folder){
     var id = localStorage.getItem("newsId") + "-" + folder;
     return this.http.post<any[]>("api/teacher/group/folder/document",
@@ -166,6 +182,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO CREATE DOCUMENT FILE
   createDocumentFile(folder ,name, date, size, url){
     var id = localStorage.getItem("newsId") + "-" + folder;
     return this.http.post<any[]>("api/teacher/group/folder/document/add",
@@ -180,6 +197,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO DELETE DOCUMENT FILE
   deleteDocumentFile(folder, name){
     var id = localStorage.getItem("newsId") + "-" + folder;
     return this.http.post<any[]>("api/teacher/group/folder/document/delete",
@@ -191,6 +209,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO UPDATE DOCUMENT FILE
   updateDocumentFile(folder, name, url){
     var id = localStorage.getItem("newsId") + "-" + folder;
     return this.http.post<any[]>("api/teacher/group/folder/document/update",
@@ -203,6 +222,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO DELETE FOLDER
   deleteFolder(folder){
     var id = localStorage.getItem("newsId") + "-" + folder;
     return this.http.post<any[]>("api/teacher/group/folder/delete",
@@ -213,6 +233,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO GET COURSE RUBROS
   getRubros(){
     return this.http.post<any[]>("api/teacher/group/rubros",
     {
@@ -221,6 +242,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO CREATE RUBRO
   createRubro(rubro, percentage){
     return this.http.post<any[]>("api/teacher/group/rubros/add",
     {
@@ -231,6 +253,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO DELETE RUBRO
   deleteRubro(rubro){
     return this.http.post<any[]>("api/teacher/group/rubros/delete",
     {
@@ -240,6 +263,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO UPDATE RUBRO
   updateRubro(lRubro, rubro, percentage){
     return this.http.post<any[]>("api/teacher/group/rubros/update",
     {
@@ -251,6 +275,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO GET COURSE ASSIGNMENTS
   getAssignments(){
     return this.http.post<any[]>("api/teacher/group/assignments",
     {
@@ -260,6 +285,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO CREATE ASSIGNMENT
   createAssignment(name, started, percentage, time, date, desc, link){
     var AID = localStorage.getItem("newsId") + "-" + name;
     return this.http.post<any[]>("api/teacher/group/assignments/add",
@@ -278,11 +304,9 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO DELETE ASSIGNMENT
   deleteAssignment(name){
-
     var AID = localStorage.getItem("newsId") + "-" + name;
-    alert(AID);
-
     return this.http.post<any[]>("api/teacher/group/assignments/delete",
     {
       "id":AID
@@ -290,6 +314,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO LOG IN A STUDENT
   studentLogIn(id, pass){
     return this.http.post<any[]>("api/StudentData",
     {
@@ -299,6 +324,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO LOG IN A TEACHER
   teacherLogIn(id, pass){
     return this.http.post<any[]>("api/TeacherData",
     {
@@ -308,6 +334,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO UPLOAD ASSIGNMENTS
   uploadAssignment(url, rubro, assign){
     var assignmentID = localStorage.getItem("newsId") + "-" + assign;
     return this.http.post<any[]>("api/student/rubros/assignments/upload",
@@ -320,6 +347,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO GET COURSE ASSIGNMENTS
   getStudentAssignments(assign){
     var assignmentID = localStorage.getItem("newsId") + "-" + assign;
     return this.http.post<any[]>("api/teacher/group/assignments/getStudents",
@@ -330,6 +358,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO UPLOAD FEEDBACK TO STUDENTS
   uploadFeedback(group , assignment, url, grade){
     var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
     return this.http.post<any[]>("api/teacher/group/assignemts/feedback",
@@ -343,6 +372,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO GET STUDENT FEEDBACK
   getFeedback(assignment){
     var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
     return this.http.post<any[]>("api/teacher/group/assignments/getFeedback",
@@ -354,6 +384,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO GET STUDENTS TO UPLOAD FEEDBACK
   getGroupStudents(){
     return this.http.post<any[]>("api/teacher/group/students/get",
     {
@@ -362,6 +393,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO CREATE A ASSIGNMENT WORKGROUP
   createWorkGroup(groupNum, assignment, students, rubro){
     var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
     return this.http.post<any[]>("api/teacher/group/workgroups/add",
@@ -374,6 +406,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO CREATE A INDIVIDUAL ASSIGNMENT
   createIndividualAssignemnt(assignment, students, rubro){
     var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
     return this.http.post<any[]>("api/teacher/group/individual/add",
@@ -385,6 +418,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO CREATE SEMESTER BY EXCEL FILE
   createSemesterByExcel(url){
     return this.http.post<any[]>("api/admin/semester/uploadExcel",
     {
@@ -393,6 +427,7 @@ export class CommunicationService {
     );
   }
 
+  //SEND DATA TO GET STUDENT GRADE
   showGrades(assignment, PDate, PTime){
     var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
     return this.http.post<any[]>("api/teacher/group/showGrades",
@@ -401,6 +436,16 @@ export class CommunicationService {
       "PDate":PDate,
       "PTime":PTime,
       "author":localStorage.getItem("current_username")
+    }
+    );
+  }
+
+  //SEND DATA TO GET STUDENT GRADE
+  generateReport(){
+    var assignmentID = localStorage.getItem("newsId");
+    return this.http.post<any[]>("api/teacher/course/generate/report/students",
+    {
+      "id":assignmentID
     }
     );
   }

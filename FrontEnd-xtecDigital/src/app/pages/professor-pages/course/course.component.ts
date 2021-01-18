@@ -27,6 +27,24 @@ export class CourseComponent implements OnInit{
     this.newsId = this.year + "-" + this.period + "-" + this.courseId + "-" + this.courseGroup;
     localStorage.setItem("newsId",this.newsId);
 
+    this.CS.generateReport().subscribe(res => {
+      var cont = 0;
+      while(cont<res["size"]){
+        var data = [];
+        var key = "student" + cont.toString();
+        data.push(res[key]["FName"] + " " + res[key]["LName1"] + " " + res[key]["LName2"]);
+        data.push(res[key]["Email"]);
+        data.push("../../../../assets/img/default-avatar.png");
+        data.push(res[key]["PhoneNumber"]);
+        data.push(res[key]["_id"]);
+        this.students.push(data);
+        cont++;
+      }
+    }, error => {
+      alert("ERROR");
+    });
+
+    //GET COURSE NEWS
     this.CS.getNews(this.newsId).subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -57,6 +75,7 @@ export class CourseComponent implements OnInit{
   n = new Date();
   newDate = this.n.getFullYear() + "/0" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
 
+  //GET HOUR
   public getHour(){
 
     var n = new Date();
@@ -88,17 +107,18 @@ export class CourseComponent implements OnInit{
 
   closeModal = false;
 
-  students = [["Nombre Estudiante 1","user01@gmail.com","../../../../assets/img/default-avatar.png"],
-              ["Nombre Estudiante 2","user02@gmail.com","../../../../assets/img/default-avatar.png"],
-              ["Nombre Estudiante 3","user03@gmail.com","../../../../assets/img/default-avatar.png"],
-              ["Nombre Estudiante 3","user03@gmail.com","../../../../assets/img/default-avatar.png"]]
+  students = [];
 
-  professors = [["Nombre Profesor 1","prof01@gmail.com","../../../../assets/img/default-avatar.png"],
-                ["Nombre Profesor 2","prof02@gmail.com","../../../../assets/img/default-avatar.png"]]
+  studentss = [["Nombre Estudiante 1","user01@gmail.com","../../../../assets/img/default-avatar.png","phone","carnet"],
+              ["Nombre Estudiante 2","user02@gmail.com","../../../../assets/img/default-avatar.png","phone","carnet"],
+              ["Nombre Estudiante 3","user03@gmail.com","../../../../assets/img/default-avatar.png","phone","carnet"],
+              ["Nombre Estudiante 3","user03@gmail.com","../../../../assets/img/default-avatar.png","phone","carnet"]]
+
+  professors = [[localStorage.getItem("Name"),localStorage.getItem("Email"),"../../../../assets/img/default-avatar.png"]]
 
   news = []
 
-
+  //OPEN COMPONENT MODALS
   openModal(content){
     if(this.closeModal){
       this.closeModal = false;
@@ -106,21 +126,26 @@ export class CourseComponent implements OnInit{
       this.modal.open(content,{size:'sm', centered:true});
     }
   }
+
+  //GO TO COURSE COMPONENT
   toCurrentSection(){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['course']));
   }
 
+  //GO TO DOCUMENTS COMPONENT
   toDocumentsSection(){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['professor_documents']));
   }
 
+  //GO TO ASSIGNMENTS COMPONENT
   toAssignmentsSection(){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['professor_rubros']));
   }
 
+  //GO TO NEWS COMPONENT
   toNewsSection(title, date, author, body, time){
     localStorage.setItem("currentNewsBody",body);
     localStorage.setItem("currentNewsTitle",title);
@@ -131,6 +156,7 @@ export class CourseComponent implements OnInit{
     this.router.navigate(['professor_news']));
   }
 
+  //CREATE A NEWS
   createNew(title, body){
     this.CS.createNews(this.currentUser , title, body, this.newDate, this.getHour(), this.newsId).subscribe(res => {
       this.ngOnInit();

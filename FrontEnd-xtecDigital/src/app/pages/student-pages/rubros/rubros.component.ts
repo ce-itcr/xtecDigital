@@ -17,6 +17,7 @@ export class RubrosComponent implements OnInit{
     this.rubros = [];
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentUser = localStorage.getItem("current_username");
+    //FILL COURSE RUBROS INFO 
     this.CS.getRubros().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -31,26 +32,23 @@ export class RubrosComponent implements OnInit{
     });
   }
 
-  public ddd(){
-    alert(this.rubros)
-  }
-
   courseName;
   closeModal = false;
   currentUser;
   rubros = [];
-
   lastRubro;
   lastPercentage;
 
   n = new Date();
   date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
 
+  //SET CURRENT LAST RUBRO INFO
   lastRubroInfo(rubro, percentage){
     this.lastRubro = rubro;
     this.lastPercentage = percentage;
   }
 
+  //GO TO ASSIGNMENTS COMPONENT
   toAssignmentSection(title){
     localStorage.setItem("currentRubroSection", title)
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>

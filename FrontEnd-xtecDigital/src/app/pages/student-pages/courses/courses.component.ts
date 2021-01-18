@@ -14,9 +14,7 @@ export class CoursesComponent implements OnInit{
     constructor(private router:Router, private CS: CommunicationService){}
 
     ngOnInit(){
-      alert(localStorage.getItem("firstName"));
-      alert(localStorage.getItem("phoneNumber"));
-      alert(localStorage.getItem("email"));
+      //FILL STUDENT COURSES
       this.CS.getStudentCourses().subscribe(res => {
         var cont = 0;
         while(cont < res.length){
@@ -46,6 +44,7 @@ export class CoursesComponent implements OnInit{
       });
     }
 
+    //GO TO COURSES COMPONENT
     goToCourse(code, name, semester){
 
       var year = this.getSemester(semester);
@@ -63,14 +62,17 @@ export class CoursesComponent implements OnInit{
 
     }
 
+    //SET CURRENT SEMESTER
     getSemester(semester: string){
       return semester.slice(11,15);
     }
 
+    //SET CURRENT PERIOD
     getPeriod(semester: string){
       return semester.slice(9,10);
     }
 
+    //SET CURRENT GROUP
     getGroup(courseName: string){
       return courseName.slice(courseName.length-1,courseName.length);
     }

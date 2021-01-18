@@ -18,27 +18,6 @@ export class LoginComponent{
     this.CS.getAdminSemesters(false);
   }
 
-  //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE ADMINISTRADOR
-  toAdminLayout(){
-    localStorage.setItem("accountType", "ADMIN");
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['admin_semesterManagement']));
-  }
-
-  //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE PROFESOR
-  toProfessorLayout(){
-    localStorage.setItem("accountType", "PROFESSOR");
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['professor_dashboard']));
-  }
-
-    //SE NAVEGA HACIE EL COMPONENTE "DASHBOARD" DE ESTUDIANTE
-  toStudentLayout(){
-    localStorage.setItem("accountType", "STUDENT");
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['student_courses']));
-  }
-
   //VERIFICA QUE LOS DATOS INGRESADOS PERTENEZCAN A UN USUARIO REGISTRADO
   //POSTERIORMENTE SE ENVÍA AL COMPONENTE RESPECTIVO
   //RECIBE: NOMBRE DE USUARIO Y CONTRASEÑA, RESPECTIVAMENTE
@@ -48,7 +27,6 @@ export class LoginComponent{
     
     if(type == "S"){
       this.CS.studentLogIn(username, password).subscribe(res => {
-        alert(res["_id"] == 0);
         if(!(res["_id"] == 0)){
           localStorage.setItem("Name", res["FName"] + " " + res["LName1"] + " " + res["LName2"]);
           localStorage.setItem("Email", res["Email"]);
@@ -68,14 +46,9 @@ export class LoginComponent{
     else if(type == "T"){
       this.CS.teacherLogIn(username, password).subscribe(res => {
         if(!(res["_id"] == 0)){
-          alert(JSON.stringify(res));
           localStorage.setItem("Name", res["FName"] + " " + res["LName1"] + " " + res["LName2"]);
           localStorage.setItem("Email", res["Email"]);
           localStorage.setItem("Pass", password);
-          alert(res["FName"] + " " + res["LName1"] + " " + res["LName2"]);
-          alert(res["Email"]);
-          alert(res["PhoneNumber"]);
-          alert(res["Password"])
           localStorage.setItem("accountType", "PROFESSOR");
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
           this.router.navigate(['professor_dashboard']));
@@ -101,7 +74,6 @@ export class LoginComponent{
 
   testMD5(password){
     let e = Md5.hashStr("HI");
-    alert(password + Md5.hashStr(password));
   }
 
 }

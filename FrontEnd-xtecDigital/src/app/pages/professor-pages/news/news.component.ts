@@ -15,6 +15,7 @@ export class NewsComponent implements OnInit{
   constructor(private router: Router, private CS:CommunicationService, private modal:NgbModal) {}
 
   ngOnInit(){
+    //SET CURRENT INFO
     this.newBody = localStorage.getItem("currentNewsBody");
     this.newTitle = localStorage.getItem("currentNewsTitle");
     this.newDate = localStorage.getItem("currentNewsDate");
@@ -29,6 +30,7 @@ export class NewsComponent implements OnInit{
   newTime;
   closeModal = false
 
+  //OPEN COMPONENT MODALS
   openModal(content){
     if(this.closeModal){
       this.closeModal = false;
@@ -37,6 +39,7 @@ export class NewsComponent implements OnInit{
     }
   }
 
+  //DELETE NEWS
   deleteNews(){
     var toDelete = this.newAuthor + "-" + this.newDate + "-" + this.newTime;
     this.CS.deleteNews(toDelete).subscribe(res => {
@@ -47,6 +50,7 @@ export class NewsComponent implements OnInit{
     });
   }
 
+  //UPDATE NEWS
   updateNews(title, body){
     var toDelete = this.newAuthor + "-" + this.newDate + "-" + this.newTime;
     this.CS.updateNews(toDelete, title, body).subscribe(res => {

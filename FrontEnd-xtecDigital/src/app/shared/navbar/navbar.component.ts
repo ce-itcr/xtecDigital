@@ -140,6 +140,5 @@ export class NavbarComponent implements OnInit{
       }
 
       test(){
-        alert("HOLA");
       }
 }

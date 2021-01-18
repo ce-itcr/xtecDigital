@@ -19,7 +19,7 @@ export class DocumentComponent implements OnInit{
 
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentDocumentSection = localStorage.getItem("currentDocumentSection");
-
+    //FILL DOCUMENT FILES
     this.CS.getDocumentFiles(this.currentDocumentSection).subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -39,18 +39,19 @@ export class DocumentComponent implements OnInit{
   courseName;
   currentDocumentSection;
   currentFileName;
-
   files = [];
+  public imagePath;
 
   n = new Date();
   date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
 
-  public imagePath;
-
+  
+  //SET CURRENT ASSIGN
   assign(name){
     this.currentFileName = name;
   }
 
+  //OPEN A NEW WINDOW WITH AN URL
   onNavigate(url){
     window.location.href=url;
   }

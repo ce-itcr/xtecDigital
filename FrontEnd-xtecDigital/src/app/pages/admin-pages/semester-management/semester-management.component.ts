@@ -30,6 +30,7 @@ export class SemesterManagementComponent implements OnInit {
 
   ngOnInit(): void {
     var x = [1,2,3,4,5];
+    //FILL SEMESTER COURSES (AVAILABILITY ON)
     this.CS.getSemesterCourses().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -44,6 +45,7 @@ export class SemesterManagementComponent implements OnInit {
     }, error => {
       alert("ERROR")
     });
+    //FILL SEMESTER STUDENTS
     this.CS.getSemesterStudents().subscribe(res => {
       this.students = res;
     }, error => {
@@ -51,6 +53,7 @@ export class SemesterManagementComponent implements OnInit {
     });
   }
 
+  //OPEN COMPONENT MODALS
   openModal(content){ 
     if(this.closeModal){
       this.closeModal = false;
@@ -59,11 +62,13 @@ export class SemesterManagementComponent implements OnInit {
     }
   }
 
+  //SET SEMESTER INFO
   semesterInfo(year, period){
     this.semesterYear = year;
     this.semesterPeriod = period;
   }
 
+  //SET COURSES ON CHECK (COURSES THAT ALREADY HAVE INFO)
   courseOnCheck(course){
     this.selectedStudents = [];
     this.cont = 0;
@@ -81,6 +86,8 @@ export class SemesterManagementComponent implements OnInit {
       alert("ERROR")
     });
   }
+
+  //SET GROUP INFO (TEACHER(S) AND GROUP NUMBER)
   groupInfo(teacher1, teacher2, number){
     this.teacher = [];
     this.putOutStudents();
@@ -98,16 +105,19 @@ export class SemesterManagementComponent implements OnInit {
     }
   }
 
+  //SET STUDENTS ON CHECK (STUDENTS THAT ALREADY HAVE GROUP)
   studentsOnCheck(item){
     this.selectedStudents.push(item);
   }
 
+  //SET NEW COURSE IN INFO ARRAY TO SEND DATA
   addNewCourse(){
     var data = [];
     data.push(this.selectedCourse, this.teacher, this.number, this.selectedStudents);
     this.semesterCourses.push(data);
   }
 
+  //SEND ALL SETTED DATA TO CREATE A NEW SEMESTER
   createSemester(){
     this.semesterData.push(this.semesterPeriod, this.semesterYear, this.semesterCourses);
     console.log(this.semesterData);
@@ -121,6 +131,7 @@ export class SemesterManagementComponent implements OnInit {
     });
   }
 
+  //VERIFY IF SEMESTER COURSES CONTAINS A COURSE CODE
   includes(courseCode){
     while(this.cont < this.semesterCourses.length){
       if(courseCode == this.semesterCourses[this.cont][0]){
@@ -131,6 +142,7 @@ export class SemesterManagementComponent implements OnInit {
     return false;
   }
 
+  //DELETE COURSES IN SEMESTER COURSES ARRAY
   deleteCourses(course){
     while(this.includes(course)){
       this.semesterCourses = this.semesterCourses.slice(0,this.cont).concat(this.semesterCourses.slice(this.cont+1,this.semesterCourses.length));
@@ -138,6 +150,7 @@ export class SemesterManagementComponent implements OnInit {
     }
   }
 
+  //PUT OUT STUDENTS THAT ALREADY HAVE A GROUP IN A COURSE
   putOutStudents(){
     var cont = 0;
     while(cont < this.selectedStudents.length){
@@ -147,13 +160,11 @@ export class SemesterManagementComponent implements OnInit {
       }
       cont++;
     }
-    alert(this.students);
-
   }
 
+  //SEND FILE PATH TO API TO CREATE A SEMESTER WITH EXCEL FILE
   addSemesterByExcel(file){
     var url = "C:/Users/Usuario/Desktop/xTecDigitalFE/xtecDigital/FrontEnd-xtecDigital/src/assets/semesters/" + file.slice(12);
-    alert(url);
     this.CS.createSemesterByExcel(url).subscribe(res => {
       this.CS.getAdminSemesters(true);
     }, error => {
@@ -162,4 +173,3 @@ export class SemesterManagementComponent implements OnInit {
   }
 
 }
-//this.selectedCourses = this.selectedCourses.slice(0,slice).concat(this.selectedCourses.slice(slice+1,this.selectedCourses.length));

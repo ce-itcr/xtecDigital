@@ -13,6 +13,7 @@ export class UserComponent implements OnInit{
   constructor(private modal:NgbModal, private CS: CommunicationService){}
 
   ngOnInit(){
+    //SET STUDENT INFO
     this.fullName = localStorage.getItem("Name");
     this.img_url = "../../../../assets/img/default-avatar.png";
     this.userName = "student";
@@ -45,10 +46,10 @@ export class UserComponent implements OnInit{
   public state: boolean = true;
 
 
-  //SE INICIALIZA LA VENTANA EMERGENTE (pop-up)
+  //OPEN COMPONENT MODALS
   openModal(content){ this.modal.open(content,{size:'ms', centered:true});}
 
-  //SE AÑADEN LOS ÍCONOS A LA INTERFAZ
+  //SET PROFILE ICONS 
   preview(files) {
     if (files.length === 0)
       return;
@@ -67,7 +68,7 @@ export class UserComponent implements OnInit{
     }
   }
 
-  //SE ENVÍAN DATOS ACTUALIZADOS DE USUARIO
+  //SEND DATA TO UPDATE PROFILE
   public updateData(password, phone, address, url){
     var imgUrl;
     if(url==""){

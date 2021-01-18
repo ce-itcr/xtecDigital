@@ -17,6 +17,7 @@ export class DocumentsComponent implements OnInit{
     this.folders = [];
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentUser = localStorage.getItem("current_username");
+    //FILL COURSE DOCUMENTS
     this.CS.getDocuments().subscribe(res => {
       var cont = 0;
       while(cont < res.length){

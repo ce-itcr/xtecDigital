@@ -19,7 +19,7 @@ export class AssignmentsComponent implements OnInit{
 
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentRubroSection = localStorage.getItem("currentRubroSection");
-
+    //GET STUDENT ASSIGNMENTS
     this.CS.getAssignments().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
@@ -42,10 +42,8 @@ export class AssignmentsComponent implements OnInit{
   currentRubroSection;
   currentFileName;
   currentAssignment;
-
   grade;
   feedbackLink;
-
   files = [];
 
   n = new Date();
@@ -55,6 +53,7 @@ export class AssignmentsComponent implements OnInit{
   closeModal = false;
   public imagePath;
 
+  //OPEN COMPONENT MODALS
   openModal(content){
     if(this.closeModal){
       this.closeModal = false;
@@ -63,14 +62,17 @@ export class AssignmentsComponent implements OnInit{
     }
   }
 
+  //OPEN A WINDOW WITH URL
   onNavigate(url){
     window.location.href=url;
   }
 
+  //SET CURRENT ASSIGMENT
   public assignment(assignment){
     this.currentAssignment = assignment;
   }
 
+  //UPLOAD ASSIGNMENT (DRIVE'S LINK)
   public uploadAssignment(url){
     this.CS.uploadAssignment(url, this.currentRubroSection, this.currentAssignment).subscribe(res => {
       this.ngOnInit();
@@ -79,6 +81,7 @@ export class AssignmentsComponent implements OnInit{
     });
   }
 
+  //GET ASSIGNMENT FEEDBACK
   getFeedback(assignment){
     this.CS.getFeedback(assignment).subscribe(res => {
       this.grade = res[0]["grade"];

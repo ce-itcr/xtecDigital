@@ -13,6 +13,7 @@ export class NewsComponent implements OnInit{
   constructor(private router: Router, private CS:CommunicationService) {}
 
   ngOnInit(){
+    //SET NEWS INFO
     this.newBody = localStorage.getItem("currentNewsBody");
     this.newTitle = localStorage.getItem("currentNewsTitle");
     this.newDate = localStorage.getItem("currentNewsDate");
