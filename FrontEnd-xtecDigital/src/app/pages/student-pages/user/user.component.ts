@@ -13,13 +13,13 @@ export class UserComponent implements OnInit{
   constructor(private modal:NgbModal, private CS: CommunicationService){}
 
   ngOnInit(){
-    this.fullName = "Student Student";
+    this.fullName = localStorage.getItem("Name");
     this.img_url = "../../../../assets/img/default-avatar.png";
     this.userName = "student";
-    this.userCarnet = "2020000000"
-    this.userPassword = "student";
-    this.cellPhone = "88888888";
-    this.userMail = "user@gmail.com";
+    this.userCarnet = localStorage.getItem("current_username");
+    this.userPassword = localStorage.getItem("Pass");
+    this.cellPhone = localStorage.getItem("Phone");
+    this.userMail = localStorage.getItem("Email");
     this.nationality = "Costarricense";
     this.birthDate = "28-02-2020";
   }

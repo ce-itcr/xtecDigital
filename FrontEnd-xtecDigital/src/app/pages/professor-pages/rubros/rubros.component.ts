@@ -15,6 +15,7 @@ export class RubrosComponent implements OnInit{
 
   ngOnInit(){
     this.rubros = [];
+    this.percentages = [];
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentUser = localStorage.getItem("current_username");
     this.CS.getRubros().subscribe(res => {
@@ -23,18 +24,22 @@ export class RubrosComponent implements OnInit{
         var data = [];
         data.push(res[cont]["rubro"]);
         data.push(res[cont]["percentage"] + "%");
+        this.percentages.push(res[cont]["percentage"]);
         this.rubros.push(data);
         cont++;
       }
     }, error => {
       alert("ERROR");
     });
+
   }
 
   courseName;
   closeModal = false;
   currentUser;
   rubros = [];
+
+  percentages = [];
 
   lastRubro;
   lastPercentage;
@@ -55,18 +60,31 @@ export class RubrosComponent implements OnInit{
     this.lastPercentage = percentage;
   }
 
-  toAssignmentSection(title){
-    localStorage.setItem("currentRubroSection", title)
+  toAssignmentSection(title, percentage){
+    localStorage.setItem("currentRubroSection", title);
+    localStorage.setItem("currentRubroPercentage", percentage);
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate(['professor_assignments']));
   }
 
   createRubro(rubro, percentage){
-    this.CS.createRubro(rubro, percentage).subscribe(res => {
-      this.ngOnInit();
-    }, error => {
-      alert("ERROR");
-    });
+    var cont = 0;
+    var result = 0;
+    while(cont < this.percentages.length){
+      result += parseInt(this.percentages[cont]);
+      cont++;
+    }
+    result += parseInt(percentage);
+    if(result <= 100){
+      this.CS.createRubro(rubro, percentage).subscribe(res => {
+        this.ngOnInit();
+      }, error => {
+        alert("ERROR");
+      });
+    }else{
+      alert("Los rubros no pueden sumar más de 100%")
+    }
+    
   }
 
   updateRubro(rubro, percentage){

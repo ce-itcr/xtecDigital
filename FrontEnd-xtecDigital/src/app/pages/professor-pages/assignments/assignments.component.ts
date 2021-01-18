@@ -19,12 +19,15 @@ export class AssignmentsComponent implements OnInit{
 
     this.courseName = localStorage.getItem("currentCourseName");
     this.currentRubroSection = localStorage.getItem("currentRubroSection");
+    this.rubroPercentage = localStorage.getItem("currentRubroPercentage");
     this.students = [];
+    this.percentages = [];
     this.CS.getAssignments().subscribe(res => {
       var cont = 0;
       while(cont < res.length){
         var data = [];
         data.push(res[cont]["APercentage"] + "%");
+        this.percentages.push(res[cont]["APercentage"])
         data.push(res[cont]["AName"]);
         data.push(res[cont]["DueDate"].slice(0,10) + " Hora: " + res[cont]["DueTime"]);
         data.push(res[cont]["ADesc"]);
@@ -54,13 +57,17 @@ export class AssignmentsComponent implements OnInit{
   currentAssignment;
   currentGroup;
 
+  percentages = [];
+  rubroPercentage;
+  flag = 0;
+
   files = [];
   students = []; 
   workGroup = [];
   groupNum = 1;
 
   n = new Date();
-  date = this.n.getFullYear() + "/" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
+  date = this.n.getFullYear() + "/" + "0" + (this.n.getMonth() + 1) + "/" + this.n.getDate();
 
 
   closeModal = false;
@@ -70,17 +77,36 @@ export class AssignmentsComponent implements OnInit{
     if(this.closeModal){
       this.closeModal = false;
     }else{
-      this.modal.open(content,{size:'md', centered:true});
+      if(this.flag == 0){
+        this.modal.open(content,{size:'md', centered:true});
+      }else{
+        this.flag = 0;
+      }
+      
     }
   }
 
   createAssignment(name, started, percentage, time, date, desc, link){
-    this.currentAssignment = name;
-    this.CS.createAssignment(name, started, percentage, time+":00", date, desc, link).subscribe(res => {
-      this.ngOnInit();
-    }, error => {
-      alert("ERROR");
-    });
+    var cont = 0;
+    var result = 0;
+    while(cont < this.percentages.length){
+      result += parseInt(this.percentages[cont]);
+      cont++;
+    }
+    alert(result);
+    result += parseInt(percentage);
+    alert(result);
+    if(result <= parseInt(this.rubroPercentage)){
+      this.currentAssignment = name;
+      this.CS.createAssignment(name, started, percentage, time+":00", date, desc, link).subscribe(res => {
+        this.ngOnInit();
+      }, error => {
+        alert("ERROR");
+      });
+    }else{
+      this.flag = 1;
+      alert("Las asignaciones no pueden exceder el porcentage del rubro (" + this.rubroPercentage + ")")
+    }
   }
 
   deleteAssignment(name){
@@ -170,6 +196,44 @@ export class AssignmentsComponent implements OnInit{
 
   countReset(){
     this.groupNum = 1;
+  }
+
+  showGrades(){
+    alert(this.getHour());
+    this.CS.showGrades(this.currentAssignment, this.date, this.getHour()).subscribe(res => {
+      this.ngOnInit();
+    }, error => {
+      alert("ERROR");
+    });
+  }
+
+  public getHour(){
+
+    var n = new Date();
+    var hour = "";
+
+    if(n.getHours()[0] == "0"){
+      hour += n.getHours()[1];
+    }else{
+      hour += n.getHours();
+    }
+
+    hour += ":";
+
+    if(n.getMinutes()[0] == "0"){
+      hour += n.getMinutes()[1];
+    }else{
+      hour += n.getMinutes();
+    }
+
+    hour += ":";
+
+    if(n.getSeconds()[0] == "0"){
+      hour += n.getSeconds()[1];
+    }else{
+      hour += n.getSeconds();
+    }
+    return hour;
   }
 
 }

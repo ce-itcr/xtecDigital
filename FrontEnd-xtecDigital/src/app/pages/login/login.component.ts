@@ -50,9 +50,10 @@ export class LoginComponent{
       this.CS.studentLogIn(username, password).subscribe(res => {
         alert(res["_id"] == 0);
         if(!(res["_id"] == 0)){
-          localStorage.setItem("firstName", res["Name"]);
-          localStorage.setItem("email", res["Email"]);
-          localStorage.setItem("phoneNumber", res["PhoneNumber"]);
+          localStorage.setItem("Name", res["FName"] + " " + res["LName1"] + " " + res["LName2"]);
+          localStorage.setItem("Email", res["Email"]);
+          localStorage.setItem("Phone", res["PhoneNumber"]);
+          localStorage.setItem("Pass", password);
           localStorage.setItem("accountType", "STUDENT");
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
           this.router.navigate(['student_courses']));
@@ -67,8 +68,14 @@ export class LoginComponent{
     else if(type == "T"){
       this.CS.teacherLogIn(username, password).subscribe(res => {
         if(!(res["_id"] == 0)){
-          localStorage.setItem("firstName", res["Name"]);
-          localStorage.setItem("email", res["Email"]);
+          alert(JSON.stringify(res));
+          localStorage.setItem("Name", res["FName"] + " " + res["LName1"] + " " + res["LName2"]);
+          localStorage.setItem("Email", res["Email"]);
+          localStorage.setItem("Pass", password);
+          alert(res["FName"] + " " + res["LName1"] + " " + res["LName2"]);
+          alert(res["Email"]);
+          alert(res["PhoneNumber"]);
+          alert(res["Password"])
           localStorage.setItem("accountType", "PROFESSOR");
           this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
           this.router.navigate(['professor_dashboard']));

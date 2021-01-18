@@ -393,4 +393,16 @@ export class CommunicationService {
     );
   }
 
+  showGrades(assignment, PDate, PTime){
+    var assignmentID = localStorage.getItem("newsId") + "-" + assignment;
+    return this.http.post<any[]>("api/teacher/group/showGrades",
+    {
+      "id":assignmentID,
+      "PDate":PDate,
+      "PTime":PTime,
+      "author":localStorage.getItem("current_username")
+    }
+    );
+  }
+
 }

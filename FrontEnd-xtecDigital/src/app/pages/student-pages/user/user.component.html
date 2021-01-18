@@ -9,7 +9,7 @@
             <img class="avatar border-gray" src="{{img_url}}" alt="Imagen de Perfil de Usuario">
             <h2 class="title" style="color: #14447c;">{{fullName}}</h2>
             <h5 class="subtitle" style="color: #14447c;">{{userCarnet}}</h5>
-          <p class="card-description">{{nationality}} <br> {{birthDate}} <br></p>
+          <p class="card-description">{{nationality}}</p>
         </div>
       </div>
       <div class="card-footer">
@@ -24,7 +24,7 @@
   <div class="col-md-8">
     <div class="card card-user">
       <div class="card-header">
-        <h2 class="card-title">Editar Perfil de Usuario</h2>
+        <h2 class="card-title">Información del estudiante</h2>
       </div>
       <div class="card-body">
         <form>
@@ -47,13 +47,13 @@
             <div class="col-md-6 pr-1">
               <div class="form-group">
                 <label for="exampleInputEmail1">Contraseña</label>
-                <input #password type="text" required class="form-control" value="{{userPassword}}" placeholder="{{userPassword}}">
+                <input #password type="text" required class="form-control" value="{{userPassword}}" placeholder="{{userPassword}}" disabled>
               </div>
             </div>
             <div class="col-md-6 pr-1">
               <div class="form-group">
                 <label>Teléfono</label>
-                <input id="phone" #phone type="text" required class="form-control" value="{{cellPhone}}" placeholder="{{cellPhone}}" >
+                <input id="phone" #phone type="text" required class="form-control" value="{{cellPhone}}" placeholder="{{cellPhone}}" disabled>
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Dirección de Correo Electrónico</label>
-                <input #address type="text" required class="form-control" value="{{userMail}}" placeholder="{{userMail}}" >
+                <input #address type="text" required class="form-control" value="{{userMail}}" placeholder="{{userMail}}" disabled>
               </div>
             </div>
           </div>
@@ -72,16 +72,9 @@
                 <input #nacionality disabled type="text" required class="form-control" value="{{nationality}}" placeholder="{{nationality}}">
               </div>
             </div>
-            <div class="col-md-6 pr-1">
-              <div class="form-group">
-                <label>Fecha de Nacimiento</label>
-                <input #birth_date disabled type="date" required class="form-control" value="{{birthDate}}">
-              </div>
-            </div>
           </div>
           <div class="row">
             <div class="update ml-auto mr-auto">
-              <button type="button" (click)="updateData(password.value, phone.value, address.value)" class="btn btn-primary btn-round">Actualizar Perfil</button>
             </div>
           </div>
         </form>
