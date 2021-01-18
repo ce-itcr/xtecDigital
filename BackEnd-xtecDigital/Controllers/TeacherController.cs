@@ -807,5 +807,41 @@ namespace BackEnd_xtecDigital.Controllers
             return info;
         }
 
+
+        [HttpPost]
+        [Route("api/teacher/group/showGrades")]
+        public IHttpActionResult showGrades([FromBody] JObject groupInfo)
+        {
+
+            string[] GID = getGID(groupInfo);
+            int end = groupInfo["id"].ToString().Length;
+
+            Debug.Print(GID[3].ToString());
+            Debug.Print(GID[2].ToString());
+            Debug.Print(GID[0].ToString());
+            Debug.Print(GID[1].ToString());
+            Debug.Print(groupInfo["id"].ToString().Substring(16, end - 16).ToString());
+            Debug.Print(groupInfo["PDate"].ToString());
+            Debug.Print(groupInfo["author"].ToString());
+            Debug.Print(DateTime.Now.TimeOfDay.ToString().Substring(0,8));
+            
+
+            conn.Open();
+            SqlCommand insertRequest = conn.CreateCommand();
+            insertRequest.CommandText = "EXEC sp_showGrades @Number, @CID, @Year, @Period, @AName, @PDate, @PTime, @Author";
+            insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = GID[3];
+            insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+            insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = GID[0];
+            insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = GID[1];
+            insertRequest.Parameters.Add("@AName", SqlDbType.VarChar, 50).Value = groupInfo["id"].ToString().Substring(16, end - 16);
+            insertRequest.Parameters.Add("@PDate", SqlDbType.Date).Value = groupInfo["PDate"];
+            insertRequest.Parameters.Add("@PTime", SqlDbType.Time).Value = DateTime.Now.TimeOfDay.ToString().Substring(0, 8); 
+            insertRequest.Parameters.Add("@Author", SqlDbType.Int).Value = groupInfo["author"];
+            insertRequest.ExecuteNonQuery();
+            conn.Close();
+
+            return Ok("Asignación agregada");
+        }
+
     }
 }

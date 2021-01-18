@@ -221,11 +221,13 @@ namespace BackEnd_xtecDigital.Controllers
                     string GID = currentSemester + "-" + item[0].ToString() + "-" + item[2].ToString();
                     conn.Open();
                     insertRequest = conn.CreateCommand();
-                    insertRequest.CommandText = "EXEC sp_AddGroup @Number, @CID, @Year, @Period";
+                    insertRequest.CommandText = "EXEC sp_AddGroup @Number, @CID, @Year, @Period, @Teacher, @CreationDate";
                     insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = item[2].ToString();
                     insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = item[0].ToString();
                     insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = semesterInfo["year"];
                     insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = semesterInfo["period"];
+                    insertRequest.Parameters.Add("@Teacher", SqlDbType.Int).Value = item[1][0];
+                    insertRequest.Parameters.Add("@CreationDate", SqlDbType.Date).Value = DateTime.Now;
                     insertRequest.ExecuteNonQuery();
                     conn.Close();
 
@@ -253,39 +255,6 @@ namespace BackEnd_xtecDigital.Controllers
                         insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = semesterInfo["year"];
                         insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = semesterInfo["period"];
                         insertRequest.Parameters.Add("@Teacher", SqlDbType.Int).Value = (int)element;
-                        insertRequest.ExecuteNonQuery();
-                        conn.Close();
-                    }
-                    string[] baseFolders = { "Presentaciones", "Quices", "Exámenes", "Proyectos" };
-                    foreach (var folder in baseFolders)
-                    {
-                        conn.Open();
-                        insertRequest = conn.CreateCommand();
-                        insertRequest.CommandText = "EXEC sp_AddFolder @FolderName, @Number, @CID, @Year, @Period, @Editable, @Teacher, @CreationDate";
-                        insertRequest.Parameters.Add("@FolderName", SqlDbType.VarChar, 50).Value = folder;
-                        insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = item[2].ToString();
-                        insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = item[0].ToString();
-                        insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = semesterInfo["year"];
-                        insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = semesterInfo["period"];
-                        insertRequest.Parameters.Add("@Editable", SqlDbType.VarChar, 10).Value = "false";
-                        insertRequest.Parameters.Add("@Teacher", SqlDbType.Int).Value = item[1][0];
-                        insertRequest.Parameters.Add("@CreationDate", SqlDbType.Date).Value = DateTime.Now;
-                        insertRequest.ExecuteNonQuery();
-                        conn.Close();
-                    }
-                    string[] baseRubro = { "Quices", "Exámenes", "Proyectos" };
-                    int[] basePercentage = { 30, 30, 40 };
-                    for (int i = 0; i < baseRubro.Length; i++)
-                    {
-                        conn.Open();
-                        insertRequest = conn.CreateCommand();
-                        insertRequest.CommandText = "EXEC sp_AddRubro @Number, @CID, @Year, @Period, @Rubro, @RPercentage";
-                        insertRequest.Parameters.Add("@Number", SqlDbType.Int).Value = item[2].ToString();
-                        insertRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = item[0].ToString();
-                        insertRequest.Parameters.Add("@Year", SqlDbType.VarChar, 4).Value = semesterInfo["year"];
-                        insertRequest.Parameters.Add("@Period", SqlDbType.VarChar, 1).Value = semesterInfo["period"];
-                        insertRequest.Parameters.Add("@Rubro", SqlDbType.VarChar, 50).Value = baseRubro[i];
-                        insertRequest.Parameters.Add("@RPercentage", SqlDbType.Int).Value = basePercentage[i];
                         insertRequest.ExecuteNonQuery();
                         conn.Close();
                     }
