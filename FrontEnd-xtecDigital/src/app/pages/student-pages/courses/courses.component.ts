@@ -42,6 +42,7 @@ export class CoursesComponent implements OnInit{
       }, error => {
         alert("ERROR");
       });
+
     }
 
     //GO TO COURSES COMPONENT

@@ -1,5 +1,5 @@
 
-
+<button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="goToGrades()">Ver mis notas</button>
 <div class="row">
   <div class="col-lg-4 col-md-4 col-sm-6">
     <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="toCurrentSection()">{{courseName}} </button>
@@ -35,66 +35,6 @@
         </div>
 
      </div>
-    </div>
-  </div>
-  <div class="col-md-6">
-  <div class="card">
-    <div class="card-header">
-      <h4 class="card-title"  style="color:#14447c">Lista de Miembros</h4>
-    </div>
-    <div class="card-body">
-      <ul class="list-unstyled team-members">
-
-        <h4 class="card-description">Equipo Docente</h4>
-
-        <div fxflex="30%" *ngFor="let item of professors">
-          <li>
-            <div class="row">
-              <div class="col-md-2 col-2">
-                <div class="avatar">
-                  <img src={{item[2]}}  alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                </div>
-              </div>
-              <div class="col-md-7 col-7">
-                {{item[0]}}
-                <br />
-                <span class="text-muted">
-                  <small>{{item[1]}}</small>
-                </span>
-              </div>
-              <div class="col-md-3 col-3 text-right">
-                <button class="btn btn-sm btn-danger btn-round btn-icon"><i class="fa fa-envelope"></i></button>
-              </div>
-            </div>
-          </li>
-        </div>
-
-        <h4 class="card-description">Estudiantes</h4>
-
-        <div fxflex="30%" *ngFor="let item of students">
-
-          <li>
-            <div class="row">
-              <div class="col-md-2 col-2">
-                <div class="avatar">
-                  <img src={{item[2]}}  alt="Circle Image" class="img-circle img-no-padding img-responsive">
-                </div>
-              </div>
-              <div class="col-md-7 col-7">
-                {{item[0]}}
-                <br />
-                <span class="text-muted">
-                  <small>{{item[1]}}</small>
-                </span>
-              </div>
-              <div class="col-md-3 col-3 text-right">
-                <button class="btn btn-sm btn-danger btn-round btn-icon"><i class="fa fa-envelope"></i></button>
-              </div>
-            </div>
-          </li>
-        </div>
-      </ul>
-    </div>
     </div>
   </div>
 </div>

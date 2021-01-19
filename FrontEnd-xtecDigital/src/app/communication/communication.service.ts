@@ -450,4 +450,21 @@ export class CommunicationService {
     );
   }
 
+  studentGrades(){
+    return this.http.post<any[]>("api/students/course/generate/report/grades",
+    {
+      "id":localStorage.getItem("newsId"),
+      "student":localStorage.getItem("current_username")
+    }
+    );
+  }
+
+  teacherGrades(){
+    return this.http.post<any[]>("api/teacher/course/generate/report/grades",
+    {
+      "id":localStorage.getItem("newsId")
+    }
+    );
+  }
+
 }

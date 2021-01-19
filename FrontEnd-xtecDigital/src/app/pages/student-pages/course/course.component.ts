@@ -50,10 +50,7 @@ export class CourseComponent implements OnInit{
 
   newsId;
 
-  students = [["Nombre Estudiante 1","user01@gmail.com","../../../../assets/img/default-avatar.png"],
-              ["Nombre Estudiante 2","user02@gmail.com","../../../../assets/img/default-avatar.png"],
-              ["Nombre Estudiante 3","user03@gmail.com","../../../../assets/img/default-avatar.png"],
-              ["Nombre Estudiante 3","user03@gmail.com","../../../../assets/img/default-avatar.png"]]
+  students = []
 
   professors = [["Nombre Profesor 1","prof01@gmail.com","../../../../assets/img/default-avatar.png"],
                 ["Nombre Profesor 2","prof02@gmail.com","../../../../assets/img/default-avatar.png"]]
@@ -88,5 +85,8 @@ export class CourseComponent implements OnInit{
     this.router.navigate(['news']));
   }
 
+  goToGrades(){
+    this.router.navigate(['student_grades']);
+  }
 
 }

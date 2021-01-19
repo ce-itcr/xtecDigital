@@ -165,4 +165,8 @@ export class CourseComponent implements OnInit{
     });
   }
 
+  goToGrades(){
+    this.router.navigate(['student_grades']);
+  }
+
 }

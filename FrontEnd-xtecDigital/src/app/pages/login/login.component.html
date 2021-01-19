@@ -18,7 +18,7 @@
         <input type="text" #username placeholder="Escriba su nombre de usuario" required class="form-control rounded-pill border-0 shadow-sm px-4">
 
         <label><b>Contraseña</b></label>
-        <input type={{pwdType}} #password placeholder="Escriba su contraseña" required class="form-control rounded-pill border-0 shadow-sm px-4">
+        <input type="password" #password placeholder="Escriba su contraseña" required class="form-control rounded-pill border-0 shadow-sm px-4">
 
         <button type="button" class="btn btn-primary btn-block text-uppercase" style="background-color: #14447c; margin-bottom: 25px;" (click)="verifyLogin(username.value,password.value, type.value)">Iniciar Sesión</button>
       </div>

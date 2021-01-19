@@ -8,6 +8,7 @@ import { DocumentsComponent } from 'app/pages/student-pages/documents/documents.
 import { NewsComponent } from 'app/pages/student-pages/news/news.component';
 import { RubrosComponent } from 'app/pages/student-pages/rubros/rubros.component';
 import { UserComponent } from '../../pages/student-pages/user/user.component';
+import { GradesComponent } from 'app/pages/student-pages/grades/grades.component'
 
 export const StudentLayoutRoutes: Routes = [
     { path: 'student_courses',        component: CoursesComponent },
@@ -17,5 +18,6 @@ export const StudentLayoutRoutes: Routes = [
     { path: 'student_documents',      component: DocumentsComponent },
     { path: 'student_assignments',    component: AssignmentsComponent},
     { path: 'student_single_document',component: DocumentComponent },
-    { path: 'student_rubros',         component: RubrosComponent }
+    { path: 'student_rubros',         component: RubrosComponent },
+    { path: 'student_grades',         component: GradesComponent}
 ];
