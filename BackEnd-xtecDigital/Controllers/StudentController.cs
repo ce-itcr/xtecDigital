@@ -225,6 +225,43 @@ namespace BackEnd_xtecDigital.Controllers
             return obj;
         }
 
+        [HttpPost]
+        [Route("api/students/course/generate/report/grades")]
+        public JArray getStudentGrades([FromBody] JObject courseInfo)
+        {
+            string[] GID = getGID(courseInfo);
+            StudentsPerCourse studentsPerCourse = new StudentsPerCourse();
+            conn.Open();
+            SqlCommand getRequest = conn.CreateCommand();
+            getRequest.CommandText = "EXEC sp_studentGradesReport @GNum, @CID, @SYear, @SPeriod, @Student";
+            getRequest.Parameters.Add("@GNum", SqlDbType.Int).Value = GID[3];
+            getRequest.Parameters.Add("@CID", SqlDbType.VarChar, 50).Value = GID[2];
+            getRequest.Parameters.Add("@SYear", SqlDbType.VarChar, 4).Value = GID[0];
+            getRequest.Parameters.Add("@SPeriod", SqlDbType.VarChar, 1).Value = GID[1];
+            getRequest.Parameters.Add("@Student", SqlDbType.Int).Value = courseInfo["student"];
+            getRequest.ExecuteNonQuery();
+            SqlDataReader data = getRequest.ExecuteReader();
+            JArray obj = new JArray();
+            while (data.Read())
+            {
+                JObject documentInfo = new JObject(
+                new JProperty("Rubro", data.GetValue(0).ToString()),
+                new JProperty("Assignment", data.GetValue(1).ToString()),
+                new JProperty("APercentage", data.GetValue(2).ToString()),
+                new JProperty("Grade", data.GetValue(3).ToString())
+                );
+                obj.Add(documentInfo);
+            }
+            data.Close();
+            conn.Close();
+            return obj;
+        }
+
+        /// <summary>
+        /// Divide el id del grupo en sus partes
+        /// </summary>
+        /// <param name="groupInfo"></param>
+        /// <returns></returns>
         public string[] getGID(JObject groupInfo)
         {
             string[] info = {
