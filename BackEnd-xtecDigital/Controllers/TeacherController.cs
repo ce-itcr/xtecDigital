@@ -20,6 +20,11 @@ namespace BackEnd_xtecDigital.Controllers
         static string stringconnection = @"Data Source=(localdb)\xTecDigital; Initial Catalog=xTecDigital; Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
+        /// <summary>
+        /// Obtiene todo el historial de materias que ha importido el profesor en cada semestre en cada semestre
+        /// </summary>
+        /// <param name="teacherInfo"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/teacher/semester")]
         public JArray obtainTeacherSemester([FromBody] JObject teacherInfo)
@@ -526,7 +531,7 @@ namespace BackEnd_xtecDigital.Controllers
                 insertRequest.Parameters.Add("@AName", SqlDbType.VarChar, 50).Value = assignmentInfo["name"];
                 insertRequest.Parameters.Add("@DueTime", SqlDbType.Time).Value = assignmentInfo["time"];
                 insertRequest.Parameters.Add("@DueDate", SqlDbType.Date).Value = assignmentInfo["date"];
-                insertRequest.Parameters.Add("@ADescription", SqlDbType.VarChar, 20).Value = assignmentInfo["desc"];
+                insertRequest.Parameters.Add("@ADescription", SqlDbType.VarChar, Int32 .MaxValue).Value = assignmentInfo["desc"];
                 insertRequest.Parameters.Add("@ALink", SqlDbType.VarChar, Int32.MaxValue).Value = assignmentInfo["link"];
                 insertRequest.ExecuteNonQuery();
                 conn.Close();
@@ -814,6 +819,11 @@ namespace BackEnd_xtecDigital.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Divide el id del grupo en sus partes
+        /// </summary>
+        /// <param name="groupInfo"></param>
+        /// <returns></returns>
         public string[] getGID(JObject groupInfo)
         {
             string[] info = {
@@ -825,6 +835,11 @@ namespace BackEnd_xtecDigital.Controllers
             return info;
         }
 
+        /// <summary>
+        /// Divide el id de las noticias en sus partes
+        /// </summary>
+        /// <param name="newsInfo"></param>
+        /// <returns></returns>
         public string[] getNewsInfo(JObject newsInfo)
         {
             string[] info = {

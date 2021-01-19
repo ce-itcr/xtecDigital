@@ -202,6 +202,11 @@ namespace BackEnd_xtecDigital.Controllers
             return list.ToArray();
         }
 
+        /// <summary>
+        /// Agrega el semestre, los grupos de todo el semestre, los profesores y estudiantes que estan en cada grupo a la base de datos
+        /// </summary>
+        /// <param name="semesterInfo"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/admin/semester/add")]
         public IHttpActionResult addSemester([FromBody] JObject semesterInfo)
@@ -269,6 +274,11 @@ namespace BackEnd_xtecDigital.Controllers
             }
         }
 
+        /// <summary>
+        /// Se carga un semestre por medio de un archivo excel
+        /// </summary>
+        /// <param name="urlInfo"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/admin/semester/uploadExcel")]
         public IHttpActionResult uploadExcel([FromBody] JObject urlInfo)

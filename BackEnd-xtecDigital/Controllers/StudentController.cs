@@ -21,6 +21,11 @@ namespace BackEnd_xtecDigital.Controllers
         static string stringconnection = @"Data Source=(localdb)\xTecDigital; Initial Catalog=xTecDigital; Integrated Security=True";
         SqlConnection conn = new SqlConnection(stringconnection);
 
+        /// <summary>
+        /// Obtiene todo el historial de materias que ha metriculado el estudiante en cada semestre
+        /// </summary>
+        /// <param name="studentInfo"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("api/student/semester")]
         public JArray obtainStudentSemester([FromBody] JObject studentInfo)
