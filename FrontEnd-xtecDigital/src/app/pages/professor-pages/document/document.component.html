@@ -1,0 +1,76 @@
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title"  style="color: #14447c;">{{courseName}} -> DOCUMENTOS -> {{currentDocumentSection}}</h1>
+      </div>
+
+      <div class="card-body">
+        <div fxflex="30%" *ngFor="let item of files">
+
+          <div class="row">
+            <div class="col-md-7 col-7">
+              {{item[0]}}
+              <br />
+                <span class="text-muted">
+                  <small>Fecha: {{item[1]}}</small>
+                </span>
+            </div>
+            <div class="col-md-3 col-3 text-right">
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="onNavigate(item[2])"><i class="fa fa-arrow-down"></i></button>
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="assign(item[0])" (click)="openModal(update_file_modal)"><i class="fa fa-refresh"></i></button>
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="deleteFile(item[0])"><i class="fa fa-shopping-basket"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(upload_file_modal)"><i class="fa fa-plus"></i></button>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #upload_file_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Subir Archivo</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-6">
+        <label for="title"><b>Nombre del Archivo</b></label>
+        <input type="text" #name placeholder="Nombre del Archivo" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="title"><b>URL del Archivo</b></label>
+        <input type="text" #url placeholder="Url del Archivo" required style="width: 100%;">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="createFile(name.value, url.value)" (click)="modal.close()">Subir</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #update_file_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Actualizar Archivo</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-6">
+        <label for="title"><b>Nombre del Archivo</b></label>
+        <input type="text" #name placeholder="{{currentFileName}}" value="{{currentFileName}}" required style="width: 100%;" disabled>
+      </div>
+      <div class="form-group mb-6">
+        <label for="title"><b>URL del Archivo</b></label>
+        <input type="text" #url placeholder="Url del Archivo" required style="width: 100%;">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="updateFile(name.value, url.value)" (click)="modal.close()">Actualizar</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>

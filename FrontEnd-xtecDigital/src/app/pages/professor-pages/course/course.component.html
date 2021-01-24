@@ -1,0 +1,136 @@
+
+<button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="goToGrades()">Ver reporte de notas</button>
+<div class="row">
+  <div class="col-lg-4 col-md-4 col-sm-6">
+    <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg">{{courseName}} </button>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-6">
+    <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="toDocumentsSection()">Documentos </button>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-6">
+      <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="toAssignmentsSection()">Evaluaciones </button>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title"  style="color:#14447c">Sección de Noticias</h4>
+        <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(create_news_modal)"><i class="fa fa-plus"></i></button>
+      </div>
+      <div class="card-body">
+        <div fxflex="30%" *ngFor="let item of news">
+            <div class="row">
+              <div class="col-md-2 col-2">
+                <div class="">
+                  <img src="../../../../assets/img/xtecdigital-favicon.png"  style="width: 30%;" class="img-circle img-no-padding img-responsive">
+                </div>
+              </div>
+              <div class="col-md-7 col-7">
+                {{item[0]}}
+                <br />
+                <span class="text-muted">
+                  <small>Fecha: {{item[1]}} - Hora: {{item[4]}}</small>
+                </span>
+              </div>
+              <div class="col-md-3 col-3 text-right">
+                <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="toNewsSection(item[0],item[1],item[2], item[3], item[4])"><i class="fa fa-arrow-right"></i></button>
+              </div>
+            </div>
+        </div>
+     </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title"  style="color:#14447c">Lista de Miembros</h4>
+    </div>
+    <div class="card-body">
+      <ul class="list-unstyled team-members">
+
+        <h4 class="card-description">Equipo Docente</h4>
+
+        <div fxflex="30%" *ngFor="let item of professors">
+          <li>
+            <div class="row">
+              <div class="col-md-2 col-2">
+                <div class="avatar">
+                  <img src={{item[2]}}  alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                </div>
+              </div>
+              <div class="col-md-7 col-7">
+                {{item[0]}}
+                <br />
+                <span class="text-muted">
+                  <small>{{item[1]}}</small>
+                </span>
+              </div>
+              <div class="col-md-3 col-3 text-right">
+                <button class="btn btn-sm btn-danger btn-round btn-icon"><i class="fa fa-envelope"></i></button>
+              </div>
+            </div>
+          </li>
+        </div>
+
+        <h4 class="card-description">Estudiantes</h4>
+
+        <div fxflex="30%" *ngFor="let item of students">
+
+          <li>
+            <div class="row">
+              <div class="col-md-2 col-2">
+                <div class="avatar">
+                  <img src={{item[2]}}  alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                </div>
+              </div>
+              <div class="col-md-7 col-7">
+                {{item[0]}} <b>{{item[4]}}</b>
+                <br />
+                <span class="text-muted">
+                  <small>Correo: {{item[1]}} Cel. {{item[3]}}</small>
+                </span>
+              </div>
+              <div class="col-md-3 col-3 text-right">
+                <button class="btn btn-sm btn-danger btn-round btn-icon" ><i class="fa fa-envelope"></i></button>
+              </div>
+            </div>
+          </li>
+        </div>
+      </ul>
+    </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #create_news_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Crear Noticia</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-6">
+          <label for="title"><b>Título de Noticia</b></label>
+          <input type="text" #title placeholder="Título de la Noticia" required style="width: 100%;">
+        </div>
+      <div class="form-group mb-3">
+        <label for="body"><b>Mensaje de la Noticia</b></label>
+        <textarea type="text" #body placeholder="Mensaje de la Noticia" required style="width: 100%; height:100px;display: inline-block;"></textarea>
+      </div>
+      <div class="form-group mb-6">
+        <label for="date"><b>Fecha de Publicación</b></label>
+        <input type="text" #date placeholder="{{newDate}}" required style="width: 100%;" disabled>
+      </div>
+      <div class="form-group mb-6">
+        <label for="author"><b>Autor</b></label>
+        <input type="text" #author placeholder="{{currentUser}}" required style="width: 100%;" disabled>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="createNew(title.value, body.value, date.value)" (click)="modal.close()">Crear</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
+

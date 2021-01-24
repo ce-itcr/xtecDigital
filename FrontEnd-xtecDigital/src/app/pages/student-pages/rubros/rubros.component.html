@@ -1,0 +1,25 @@
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title"  style="color: #14447c;">{{courseName}} -> RUBROS</h1>
+      </div>
+
+      <div class="card-body">
+        <div fxflex="30%" *ngFor="let item of rubros">
+
+          <div class="text-muted card-columns">
+
+            <a (click)="toAssignmentSection(item[0])"><p><i class="fa fa-folder">
+
+              </i>{{item[0]}}</p>
+              <p>Porcentaje: {{item[1]}}</p>
+
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

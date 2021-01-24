@@ -1,0 +1,115 @@
+<h3 class="card-title"><b>Vista Administrador > Inicializar Semestre</b> </h3>
+<h4><b>Descripción: </b>El sistema permite crear semestres, estableciendo cursos, grupos, profesores y estudiantes asociados.</h4>
+<div>
+  <admin-semesters></admin-semesters>
+  <div style="margin-left: auto;margin-right: auto; display: block;">  
+    <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" (click)="openModal(create_semester_modal)">Inicializar Semestre</button>
+    <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" (click)="openModal(addStudentsByExcel_modal)">Cargar Semestre</button>
+  </div>
+</div>
+
+<ng-template #create_semester_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Crear Semestre</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-3">
+          Año: <select #year name="period" class="form-control rounded-pill border-0 shadow-sm px-4">
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+            <option value="2029">2029</option>
+            <option value="2030">2030</option>
+          </select>
+        </div>
+      <div class="form-group mb-3">
+          Periodo: <select #period name="period" class="form-control rounded-pill border-0 shadow-sm px-4">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="V">V</option>
+          </select>
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="semesterInfo(year.value, period.value)" (click)="openModal(addCourses_semester_modal)" (click)="modal.close()">Avanzar</button>
+      <button type="button" class="btn btn-warning" (click)="erase()" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #addCourses_semester_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Ingrese los cursos a impartir</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div fxFlex="30%" *ngFor="let item of courses">
+          <input #ref type="checkbox" id="{{item[0]}}" name="{{item[1]}}" value="{{item[0]}}" (click)="courseOnCheck(ref.value)" (click)="openModal(addCourseInfo_semester_modal)">
+          <label for="{{item[1]}}"> {{item[0]}}: {{item[1]}}</label><br>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-success" (click)="createSemester()" (click)="modal.close()">Finalizar</button>
+      <button type="button" class="btn btn-warning" (click)="erase()" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #addCourseInfo_semester_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Ingrese datos para el curso</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <input #number type="text" placeholder="Número de grupo">
+      <input #teacher1 type="text" placeholder="Profesor 1">
+      <input #teacher2 type="text" placeholder="Profesor 2 (Opcional)">
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-success" (click)="groupInfo(teacher1.value, teacher2.value, number.value)" (click)="openModal(addStudents_semester_modal)" (click)="modal.close()">Avanzar</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #addStudents_semester_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Ingrese los estudiantes para el grupo</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div fxFlex="30%" *ngFor="let item of students">
+          <input #ref type="checkbox" id="{{item}}" name="{{item}}" value="{{item}}" (click)="studentsOnCheck(ref.value)">
+          <label for="{{item}}"> {{ref.value}}</label><br>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-success" (click)="addNewCourse()" (click)="modal.close()">Crear curso</button>
+      <button type="submit" class="btn btn-success" (click)="addNewCourse()" (click)="openModal(addCourseInfo_semester_modal)" (click)="modal.close()">Añadir otro grupo</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #addStudentsByExcel_modal let-modal>
+  <div class="modal-body" >
+      <body>
+      <form id="frmMain" name="frmMain">
+          <input #file type="file" id="myFile" name="myFile"/>
+      </form>
+      </body>
+  </div>
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-success" (click)="addSemesterByExcel(file.value)" (click)="modal.close()">Crear semestre</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">Cancelar</button>
+  </div>
+</ng-template>
+
+
+

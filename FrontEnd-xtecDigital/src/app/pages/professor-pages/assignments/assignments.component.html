@@ -1,0 +1,159 @@
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title"  style="color: #14447c;">{{courseName}} -> RUBROS -> {{currentRubroSection}}</h1>
+      </div>
+
+      <div class="card-body">
+        <div fxflex="30%" *ngFor="let item of files">
+
+          <div class="row">
+            <div class="col-md-7 col-7">
+              Título: {{item[1]}}
+              <br />
+              Fecha: {{item[2]}} 
+              <br />
+              Porcentaje: {{item[0]}}
+              <br />
+              Descripcion: {{item[3]}}
+              <br />
+              <br />
+            </div>
+            <div class="col-md-3 col-3 text-right">
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="onNavigate(item[4])"><i class="fa fa-arrow-down"></i></button>
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="fillStudents(item[1])" (click)="openModal(students_assignments_modal)"><i class="fa fa-refresh"></i></button>
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="deleteAssignment(item[1])"><i class="fa fa-shopping-basket"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button  class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-lg" (click)="openModal(add_assignment_modal)"><i class="fa fa-plus"></i></button>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #add_assignment_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Añadir Evaluación</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-6">
+        <label for="text"><b>Nombre </b></label>
+        <input type="text" #name placeholder="Nombre de la Asignación" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="date"><b>Fecha de Inicio</b></label>
+        <input type="date" #start placeholder="Porcentaje de a Asignación" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="text"><b>Porcentaje</b></label>
+        <input type="text" #percentage placeholder="Porcentaje de a Asignación" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="time"><b>Hora de Finalización</b></label>
+        <input type="time" #time placeholder="Porcentaje de a Asignación" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="date"><b>Fecha de Finalización</b></label>
+        <input type="date" #date placeholder="Porcentaje de a Asignación" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="text"><b>Descripción</b></label>
+        <input type="text" #desc placeholder="Especificación de la Evaluación" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="url_file"><b>Link</b></label>
+        <input type="text" #url placeholder="Especificación de la Evaluación" required style="width: 100%;">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="createAssignment(name.value, start.value, percentage.value, time.value, date.value, desc.value, url.value)" (click)="openModal(create_groups_modal)" (click)="modal.close()">Añadir</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close(add_groups_modal)">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #students_assignments_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Evaluar</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div fxFlex="30%" *ngFor="let item of students">
+        <div class="row">
+          <div class="col-md-7 col-7">
+            {{item[0]}}
+          </div>
+          <div class="col-md-3 col-3 text-right">
+            <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="onNavigate(item[1])"><i class="fa fa-arrow-down"></i></button>
+            <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="currentStudent(item[2])" (click)="openModal(upload_feedback_modal)"><i class="fa fa-arrow-up"></i></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="showGrades()" (click)="modal.close(add_groups_modal)" (click)="modal.close()">Listo</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close(add_groups_modal)">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #upload_feedback_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Subir Evaluación</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-6">
+        <label for="url_file"><b>Link</b></label>
+        <input type="text" #url placeholder="Feedback" required style="width: 100%;">
+      </div>
+      <div class="form-group mb-6">
+        <label for="url_file"><b>Calificación</b></label>
+        <input type="number" #grade placeholder="Nota" required style="width: 100%;">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="uploadFeedback(url.value, grade.value)" (click)="modal.close()">Enviar</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close(add_groups_modal)">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #addStudents_group_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Ingrese los grupos</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div fxFlex="30%" *ngFor="let item of students">
+          <input #ref type="checkbox" id="{{item}}" name="{{item}}" value="{{item}}" (click)="studentsOnCheck(ref.value)">
+          <label for="{{item}}"> {{ref.value}}</label><br>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-success" (click)="addGroup()" (click)="openModal(addStudents_group_modal)" (click)="modal.close()">Crear grupo</button>
+      <button type="button" class="btn btn-warning" (click)="countReset()" (click)="modal.close()">Listo</button>
+  </div>
+</ng-template>
+
+<ng-template #create_groups_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">¿El trabajo será grupal?</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group">
+        <button type="button" class="btn btn-danger" (click)="openModal(addStudents_group_modal)" (click)="modal.close()">Conformar Grupos</button>
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-danger" (click)="individualAssignment()" (click)="modal.close()">Individual</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

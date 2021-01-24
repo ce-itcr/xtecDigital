@@ -1,0 +1,41 @@
+<div class="row">
+
+  <!--<ul>
+    <ng-template #recursiveList let-list>
+      <li *ngFor="let item of list" style="color: #14447c;">
+
+        <a (click)="test(item.id, item.title)"><p>{{item.title}}</p></a>
+        <ul *ngIf="item.children.length > 0">
+          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children };" ></ng-container>
+        </ul>
+
+      </li>
+    </ng-template>
+    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: courses }"></ng-container>
+
+  </ul>-->
+
+        <div class="col-md-12">
+          <div fxflex="30%" *ngFor="let item of _courses">
+
+          <div class="card">
+            <div class="card-header">
+              <h1 class="card-title"  style="color: #14447c;">{{item[0]}}</h1>
+            </div>
+
+            <div fxFlex="30%" *ngFor="let data of item[1]">
+              <div class="card-body">
+                <span  class="text-muted">
+                  <a (click)="goToCourse(data[1], data[0], item[0])"><p style="padding-left: 10px;">{{data[1]}}: {{data[0]}}</p></a>
+                </span>
+              </div>
+          </div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+</div>
+

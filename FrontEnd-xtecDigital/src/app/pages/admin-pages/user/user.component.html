@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="card card-user">
+      <div class="image">
+        <img src="assets/img/default-profile-header.jpg" alt="...">
+      </div>
+      <div class="card-body">
+        <div class="author">
+            <img class="avatar border-gray" src="{{userImage}}" alt="Imagen de Perfil de Usuario">
+            <h1 style="color: #14447c;" class="card-title">{{userFullName}}</h1>
+          <p class="description">
+            @{{username}}
+          </p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div>
+          <button class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" style="background-color: #14447c;"  (click)="openModal(close_this)">Cerrar Sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ng-template #close_this let-modal>
+  <div class="modal-header">
+    <img src="../../../../assets/img/xtecdigital-logo.png" class="display-4" style="margin-left: auto;margin-right: auto; display: block; width: 60%;">
+
+  </div>
+  <div class="modal-body">
+    <h4 class="modal-title" style="margin-left: auto; margin-right: auto; display: block;"><b>¿Seguro que desea salir?</b></h4>
+    xtecDigital - Sistema de la Universidad XTEC que permite gestionar el proceso de enseñanza - aprendizaje.
+</div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="modal.close()" [routerLink]='["/"]'>Si</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close()">No</button>
+  </div>
+</ng-template>

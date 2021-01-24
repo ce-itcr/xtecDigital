@@ -1,0 +1,73 @@
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title"  style="color: #14447c;">{{courseName}} -> RUBROS -> {{currentRubroSection}}</h1>
+      </div>
+
+      <div class="card-body">
+        <div fxflex="30%" *ngFor="let item of files">
+
+          <div class="row">
+            <div class="col-md-7 col-7">
+              Título: {{item[1]}}
+              <br />
+              Fecha: {{item[2]}}
+              <br />
+              Porcentaje: {{item[0]}}
+              <br />
+              Descripcion: {{item[3]}}
+              <br />
+              <br />
+            </div>
+            <div class="col-md-3 col-3 text-right">
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="onNavigate(item[4])"><i class="fa fa-arrow-down"></i></button>
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="assignment(item[1])" (click)="openModal(upload_assignment_modal)"><i class="fa fa-arrow-up"></i></button>
+              <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="getFeedback(item[1])" (click)="openModal(feedback_modal)"><i class="fa fa-refresh"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #upload_assignment_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Subir Evaluación</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-6">
+        <label for="url_file"><b>Link</b></label>
+        <input type="text" #url placeholder="Link del trabajo" required style="width: 100%;">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="uploadAssignment(url.value)" (click)="modal.close()">Enviar</button>
+      <button type="button" class="btn btn-warning" (click)="modal.close(add_groups_modal)">Cancelar</button>
+  </div>
+</ng-template>
+
+<ng-template #feedback_modal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title">Evaluación</h4>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <div class="form-group mb-6">
+        <label for="url_file"><b>Calificación</b></label>
+        <input type="text" #url placeholder="{{grade}}" required style="width: 100%;" disabled>
+      </div>
+      <div class="col-md-3 col-3 text-right">
+        <button class="btn btn-sm btn-danger btn-round btn-icon" (click)="onNavigate(feedbackLink)"><i class="fa fa-refresh"></i></button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-warning" (click)="modal.close(add_groups_modal)">Listo</button>
+  </div>
+</ng-template>
