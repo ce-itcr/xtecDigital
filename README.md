@@ -14,7 +14,6 @@
  <a href="https://github.com/ce-itcr/StraviaTec"><img src="https://badge.fury.io/gh/tterb%2FHyde.svg"></a>
 </p>
 
-
 ## Descripción
 xtecDigital corresponde al Proyecto II para el curso de Bases de Datos (CE3101).
 
@@ -30,7 +29,41 @@ Dado lo anterior se ha determinado que son requeridas las siguientes vistas:
 
 
 ## Pantallas de la Aplicación
+### Inicio de Sesión y Panel de Administrador
+<table>
+  <tr>
+    <td>
+      <img src="https://res.cloudinary.com/dek4evg4t/image/upload/v1611532373/xtecDigital/ea1905a2-c6b5-4de2-8a6f-8031510ed929.jpg" width="450">
+    </td>
+    <td>
+      <img src="https://res.cloudinary.com/dek4evg4t/image/upload/v1611532376/xtecDigital/5ddbafaa-f9d0-4dcb-a743-d3fbbe9f3501.jpg" width="450">
+    </td>
+  </tr>
+</table>
 
+### Vista Profesor
+<table>
+  <tr>
+    <td>
+      <img src="https://res.cloudinary.com/dek4evg4t/image/upload/v1611532375/xtecDigital/43fa10b6-2f0d-4993-8f91-ccaa5e6c69d7.jpg" width="450">
+    </td>
+    <td>
+      <img src="https://res.cloudinary.com/dek4evg4t/image/upload/v1611532375/xtecDigital/239b2f9d-4e91-4870-b406-ae479fb245cb.jpg" width="450">
+    </td>
+  </tr>
+</table>
+
+### Vista Estudiante
+<table>
+  <tr>
+    <td>
+      <img src="https://res.cloudinary.com/dek4evg4t/image/upload/v1611532376/xtecDigital/4ac6e070-7620-4b73-ab2c-36de897b0044.jpg" width="450">
+    </td>
+    <td>
+      <img src="https://res.cloudinary.com/dek4evg4t/image/upload/v1611532373/xtecDigital/9460dca7-d2a6-49a2-aae8-adf02e2e3e3b.jpg" width="450">
+    </td>
+  </tr>
+</table>
 
 ## Documentación
 
